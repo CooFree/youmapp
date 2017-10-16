@@ -127,11 +127,12 @@ export default class HomeChannel {
   }
   //获取搜索热门词列表
   async getSearchKeyword() {
+    let data=[];
     let command_url = Config.ApiHost + '/search.aspx';
     try {
       let responseData = await fetch(command_url).then(response => response.json());
       if (responseData.result === 1) {
-        return responseData.list;
+        data= responseData.list;
       }
       else {
         console.warn(responseData.msg);
@@ -140,6 +141,7 @@ export default class HomeChannel {
     catch (error) {
       console.error(error);
     }
+    return data;
   }
 
   //判断是否存在电子邮箱

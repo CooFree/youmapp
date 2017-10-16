@@ -1,6 +1,6 @@
 //基本配置信息
 const Config = {
-  ApiHost: 'https://app.you.camel.com.cn',
+  ApiHost: 'https://app.test.camel.com.cn',
 }
 
 

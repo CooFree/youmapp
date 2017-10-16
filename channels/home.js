@@ -32,51 +32,6 @@ export default class HomeChannel {
             return [];
         }
     }
-<<<<<<< HEAD
-    catch (error) {
-      console.error(error);
-    }
-    return data;
-  }
-  //积分兑换优惠券，ticketActivityId：优惠券活动ID
-  async scoreExchTicket(ticketActivityId) {
-    let memberId = MemberLoginState.getLoginId();
-    if (memberId) {
-      let post_data = 'exch_id=' + ticketActivityId;
-      let sign = Utility.sign(post_data);
-      post_data += '&sign=' + sign;
-      let command_url = Config.ApiHost + '/scoreExchange.aspx?post=exch_ticket&member_id=' + memberId + '&' + post_data;
-      let fetchHeaders = {
-        'Content-Platform': 'wap'
-      }
-      try {
-        let responseData = await fetch(command_url, { headers: fetchHeaders }).then(response => response.json());
-        return responseData;
-      }
-      catch (error) {
-        console.error(error);
-      }
-    }
-  }
-  //获取搜索热门词列表
-  async getSearchKeyword() {
-    let data=[];
-    let command_url = Config.ApiHost + '/search.aspx';
-    try {
-      let responseData = await fetch(command_url).then(response => response.json());
-      if (responseData.result === 1) {
-        data= responseData.list;
-      }
-      else {
-        console.warn(responseData.msg);
-      }
-    }
-    catch (error) {
-      console.error(error);
-    }
-    return data;
-  }
-=======
     async getPageProductList(listCode, page, pageSize) {
         let data = this.findPageListCache(listCode + '_' + page);
         if (data.length === 0) {
@@ -99,7 +54,6 @@ export default class HomeChannel {
         }
         return data;
     }
->>>>>>> c207ff55850741b8286e816fb58bda4646acbed0
 
     async getPageModuleList(moduleCode) {
         let data = this.findPageModuleCache(moduleCode);

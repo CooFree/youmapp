@@ -10,9 +10,9 @@
     </view>
     <view class="m-search-section g-row">
         <view class="hd">热门搜索</view>
-        <view class="list">
-            <view class='hot'>冲锋衣</view>
-            <view>冲锋裤</view>
+        <view class="list" wx:for="{{searchKeywordList}}">
+            <view>{{item}}</view>
+            <view>{{item}}</view>
         </view>
     </view>
 </view>

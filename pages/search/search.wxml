@@ -1,4 +1,6 @@
 <!--pages/search/search.wxml-->
+
+
 <view class="search-top">
     <view class="search-box g-row">
         <view class="m-ipt m-searchIpt">
@@ -10,9 +12,8 @@
     </view>
     <view class="m-search-section g-row">
         <view class="hd">热门搜索</view>
-        <view class="list" wx:for="{{searchKeywordList}}">
-            <view>{{item}}</view>
-            <view>{{item}}</view>
+        <view class="list">
+            <view wx:for="{{searchKeywordList}}">{{item}}</view>
         </view>
     </view>
 </view>

@@ -1,6 +1,7 @@
 import Config from '../config';
+import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import Utility from '../utils/utility';
-import MemberLoginState from '../utils/memberState';
+//import MemberLoginState from '../utils/memberState';
 
 export default class HomeChannel {
     constructor(options) {
@@ -35,9 +36,9 @@ export default class HomeChannel {
     async getPageProductList(listCode, page, pageSize) {
         let data = this.findPageListCache(listCode + '_' + page);
         if (data.length === 0) {
-            let command_url = Config.ApiHost + '/index.aspx?post=list&code=' + listCode + '&page=' + page + '&page_size=' + pageSize;
+            let command_url = Config.ApiHost + '/index.aspx?post=list';
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
+                let responseData = await Utility.wxrequest(command_url, { data: { code: listCode, page, page_size: pageSize } });
                 if (responseData.result === 1) {
                     data = responseData.list;
                     if (data.length > 0) {
@@ -58,9 +59,9 @@ export default class HomeChannel {
     async getPageModuleList(moduleCode) {
         let data = this.findPageModuleCache(moduleCode);
         if (!data) {
-            let command_url = Config.ApiHost + '/index.aspx?post=module&code=' + moduleCode;
+            let command_url = Config.ApiHost + '/index.aspx?post=module';
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
+                const responseData = await Utility.wxrequest(command_url, { data: { code: moduleCode } });
                 if (responseData.result === 1) {
                     data = responseData;
                     this.cache.pageModuleData.push({ code: moduleCode, data });
@@ -75,33 +76,15 @@ export default class HomeChannel {
         }
         return data;
     }
-    async getTimePageModuleList() {
-        if (this.cache.timePageModuleData.length === 0) {
-            let command_url = Config.ApiHost + '/index.aspx?post=time_module';
-            try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    this.cache.timePageModuleData = responseData.list;
-                }
-                else {
-                    console.warn(responseData.msg);
-                }
-            }
-            catch (error) {
-                console.error(error);
-            }
-        }
-        return this.cache.timePageModuleData;
-    }
-
+    /*
     async getScoreExchTicketList(ticketActivityIdArray) {
         let data = [];
-        let command_url = Config.ApiHost + '/scoreExchange.aspx?tid=' + ticketActivityIdArray;
+        let command_url = Config.ApiHost + '/scoreExchange.aspx';
         let fetchHeaders = {
             'Content-Platform': 'wap'
         }
         try {
-            let responseData = await fetch(command_url, { headers: fetchHeaders }).then(response => response.json());
+            let responseData = await fetch(command_url, { headers: fetchHeaders, body: { tid: ticketActivityIdArray } }).then(response => response.json());
             if (responseData.result === 1) {
                 data = responseData.list;
             }
@@ -146,12 +129,12 @@ export default class HomeChannel {
         catch (error) {
             console.error(error);
         }
-    }
+    }*/
 
     async getSearchKeyword() {
         let command_url = Config.ApiHost + '/search.aspx';
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
+            let responseData = await Utility.wxrequest(command_url);
             if (responseData.result === 1) {
                 return responseData.list;
             }
@@ -163,4 +146,5 @@ export default class HomeChannel {
             console.error(error);
         }
     }
+
 }

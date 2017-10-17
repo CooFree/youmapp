@@ -83,11 +83,11 @@
     </view>
 
     <view class="zw-banner">
-        <swiper indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" circular="{{circular}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-            <block wx:for="{{imgUrls}}">
+        <swiper indicator-dots="true" indicator-color="#fff" circular="true" indicator-active-color="#d2ab44" autoplay="true" interval="5000" duration="500">
+            <block wx:for="{{swiperData}}">
                 <swiper-item>
                     <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
-                        <image src="{{item}}" class="slide-image" width="750" height="376" />
+                        <image src="{{item.image_url}}" class="slide-image" width="750" height="376" />
                     </navigator>
                 </swiper-item>
             </block>

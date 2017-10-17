@@ -1,6 +1,7 @@
 import Config from '../config';
 import MemberState from './memberState';
 import md5 from '../modules/crypto-js/md5';
+import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 
 export default class Utility {
     static parseInt(s) {
@@ -19,28 +20,6 @@ export default class Utility {
         }
         else {
             return num;
-        }
-    }
-    static windowScroll(document, callback) {
-        if (document) {
-            const range = 1;
-            window.onscroll = () => {
-                let scrollY = window.scrollY;
-                let height = window.innerHeight;
-                if (document.scrollHeight - range <= scrollY + height) {	//判断是否到底部
-                    if (callback) {
-                        callback();
-                    }
-                }
-            };
-        }
-    }
-    static isWeiXin() {
-        const ua = window.navigator.userAgent.toLowerCase();
-        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
-            return true;
-        } else {
-            return false;
         }
     }
     static getPageCount(record_count, page_size) {
@@ -242,10 +221,23 @@ export default class Utility {
             return value;
         }) || {};
     }
-    static isLocal() {
-        return window.location.hostname === 'localhost';
+
+    static wxrequest(url, options) {
+        return new Promise(function (resolve, reject) {
+            wx.request({
+                url,
+                method: options.method,
+                data: options.data,
+                header: options.header,
+                success: function (res) {
+                    resolve(res.data);
+                },
+                fail: reject
+            });
+        });
     }
-    static async uploadFile(url, file, access: Boolean) {
+
+    static async uploadFile(url, file, access) {
         if (file) {
             let formData = new FormData();
             formData.append("file", file);

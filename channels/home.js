@@ -32,11 +32,12 @@ export default class HomeChannel {
             return [];
         }
     }
-    async getPageProductList(listCode, page, pageSize) {
+     getPageProductList(listCode, page, pageSize) {
         let data = this.findPageListCache(listCode + '_' + page);
         if (data.length === 0) {
             let command_url = Config.ApiHost + '/index.aspx?post=list&code=' + listCode + '&page=' + page + '&page_size=' + pageSize;
             try {
+                
                 let responseData = await fetch(command_url).then(response => response.json());
                 if (responseData.result === 1) {
                     data = responseData.list;

@@ -1,5 +1,4 @@
-// pages/search/search.js
-import utility from '../../utils/utility';
+import utility from '../../../utils/utility';
 
 Page({
 
@@ -7,25 +6,31 @@ Page({
      * 页面的初始数据
      */
     data: {
-        searchKeywordList: []
+        keyword: ''
     },
-    toSearch: function(event){
-        wx.navigateTo({
-            url: '/pages/product/productSearch/productSearch?keyword=' + event.detail.value,
-        })
-    },
+
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        utility.request('/search.aspx', {}, function(res){
-            console.log(res.data.list);
-            this.setData({ 'searchKeywordList': utility.doDecodeURI(res.data.list) });
-        }.bind(this))
-    },
-    loadData: function () {
+        utility.request(
+            '/product/productSearch.aspx',
+            {
+                'keyword': options.keyword,
+                'page': 1,
+                'page_size': 10
+            },
+            function (res) {
+                console.log(res.data.list);
+                this.setData({
+                    'keyword': options.keyword,
+                    'result': utility.doDecodeURI(res.data.list)
+                })
+            }.bind(this)
+        )
 
     },
+
     /**
      * 生命周期函数--监听页面初次渲染完成
      */

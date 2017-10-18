@@ -1,6 +1,7 @@
-import Config from '../config';
-import Utility from '../utils/utility';
-import MemberLoginState from '../utils/memberState';
+import config from '../config';
+import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
+import util from '../utils/util';
+import memberState from '../utils/memberState';
 import { TopCategoryArray } from '../constant';
 
 export default class ProductChannel {
@@ -20,14 +21,14 @@ export default class ProductChannel {
 
     async getCategoryData() {
         if (this.cache.categoryData.length === 0) {
-            let command_url = Config.ApiHost + '/category.aspx';
+            let url = config.Host + '/category.aspx';
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    this.cache.categoryData = responseData.list;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    this.cache.categoryData = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -39,14 +40,14 @@ export default class ProductChannel {
 
     async getTagData() {
         if (this.cache.tagData.length === 0) {
-            let command_url = Config.ApiHost + '/product/tagList.aspx';
+            let url = config.Host + '/product/tagList.aspx';
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    this.cache.tagData = responseData.list;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    this.cache.tagData = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -56,15 +57,15 @@ export default class ProductChannel {
         return this.cache.tagData;
     }
     async getProductInfo(productId) {
-        let command_url = Config.ApiHost + '/product/productDetail.aspx?product_id=' + productId;
-
+        let url = config.Host + '/product/productDetail.aspx';
+        let post_data = 'product_id=' + productId;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                return responseData.info.product;
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                return resData.info.product;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -72,22 +73,23 @@ export default class ProductChannel {
         }
     }
     async getProductDetail(productId) {
-        let command_url = Config.ApiHost + '/product/productDetail.aspx?product_id=' + productId;
+        let url = config.Host + '/product/productDetail.aspx';
+        let post_data = 'product_id=' + productId;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                let memberId = MemberLoginState.getLoginIdStr();
-                let spec_command_url = Config.ApiHost + '/handlers/getSpecificateListJson.ashx?product_id=' + productId + '&member_id=' + memberId;
-                let responseSpecData = await fetch(spec_command_url).then(response => response.json());
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                let memberId = memberState.getLoginIdStr();
+                let spec_url = config.Host + '/handlers/getSpecificateListJson.ashx?product_id=' + productId + '&member_id=' + memberId;
+                let responseSpecData = await util.fetch(spec_url);
                 if (responseSpecData.result === 1) {
-                    return { productData: responseData.info, specificateData: responseSpecData.info };
+                    return { productData: resData.info, specificateData: responseSpecData.info };
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -97,18 +99,19 @@ export default class ProductChannel {
     }
     async getProductPrefer(productId) {
         let data = [];
-        let memberId = MemberLoginState.getLoginIdStr();
-        let command_url = Config.ApiHost + '/product/productDetail.aspx?post=get_prefer&product_id=' + productId + '&member_id=' + memberId;
-        let fetchHeaders = {
-            'Content-Platform': 'wap'
+        let memberId = memberState.getLoginIdStr();
+        let url = config.Host + '/product/productDetail.aspx?post=get_prefer';
+        let post_data = 'product_id=' + productId + '&member_id=' + memberId;
+        let headers = {
+            'Content-Platform': 'wxapp'
         }
         try {
-            let responseData = await fetch(command_url, { headers: fetchHeaders }).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '&' + post_data, { headers });
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -117,17 +120,22 @@ export default class ProductChannel {
         return data;
     }
     async addProductStore(productId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/product/productDetail.aspx?post=add_store&member_id=' + memberId;
-            let post_data = 'product_id=' + productId;
+            let url = config.Host + '/product/productDetail.aspx?post=add_store&member_id=' + memberId;
+            let post_data = {
+                product_id: productId
+            }
+            let headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
             try {
-                let responseData = await fetch(command_url + '&' + post_data).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -138,17 +146,22 @@ export default class ProductChannel {
     }
 
     async deleteProductStore(productId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/product/productDetail.aspx?post=delete_store&member_id=' + memberId;
-            let post_data = 'product_id=' + productId;
+            let url = config.Host + '/product/productDetail.aspx?post=delete_store&member_id=' + memberId;
+            let post_data = {
+                product_id: productId
+            }
+            let headers = {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
             try {
-                let responseData = await fetch(command_url + '&' + post_data).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -160,16 +173,16 @@ export default class ProductChannel {
 
     async getProductCommentList(productId, page, pageSize) {
         let data = [];
-        let memberId = MemberLoginState.getLoginIdStr();
-        let command_url = Config.ApiHost + '/product/productDetail.aspx?post=get_comment&member_id=' + memberId + '&product_id=' + productId + '&page=' + page + '&page_size=' + pageSize;
-
+        let memberId = memberState.getLoginIdStr();
+        let url = config.Host + '/product/productDetail.aspx?post=get_comment&member_id=' + memberId;
+        let post_data = 'product_id=' + productId + '&page=' + page + '&page_size=' + pageSize;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '&' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -178,17 +191,17 @@ export default class ProductChannel {
         return data;
     }
 
-    async getProductList(productClassId, brand, sort, page, pageSize) {
+    async getProductList(classId, brand, sort, page, pageSize) {
         let data = [];
-        let command_url = Config.ApiHost + '/product/productList.aspx?class_id=' + productClassId + '&brand=' + brand + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
-  
+        let url = config.Host + '/product/productList.aspx';
+        let post_data = 'class_id=' + classId + '&brand=' + brand + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -197,17 +210,17 @@ export default class ProductChannel {
         return data;
     }
 
-    async getTopProductList(productClassId, pageSize) {
+    async getTopProductList(classId, pageSize) {
         let data = [];
-        let command_url = Config.ApiHost + '/product/productList.aspx?post=toplist&class_id=' + productClassId + '&page_size=' + pageSize;
-
+        let url = config.Host + '/product/productList.aspx?post=toplist';
+        let post_data = 'class_id=' + classId + '&page_size=' + pageSize;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '&' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -216,16 +229,17 @@ export default class ProductChannel {
         return data;
     }
 
-    async getVProductList(vproductClassId, sort, page, pageSize) {
+    async getVProductList(classId, sort, page, pageSize) {
         let data = [];
-        let command_url = Config.ApiHost + '/product/vproductList.aspx?class_id=' + vproductClassId + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
+        let url = config.Host + '/product/vproductList.aspx';
+        let post_data = 'class_id=' + classId + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -234,17 +248,17 @@ export default class ProductChannel {
         return data;
     }
 
-    async getTopicProductList(vproductClassId, preferId, page, pageSize) {
+    async getTopicProductList(classId, preferId, page, pageSize) {
         let data = [];
-        let command_url = Config.ApiHost + '/product/topicProductList.aspx?class_id=' + vproductClassId + '&prefer_id=' + preferId + '&page=' + page + '&page_size=' + pageSize;
-
+        let url = config.Host + '/product/topicProductList.aspx';
+        let post_data = 'class_id=' + classId + '&prefer_id=' + preferId + '&page=' + page + '&page_size=' + pageSize;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -255,15 +269,16 @@ export default class ProductChannel {
 
     async getProductSearch(keyword, sort, page, pageSize) {
         let data = [];
-        let command_url = Config.ApiHost + '/product/productSearch.aspx?keyword=' + encodeURIComponent(keyword) + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
+        let url = config.Host + '/product/productSearch.aspx';
+        let post_data = 'keyword=' + encodeURIComponent(keyword) + '&sort=' + sort + '&page=' + page + '&page_size=' + pageSize;
 
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '?' + post_data);
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -272,15 +287,16 @@ export default class ProductChannel {
         return data;
     }
 
-    async getProductClassInfo(productClassId) {
-        let command_url = Config.ApiHost + '/product/productList.aspx?post=get_class&class_id=' + productClassId;
+    async getProductClassInfo(classId) {
+        let url = config.Host + '/product/productList.aspx?post=get_class';
+        let post_data = 'class_id=' + classId;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                return responseData.info;
+            let resData = await util.fetch(url + '&' + post_data);
+            if (resData.result === 1) {
+                return resData.info;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -288,15 +304,16 @@ export default class ProductChannel {
         }
     }
 
-    async getVProductClassInfo(productClassId) {
-        let command_url = Config.ApiHost + '/product/vproductList.aspx?post=get_class&class_id=' + productClassId;
+    async getVProductClassInfo(classId) {
+        let url = config.Host + '/product/vproductList.aspx?post=get_class';
+        let post_data = 'class_id=' + classId;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                return responseData.info;
+            let resData = await util.fetch(url + '&' + post_data);
+            if (resData.result === 1) {
+                return resData.info;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -305,14 +322,15 @@ export default class ProductChannel {
     }
 
     async getTopicProductPrefer(preferId) {
-        let command_url = Config.ApiHost + '/product/topicProductList.aspx?post=get_prefer&prefer_id=' + preferId;
+        let url = config.Host + '/product/topicProductList.aspx?post=get_prefer';
+        let post_data = 'prefer_id=' + preferId;
         try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                return responseData.info;
+            let resData = await util.fetch(url + '&' + post_data);
+            if (resData.result === 1) {
+                return resData.info;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {

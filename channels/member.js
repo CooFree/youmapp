@@ -1,6 +1,7 @@
-import Config from '../config';
-import Utility from '../utils/utility';
-import MemberLoginState from '../utils/memberState';
+import config from '../config';
+import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
+import util from '../utils/util';
+import memberState from '../utils/memberState';
 
 export default class MemberChannel {
     constructor(options) {
@@ -17,17 +18,16 @@ export default class MemberChannel {
         };
     }
     async getMemberInfo() {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/info.aspx?member_id=' + memberId;
-
+            let url = config.Host + '/member/info.aspx?member_id=' + memberId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -37,16 +37,16 @@ export default class MemberChannel {
     }
 
     async getProfile() {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/profile.aspx?member_id=' + memberId;
+            let url = config.Host + '/member/profile.aspx?member_id=' + memberId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -55,20 +55,27 @@ export default class MemberChannel {
         }
     }
     async saveProfile(name, sex, birthYear, birthMonth, birthDay, area) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/profile.aspx?member_id=' + memberId + '&post=set_profile';
-            let post_data = 'name=' + encodeURIComponent(name) + '&sex=' + sex + '&birth_year=' + birthYear + '&birth_month=' + birthMonth + '&birth_day=' + birthDay + '&area=' + area;
-            let fetchHeaders = {
+            let url = config.Host + '/member/profile.aspx?post=set_profile&member_id=' + memberId;
+            let post_data = {
+                name: encodeURIComponent(name),
+                sex,
+                birth_year: birthYear,
+                birth_month: birthMonth,
+                birth_day: birthDay,
+                area
+            }
+            let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -79,16 +86,16 @@ export default class MemberChannel {
     }
 
     async getMemberOrderData() {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/index.aspx?member_id=' + memberId;
+            let url = config.Host + '/member/index.aspx?member_id=' + memberId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -99,16 +106,17 @@ export default class MemberChannel {
 
     async getOrderList(showStatus, page, pageSize) {
         let data = [];
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/orderList.aspx?member_id=' + memberId + '&show_status=' + showStatus + '&page=' + page + '&page_size=' + pageSize;
+            let url = config.Host + '/member/orderList.aspx?member_id=' + memberId;
+            let post_data = 'show_status=' + showStatus + '&page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    data = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -119,16 +127,17 @@ export default class MemberChannel {
     }
 
     async getOrderTrace(orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/orderTrace.aspx?member_id=' + memberId + '&order_id=' + orderId;
+            let url = config.Host + '/member/orderTrace.aspx?member_id=' + memberId;
+            let post_data = 'order_id=' + orderId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -138,16 +147,17 @@ export default class MemberChannel {
     }
 
     async getOrderDetail(orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/orderDetail.aspx?member_id=' + memberId + '&order_id=' + orderId;
+            let url = config.Host + '/member/orderDetail.aspx?member_id=' + memberId;
+            let post_data = 'order_id=' + orderId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -157,17 +167,20 @@ export default class MemberChannel {
     }
 
     async cancelOrder(orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/orderDetail.aspx?post=cancel&member_id=' + memberId;
-            let post_data = 'order_id=' + orderId;
+            let url = config.Host + '/member/orderDetail.aspx?post=cancel&member_id=' + memberId;
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            let post_data = { order_id: orderId };
             try {
-                let responseData = await fetch(command_url + '&' + post_data).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -178,17 +191,20 @@ export default class MemberChannel {
     }
 
     async receiveOrder(orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/orderDetail.aspx?post=receive&member_id=' + memberId;
-            let post_data = 'order_id=' + orderId;
+            let url = config.Host + '/member/orderDetail.aspx?post=receive&member_id=' + memberId;
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            let post_data = { order_id: orderId };
             try {
-                let responseData = await fetch(command_url + '&' + post_data).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -200,17 +216,17 @@ export default class MemberChannel {
 
     async getProductStore(page, pageSize) {
         let data = [];
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/productStore.aspx?member_id=' + memberId + '&page=' + page + '&page_size=' + pageSize;
-
+            let url = config.Host + '/member/productStore.aspx?member_id=' + memberId;
+            let post_data = 'page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    data = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -221,17 +237,20 @@ export default class MemberChannel {
     }
 
     async deleteProductStore(storeId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/productStore.aspx?post=delete&member_id=' + memberId;
-            let post_data = 'store_id=' + storeId;
+            let url = config.Host + '/member/productStore.aspx?post=delete&member_id=' + memberId;
+            let headers = {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+            let post_data = { store_id: storeId };
             try {
-                let responseData = await fetch(command_url + '&' + post_data).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -242,16 +261,17 @@ export default class MemberChannel {
     }
 
     async getReceiveInfo(receiveId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId && receiveId > 0) {
-            let command_url = Config.ApiHost + '/member/receive.aspx?member_id=' + memberId + '&receive_id=' + receiveId;
+            let url = config.Host + '/member/receive.aspx?member_id=' + memberId;
+            let post_data = 'receive_id=' + receiveId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -261,20 +281,22 @@ export default class MemberChannel {
     }
 
     async deleteReceive(receiveId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/receive.aspx?post=delete&member_id=' + memberId;
-            let post_data = 'receive_id=' + receiveId;
-            let fetchHeaders = {
+            let url = config.Host + '/member/receive.aspx?post=delete&member_id=' + memberId;
+            let post_data = {
+                receive_id: receiveId
+            }
+            let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -285,17 +307,24 @@ export default class MemberChannel {
     }
 
     async saveReceive(receiveId, receiveName, receiveAddress, receiveMobile, receiveRegion, receiveDefault) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/receive.aspx?post=save&member_id=' + memberId;
-            let post_data = 'receive_id=' + receiveId + '&receive_name=' + Utility.filterUrlBad(receiveName) + '&receive_mobile=' + receiveMobile
-                + '&receive_region=' + receiveRegion + '&receive_zipcode=&default_flag=' + receiveDefault + '&receive_address=' + encodeURIComponent(receiveAddress);
-            let fetchHeaders = {
+            let url = config.Host + '/member/receive.aspx?post=save&member_id=' + memberId;
+            let post_data = {
+                receive_id: receiveId,
+                receive_name: Utility.filterUrlBad(receiveName),
+                receive_mobile: receiveMobile,
+                receive_region: receiveRegion,
+                receive_zipcode: '',
+                default_flag: receiveDefault,
+                receive_address: encodeURIComponent(receiveAddress)
+            };
+            let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                return responseData;
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                return resData;
             }
             catch (error) {
                 console.error(error);
@@ -305,16 +334,16 @@ export default class MemberChannel {
 
     async getReceiveList() {
         let data = [];
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/receiveList.aspx?member_id=' + memberId;
+            let url = config.Host + '/member/receiveList.aspx?member_id=' + memberId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    data = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -325,16 +354,16 @@ export default class MemberChannel {
     }
 
     async getAccountData() {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/account.aspx?member_id=' + memberId;
+            let url = config.Host + '/member/account.aspx?member_id=' + memberId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.info;
+                let resData = await util.fetch(url);
+                if (resData.result === 1) {
+                    return resData.info;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -346,19 +375,19 @@ export default class MemberChannel {
 
     async postSetPassword(memberId, formPassword) {
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/setPassword.aspx?member_id=' + memberId;
+            let url = config.Host + '/member/setPassword.aspx?member_id=' + memberId;
             let password = Utility.md5(formPassword);
-            let post_data = 'password=' + password;
-            let fetchHeaders = {
+            let post_data = { password };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -370,18 +399,18 @@ export default class MemberChannel {
 
     async postSetLoginEmail(memberId, loginEmail) {
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/setLoginEmail.aspx?member_id=' + memberId;
-            let post_data = 'login_email=' + loginEmail;
-            let fetchHeaders = {
+            let url = config.Host + '/member/setLoginEmail.aspx?member_id=' + memberId;
+            let post_data = { login_email: loginEmail };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -393,18 +422,18 @@ export default class MemberChannel {
 
     async postSetLoginMobile(memberId, loginMobile) {
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/setLoginMobile.aspx?member_id=' + memberId;
-            let post_data = 'login_mobile=' + loginMobile;
-            let fetchHeaders = {
+            let url = config.Host + '/member/setLoginMobile.aspx?member_id=' + memberId;
+            let post_data = { login_mobile: loginMobile };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -416,18 +445,18 @@ export default class MemberChannel {
 
     async postSetLoginName(memberId, loginName) {
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/setLoginName.aspx?member_id=' + memberId;
-            let post_data = 'login_name=' + loginName;
-            let fetchHeaders = {
+            let url = config.Host + '/member/setLoginName.aspx?member_id=' + memberId;
+            let post_data = { login_name: loginName };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -439,16 +468,17 @@ export default class MemberChannel {
 
     async getScoreLog(page, pageSize) {
         let data = [];
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/scoreLog.aspx?member_id=' + memberId + '&page=' + page + '&page_size=' + pageSize;
+            let url = config.Host + '/member/scoreLog.aspx?member_id=' + memberId;
+            let post_data = 'page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    data = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -460,16 +490,17 @@ export default class MemberChannel {
 
     async getTicketList(page, pageSize) {
         let data = [];
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/ticketList.aspx?member_id=' + memberId + '&used_flag=-1&due_flag=-1&page=' + page + '&page_size=' + pageSize;
+            let url = config.Host + '/member/ticketList.aspx?member_id=' + memberId;
+            let post_data = 'used_flag=-1&due_flag=-1&page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    data = resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -480,20 +511,20 @@ export default class MemberChannel {
     }
 
     async bindTicket(ticketCode) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/ticketList.aspx?post=bind&member_id=' + memberId;
-            let post_data = 'ticket_code=' + Utility.filterUrlBad(ticketCode);
-            let fetchHeaders = {
+            let url = config.Host + '/member/ticketList.aspx?post=bind&member_id=' + memberId;
+            let post_data = { ticket_code: Utility.filterUrlBad(ticketCode) };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -504,16 +535,17 @@ export default class MemberChannel {
     }
 
     async getCommentList(page, pageSize) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/productCommentList.aspx?member_id=' + memberId + '&page=' + page + '&page_size=' + pageSize;
+            let url = config.Host + '/member/productCommentList.aspx?member_id=' + memberId;
+            let post_data = 'page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -523,16 +555,17 @@ export default class MemberChannel {
     }
 
     async getCommentData(orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/productComment.aspx?member_id=' + memberId + '&order_id=' + orderId;
+            let url = config.Host + '/member/productComment.aspx?member_id=' + memberId;
+            let post_data = 'order_id=' + orderId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -542,20 +575,26 @@ export default class MemberChannel {
     }
 
     async saveComment(orderItemId, content, imageUrlArray, imageWidthArray, imageHeightArray) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/productComment.aspx?post=save&member_id=' + memberId;
-            let post_data = 'orderitem_id=' + orderItemId + '&image=' + imageUrlArray.join(',') + '&image_w=' + imageWidthArray.join(',') + '&image_h=' + imageHeightArray.join(',') + '&content=' + encodeURIComponent(content);
-            let fetchHeaders = {
+            let url = config.Host + '/member/productComment.aspx?post=save&member_id=' + memberId;
+            let post_data = {
+                orderitem_id: orderItemId,
+                image: imageUrlArray.join(','),
+                image_w: imageWidthArray.join(','),
+                image_h: imageHeightArray.join(','),
+                content: encodeURIComponent(content)
+            };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -566,16 +605,17 @@ export default class MemberChannel {
     }
 
     async getApplyData(applyId, orderId) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/apply.aspx?member_id=' + memberId + '&apply_id=' + applyId + '&order_id=' + orderId;
+            let url = config.Host + '/member/apply.aspx?member_id=' + memberId;
+            let post_data = 'apply_id=' + applyId + '&order_id=' + orderId;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -585,20 +625,25 @@ export default class MemberChannel {
     }
 
     async saveApply(orderId, applyType, title, content) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/apply.aspx?post=apply&member_id=' + memberId;
-            let post_data = 'order_id=' + orderId + '&type=' + applyType + '&title=' + Utility.filterUrlBad(title)+'&content=' + encodeURIComponent(content);
-            let fetchHeaders = {
+            let url = config.Host + '/member/apply.aspx?post=apply&member_id=' + memberId;
+            let post_data = {
+                order_id: orderId,
+                type: applyType,
+                title: Utility.filterUrlBad(title),
+                content: encodeURIComponent(content)
+            };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -609,20 +654,23 @@ export default class MemberChannel {
     }
 
     async replyApply(applyId, content) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/apply.aspx?post=reply&member_id=' + memberId;
-            let post_data = 'apply_id=' + applyId + '&content=' + encodeURIComponent(content);
-            let fetchHeaders = {
+            let url = config.Host + '/member/apply.aspx?post=reply&member_id=' + memberId;
+            let post_data = {
+                apply_id: applyId,
+                content: encodeURIComponent(content)
+            };
+            let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
-                let responseData = await fetch(command_url, { method: 'POST', headers: fetchHeaders, body: post_data }).then(response => response.json());
-                if (responseData.result === 1) {
+                let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+                if (resData.result === 1) {
                     return true;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -632,16 +680,17 @@ export default class MemberChannel {
         return false;
     }
     async getApplyList(applyType, page, pageSize) {
-        let memberId = MemberLoginState.getLoginId();
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let command_url = Config.ApiHost + '/member/applyList.aspx?member_id=' + memberId + '&apply_type=' + applyType + '&page=' + page + '&page_size=' + pageSize;
+            let url = config.Host + '/member/applyList.aspx?member_id=' + memberId;
+            let post_data = 'apply_type=' + applyType + '&page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await fetch(command_url).then(response => response.json());
-                if (responseData.result === 1) {
-                    return responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    return resData.list;
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {

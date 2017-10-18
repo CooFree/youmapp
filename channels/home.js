@@ -1,15 +1,13 @@
-import Config from '../config';
+import config from '../config';
 import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
-import Utility from '../utils/utility';
-//import MemberLoginState from '../utils/memberState';
+import util from '../utils/util';
+import memberState from '../utils/memberState';
 
 export default class HomeChannel {
     constructor(options) {
         this.options = options;
 
         this.cache = {
-            hotProductData: [],
-            timePageModuleData: [],
             pageModuleData: [],
             pageListData: []
         };
@@ -36,17 +34,18 @@ export default class HomeChannel {
     async getPageProductList(listCode, page, pageSize) {
         let data = this.findPageListCache(listCode + '_' + page);
         if (data.length === 0) {
-            let command_url = Config.ApiHost + '/index.aspx?post=list';
+            let url = config.Host + '/index.aspx?post=list';
+            let post_data = 'code=' + listCode + '&page=' + page + '&page_size=' + pageSize;
             try {
-                let responseData = await Utility.wxrequest(command_url, { data: { code: listCode, page, page_size: pageSize } });
-                if (responseData.result === 1) {
-                    data = responseData.list;
+                let resData = await util.fetch(url + '&' + post_data);
+                if (resData.result === 1) {
+                    data = resData.list;
                     if (data.length > 0) {
                         this.cache.pageListData.push({ code: listCode + '_' + page, list: data });
                     }
                 }
                 else {
-                    console.warn(responseData.msg);
+                    console.warn(resData.msg);
                 }
             }
             catch (error) {
@@ -59,9 +58,10 @@ export default class HomeChannel {
     async getPageModuleList(moduleCode) {
         let data = this.findPageModuleCache(moduleCode);
         if (!data) {
-            let command_url = Config.ApiHost + '/index.aspx?post=module';
+            let url = config.Host + '/index.aspx?post=module';
+            let post_data = 'code=' + moduleCode;
             try {
-                const responseData = await Utility.wxrequest(command_url, { data: { code: moduleCode } });
+                const responseData = await util.fetch(url + '&' + post_data);
                 if (responseData.result === 1) {
                     data = responseData;
                     this.cache.pageModuleData.push({ code: moduleCode, data });
@@ -76,20 +76,21 @@ export default class HomeChannel {
         }
         return data;
     }
-    /*
-    async getScoreExchTicketList(ticketActivityIdArray) {
+
+    async getScoreExchTicketList(ticketActIdArray) {
         let data = [];
-        let command_url = Config.ApiHost + '/scoreExchange.aspx';
-        let fetchHeaders = {
-            'Content-Platform': 'wap'
+        let url = config.Host + '/scoreExchange.aspx';
+        let headers = {
+            'Content-Platform': 'wxapp'
         }
+        let post_data = 'tid=' + ticketActIdArray;
         try {
-            let responseData = await fetch(command_url, { headers: fetchHeaders, body: { tid: ticketActivityIdArray } }).then(response => response.json());
-            if (responseData.result === 1) {
-                data = responseData.list;
+            let resData = await util.fetch(url + '?' + post_data, { headers });
+            if (resData.result === 1) {
+                data = resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {
@@ -97,17 +98,17 @@ export default class HomeChannel {
         }
         return data;
     }
-    async scoreExchTicket(ticketActivityId) {
-        let memberId = MemberLoginState.getLoginId();
+    async scoreExchTicket(ticketActId) {
+        let memberId = memberState.getLoginId();
         if (memberId) {
-            let post_data = 'exch_id=' + ticketActivityId;
-            let command_url = Config.ApiHost + '/scoreExchange.aspx?post=exch_ticket&member_id=' + memberId + '&' + post_data;
-            let fetchHeaders = {
-                'Content-Platform': 'wap'
+            let url = config.Host + '/scoreExchange.aspx?post=exch_ticket&member_id=' + memberId;
+            let headers = {
+                'Content-Platform': 'wxapp'
             }
+            let post_data = 'exch_id=' + ticketActId;
             try {
-                let responseData = await fetch(command_url, { headers: fetchHeaders }).then(response => response.json());
-                return responseData;
+                let resData = await util.fetch(url + '&' + post_data, { headers });
+                return resData;
             }
             catch (error) {
                 console.error(error);
@@ -115,31 +116,15 @@ export default class HomeChannel {
         }
     }
 
-    async getQrcodeHandle(qrcode) {
-        let command_url = Config.ApiHost + '/qrcodeResult.aspx?qrcode=' + encodeURIComponent(qrcode);
-        try {
-            let responseData = await fetch(command_url).then(response => response.json());
-            if (responseData.result === 1) {
-                return responseData.info;
-            }
-            else {
-                console.warn(responseData.msg);
-            }
-        }
-        catch (error) {
-            console.error(error);
-        }
-    }*/
-
     async getSearchKeyword() {
-        let command_url = Config.ApiHost + '/search.aspx';
+        let url = config.Host + '/search.aspx';
         try {
-            let responseData = await Utility.wxrequest(command_url);
-            if (responseData.result === 1) {
-                return responseData.list;
+            let resData = await util.fetch(url);
+            if (resData.result === 1) {
+                return resData.list;
             }
             else {
-                console.warn(responseData.msg);
+                console.warn(resData.msg);
             }
         }
         catch (error) {

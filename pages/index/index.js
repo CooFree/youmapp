@@ -1,12 +1,13 @@
 //index.js
 import HomeChannel from '../../channels/home.js';
+import {TopCategoryArray} from '../../constant.js';
 
 const app = getApp();
 const homeChannel = new HomeChannel();
+
 Page({
     data: {
-        swiperData: [],
-        
+        TopCategoryArray: TopCategoryArray
     },
     onLoad: function (options) {
         homeChannel.getPageModuleList('wap_home_focus_20171013').then(data => {
@@ -44,7 +45,5 @@ Page({
         homeChannel.getPageProductList('wap_home_huwai_20171013').then(data => {
             this.setData({ home_huwai_list: data });
         });
-
-
     },
 })

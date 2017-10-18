@@ -23,61 +23,13 @@
                             <text class="txt">推荐</text>
                         </navigator>
                     </view>
-                    <view>
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">户外</text>
-                        </navigator>
-                    </view>
-                    <view>
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">运动</text>
-                        </navigator>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
+                    <block wx:for="{{TopCategoryArray}}">
+                        <view>
+                            <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
+                                <text class="txt">{{item.name}}</text>
+                            </navigator>
+                        </view>
+                    </block>
                 </view>
             </view>
         </view>
@@ -220,7 +172,7 @@
     </view>
 
     <!-- WAP_首页_户外热搜 wap_home_huwai_20171013 -->
-     <view class="layort-h">
+    <view class="layort-h">
         <view class="zw-title">
             <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title4.png' alt=""></image>
             <text class="more">更多></text>
@@ -255,5 +207,5 @@
                 </view>
             </block>
         </view>
-    </view> 
+    </view>
 </view>

@@ -4010,6 +4010,7 @@ m-indexHd .inner {
     width: 375rpx;
     height: 375rpx;
     float: left;
+    display: inline-block;
 }
 
 .zw-pli-info {

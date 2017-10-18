@@ -1,5 +1,5 @@
 <!--index.wxml-->
-
+<wxs src="../../utils/tools.wxs" module="tools" />
 <view class="container">
     <view class="m-indexHd" style="height: 162rpx;">
         <view class="m-hd g-row">
@@ -18,326 +18,191 @@
             </view>
             <view class="inner">
                 <view class="m-navs disflex">
-                    <view class="active">
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">推荐</text>
+                    <view>
+                        <navigator url="../product/productList/productList " hover-class="navigator-hover ">
+                            <text class="txt ">推荐</text>
+                            <block wx:for="{{home_sudi}}">  
+                                <text>{{item.image_url}}</text>
+                            </block>
                         </navigator>
-                    </view>
-                    <view>
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">户外</text>
-                        </navigator>
-                    </view>
-                    <view>
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">运动</text>
-                        </navigator>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
                     </view>
                 </view>
             </view>
         </view>
     </view>
 
-    <view class="zw-banner">
-        <swiper indicator-dots="true" indicator-color="#fff" circular="true" indicator-active-color="#d2ab44" autoplay="true" interval="5000" duration="500">
-            <block wx:for="{{swiperData}}">
+    <view class="zw-banner ">
+        <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
+            <block wx:for="{{swiperData}} ">
                 <swiper-item>
-                    <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
-                        <image src="{{item.image_url}}" class="slide-image" width="750" height="376" />
+                    <navigator url="../product/productDetail/productDetail " hover-class="changestyle ">
+                        <!-- <image src="{{item.image_url}} " class="slide-image " width="750 " height="376 "></image> -->
                     </navigator>
                 </swiper-item>
             </block>
         </swiper>
     </view>
 
-    <view class="zw-tabs">
-        <view class="zw-tabs-item">
+    <view class="zw-tabs ">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
             </view>
             <text>领10元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=" "></image>
             </view>
             <text>领20元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=" "></image>
             </view>
             <text>领50元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=" "></image>
             </view>
             <text>下单返现</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=" "></image>
             </view>
             <text>买一送一</text>
         </view>
     </view>
 
     <!-- WAP_首页_新品速递 wap_home_sudi_20171013  -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title1.png' alt=""></image>
+     <view class="layort-h ">
+        <view class="zw-title ">
+            <image mode='widthFix' style="width:150rpx " src='https://img02.camel.com.cn/image/h5_20171013_title1.png' alt=" "></image>
         </view>
-        <view class="zw-pro1">
-            <block wx:for="{{home_sudi}}">
-                <view class="zw-pro1-link">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        <view class="zw-pro1 ">
+            <block wx:for="{{home_sudi}} ">
+                <view class="zw-pro1-link ">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                         <!-- <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>  -->
                     </navigator>
                 </view>
             </block>
         </view>
-    </view>
+    </view> 
 
     <!-- WAP_首页_精选专题  wap_home_jingxuan_20171013 -->
-    <view class="layort-h">
-        <view class="zw-banner">
-            <block wx:for="{{home_jingxuan}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+    <!-- <view class="layort-h ">
+        <view class="zw-banner ">
+            <block wx:for="{{home_jingxuan}} ">
+                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                    <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
                 </navigator>
             </block>
         </view>
-    </view>
+    </view> -->
 
     <!-- WAP_首页_瑜伽专场 wap_home_yujia_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title2.png' alt=""></image>
-            <text class="more">更多></text>
+    <!-- <view class="layort-h ">
+        <view class="zw-title ">
+            <image mode='widthFix' style="width:150rpx " src='https://img02.camel.com.cn/image/h5_20171013_title2.png' alt=" "></image>
+            <text class="more ">更多></text>
         </view>
-        <view class="zw-banner">
-            <block wx:for="{{home_yujia}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        <view class="zw-banner ">
+            <block wx:for="{{home_yujia}} ">
+                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                    <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
                 </navigator>
             </block>
         </view>
 
-        <view class="zw-proul2">
-            <block wx:for="{{home_yujia_list}}">
-                <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                        <view class="zw-proli-tips">{{item.intro}}</view>
-                        <view class="zw-proli-info">
-                            <view>{{item.name}}</view>
-                            <view class="price-wrap">￥<text class="price">{{item.last_price}}</text></view>
+        <view class="zw-proul2 ">
+            <block wx:for="{{home_yujia_list}} ">
+                <view class="zw-proli2 ">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                        <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
+                        <view class="zw-proli-tips ">{{tools.decodeuri(item.intro)}}</view>
+                        <view class="zw-proli-info ">
+                            <view>{{tools.decodeuri(item.name)}}</view>
+                            <view class="price-wrap ">￥
+                                <text class="price ">{{item.last_price}}</text>
+                            </view>
                         </view>
                     </navigator>
                 </view>
             </block>
         </view>
-    </view>
+    </view> -->
 
     <!-- WAP_首页_运动专场 wap_home_yundong_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title3.png' alt=""></image>
-            <text class="more">更多></text>
+    <!-- <view class="layort-h ">
+        <view class="zw-title ">
+            <image mode='widthFix' style="width:150rpx " src='https://img02.camel.com.cn/image/h5_20171013_title3.png' alt=" "></image>
+            <text class="more ">更多></text>
         </view>
-        <view class="zw-banner">
-            <block wx:for="{{home_yundong}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        <view class="zw-banner ">
+            <block wx:for="{{home_yundong}} ">
+                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                    <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
                 </navigator>
             </block>
         </view>
 
-        <view class="zw-proul2">
-            <block wx:for="{{home_yundong_list}}">
-                <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                        <view class="zw-proli-tips">{{item.intro}}</view>
-                        <view class="zw-proli-info">
-                            <view>{{item.name}}</view>
-                            <view class="price-wrap">￥<text class="price">{{item.last_price}}</text></view>
+        <view class="zw-proul2 ">
+            <block wx:for="{{home_yundong_list}} ">
+                <view class="zw-proli2 ">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                        <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
+                        <view class="zw-proli-tips ">{{tools.decodeuri(item.intro)}}</view>
+                        <view class="zw-proli-info ">
+                            <view>{{tools.decodeuri(item.name)}}</view>
+                            <view class="price-wrap ">￥
+                                <text class="price ">{{item.last_price}}</text>
+                            </view>
                         </view>
                     </navigator>
                 </view>
             </block>
         </view>
-    </view>
+    </view> -->
 
     <!-- WAP_首页_户外热搜 wap_home_huwai_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title4.png' alt=""></image>
-            <text class="more">更多></text>
+    <!-- <view class="layort-h ">
+        <view class="zw-title ">
+            <image mode='widthFix' style="width:150rpx " src='https://img02.camel.com.cn/image/h5_20171013_title4.png' alt=" "></image>
+            <text class="more ">更多></text>
         </view>
-        <view class="zw-banner">
-            <image mode='widthFix' src="https://topic.camel.com.cn/module/wap_index_yujiagirl_201709/344cc183-61e5-444f-b22c-9c46e699f43f.jpg" alt=""></image>
-        </view>
-
-        <view class="zw-proshow">
-            <view class="zw-proshow-li">
-                <image class="zw-proshow-li-img" src="https://img01.camel.com.cn/product/image/A7S1U8135/b45432fc-aa90-4ebd-81b2-970d0b7585c6.jpg" alt=""></image>
-                <view class="zw-pli-info">
-                    <view class="pli-info-wrap">
-                        <view>
-                            <text class="h2">无缝一体提臀裤</text>
-                        </view>
-                        <view>
-                            <text class="p1">雕塑S迷人身材</text>
-                        </view>
-                        <view class="h1">
-                            <!-- react-text: 228 -->￥
-                            <!-- /react-text -->
-                            <text>229.00</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view class="zw-proshow-li">
-                <image class="zw-proshow-li-img" src="https://img01.camel.com.cn/product/image/A7S1Q9117/f4e069a6-c3b3-40db-bd90-dbbfe0abd70b.jpg" alt=""></image>
-                <view class="zw-pli-info">
-                    <view class="pli-info-wrap">
-                        <view>
-                            <text class="h2">360°防震运动内衣</text>
-                        </view>
-                        <view>
-                            <text class="p1">一体编织成型</text>
-                        </view>
-                        <view class="h1">
-                            <!-- react-text: 236 -->￥
-                            <!-- /react-text -->
-                            <text>56.00</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view class="zw-proshow-li">
-                <image class="zw-proshow-li-img" src="https://img01.camel.com.cn/product/image/A7W1Q9106/2e21e361-5e2b-4a4f-94e1-d7827d3baced.jpg" alt=""></image>
-                <view class="zw-pli-info">
-                    <view class="pli-info-wrap">
-                        <view>
-                            <text class="h2">3D修身裁剪5件套</text>
-                        </view>
-                        <view>
-                            <text class="p1">一穿立变蜜桃臀</text>
-                        </view>
-                        <view class="h1">
-                            <!-- react-text: 244 -->￥
-                            <!-- /react-text -->
-                            <text>58.00</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view class="zw-proshow-li">
-                <image class="zw-proshow-li-img" src="https://img01.camel.com.cn/product/image/A7W1X7129/801f0dac-a93a-4ada-916f-87cc6d2106d7.jpg" alt=""></image>
-                <view class="zw-pli-info">
-                    <view class="pli-info-wrap">
-                        <view>
-                            <text class="h2">活力弹力4件套</text>
-                        </view>
-                        <view>
-                            <text class="p1">包出好三围</text>
-                        </view>
-                        <view class="h1">
-                            <!-- react-text: 252 -->￥
-                            <!-- /react-text -->
-                            <text>219.00</text>
-                        </view>
-                    </view>
-                </view>
-            </view>
+        <view class="zw-banner ">
+            <block wx:for="{{home_huwai}} ">
+                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                    <image mode='widthFix' src="{{item.image_url}} " alt=" "></image>
+                </navigator>
+            </block>
         </view>
 
-    </view>
-
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:200rpx" src='https://img02.camel.com.cn/image/zw_title7-wx.png' alt=""></image>
-            <text class="more">更多></text>
-        </view>
-        <view class="zw-banner">
-            <image mode='widthFix' src="https://topic.camel.com.cn/module/wap_index_peichild_201709/0c70dad9-f11e-4e2d-9651-ad001bb94cda.jpg" alt=""></image>
-        </view>
-
-        <view class="zw-proul">
-            <view class="zw-proli">
-                <image src="https://img01.camel.com.cn/product/image/1F01018/918b822c-76f0-4f29-b3e2-cced7e961e1d.jpg" alt=""></image>
-                <view class="zw-proli-tips">排湿透气 不怕背着黏糊糊</view>
-                <view class="zw-proli-info">
-                    <view>骆驼户外登山包</view>
-                    <view class="price-wrap">
-                        <!-- react-text: 158 -->￥
-                        <!-- /react-text -->
-                        <text class="price">178.00</text>
-                    </view>
+        <view class="zw-proshow ">
+            <block wx:for="{{home_huwai_list}} ">
+                <view class="zw-proshow-li ">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}} " hover-class="changestyle ">
+                        <image class="zw-proshow-li-img " src="{{item.image_url}} " alt=" "></image>
+                        <view class="zw-pli-info ">
+                            <view class="pli-info-wrap ">
+                                <view>
+                                    <text class="h2 ">{{tools.decodeuri(item.intro)}}</text>
+                                </view>
+                                <view>
+                                    <text class="p1 ">{{tools.decodeuri(item.name)}}</text>
+                                </view>
+                                <view class="h1 ">￥
+                                    <text>{{item.last_price}}</text>
+                                </view>
+                            </view>
+                        </view>
+                    </navigator>
                 </view>
-            </view>
-            <view class="zw-proli">
-                <image src="https://img01.camel.com.cn/product/image/A5W3H8101/9f739417-7bfe-49fd-a4d9-dc09eecbc42c.jpg" alt=""></image>
-                <view class="zw-proli-tips">3秒速开 一眨眼就完成</view>
-                <view class="zw-proli-info">
-                    <view>第四代自动速开帐篷</view>
-                    <view class="price-wrap">
-                        <!-- react-text: 166 -->￥
-                        <!-- /react-text -->
-                        <text class="price">238.00</text>
-                    </view>
-                </view>
-            </view>
+            </block>
         </view>
-    </view>
-
+    </view> -->
 
 </view>

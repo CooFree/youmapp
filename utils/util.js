@@ -26,22 +26,22 @@ const navigateRule = (rule) => {
       if (!adlog) {
         adlog = rule.location;
       }
-      url = '/product/productDetail?prod_id=' + rule.prod_id + (adlog && adlog.length > 0 ? '&adlog=' + adlog : '');
+      url = '/product/productDetail/productDetail?prod_id=' + rule.prod_id + (adlog && adlog.length > 0 ? '&adlog=' + adlog : '');
     }
     else if (ruleName === 'productList'.toLowerCase()) {
-      url = '/product/productList?prod_classid=' + rule.class_id + '&prod_brand=' + rule.brand;
+      url = '/product/productList/productList?prod_classid=' + rule.class_id + '&prod_brand=' + rule.brand;
     }
     else if (ruleName === 'productSearch'.toLowerCase()) {
-      url = '/product/productSearch?keyword=' + encodeURIComponent(rule.keyword);
+      url = '/product/productSearch/productSearch?keyword=' + encodeURIComponent(rule.keyword);
     }
     else if (ruleName === 'vproductList'.toLowerCase()) {
-      url = '/product/vproductList?prod_classid=' + rule.class_id;
+      url = '/product/vproductList/vproductList?prod_classid=' + rule.class_id;
     }
     else if (ruleName === 'topicProductList'.toLowerCase()) {
-      url = '/product/topicProductList?prod_classid=' + rule.class_id + '&prefer_id=' + rule.prefer_id;
+      url = '/product/topicProductList/topicProductList?prod_classid=' + rule.class_id + '&prefer_id=' + rule.prefer_id;
     }
     else if (ruleName === 'scoreExchange'.toLowerCase()) {
-      url = '/scoreExch?ticket_id=' + rule.ticket_activity_id;
+      url = '/scoreExch/scoreExch?ticket_id=' + rule.ticket_activity_id;
     }
   }
   if (url) {

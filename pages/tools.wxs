@@ -1,0 +1,19 @@
+
+var decodeURI = function (str) {
+  if (str && str.length > 0) {
+    return decodeURIComponent(str.toString().replace('+', '%20'));
+  }
+  return '';
+}
+
+var httpsURI = function (uri) {
+  if (uri && uri.length > 0) {
+    return uri.replace('http://', 'https://');
+  }
+  return '';
+}
+
+module.exports = {
+  decodeuri: decodeURI,
+  httpsuri: httpsURI
+}

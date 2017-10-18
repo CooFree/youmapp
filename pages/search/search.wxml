@@ -1,19 +1,19 @@
 <!--pages/search/search.wxml-->
 
-
+<wxs src="../tools.wxs" module="tools" />
 <view class="search-top">
-    <view class="search-box g-row">
-        <view class="m-ipt m-searchIpt">
-            <view class="icon ion-ios-search icon-search"></view>
-            <input placeholder="冲锋衣 买1赠1" bindconfirm="toSearch" auto-focus='true' class="search-input" name="search" focus="true" />
-            <view class="icon ion-ios-close icon-search-del"></view>
-        </view>
-        <view class="cancel-search">取消</view>
+  <view class="search-box g-row">
+    <view class="m-ipt m-searchIpt">
+      <view class="icon ion-ios-search icon-search"></view>
+      <input placeholder="冲锋衣 买1赠1" class="search-input" name="search" focus="true" />
+      <view class="icon ion-ios-close icon-search-del"></view>
     </view>
-    <view class="m-search-section g-row">
-        <view class="hd">热门搜索</view>
-        <view class="list">
-            <view wx:for="{{searchKeywordList}}"><navigator url="/pages/product/productSearch/productSearch?keyword={{item}}">{{item}}</navigator></view>
-        </view>
+    <view class="cancel-search">取消</view>
+  </view>
+  <view class="m-search-section g-row">
+    <view class="hd">热门搜索</view>
+    <view class="list">
+      <view wx:for="{{searchKeywordList}}">{{tools.decodeuri(item)}}</view>
     </view>
+  </view>
 </view>

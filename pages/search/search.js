@@ -1,76 +1,72 @@
 // pages/search/search.js
+import util from '../../utils/util';
+import HomeChannel from '../../channels/home';
+const homeChannel = new HomeChannel();
 
 Page({
 
-    /**
-     * 页面的初始数据
-     */
-    data: {
-        searchKeywordList: []
-    },
-    toSearch: function(event){
-        // wx.navigateTo({
-        //     url: '/pages/product/productSearch/productSearch?keyword=' + event.detail.value,
-        // })
-    },
-    /**
-     * 生命周期函数--监听页面加载
-     */
-    onLoad: function (options) {
-        // utility.request('/search.aspx', {}, function(res){
-        //     console.log(res.data.list);
-        //     this.setData({ 'searchKeywordList': utility.doDecodeURI(res.data.list) });
-        // }.bind(this))
-    },
-    loadData: function () {
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    searchKeywordList: []
+  },
 
-    },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    onReady: function () {
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    homeChannel.getSearchKeyword().then(data => {
+      this.setData({ searchKeywordList: data });
+    });
+  },
 
-    },
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
 
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
+  },
 
-    },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
+  },
 
-    },
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
 
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
+  },
 
-    },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
 
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
+  },
 
-    },
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
 
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
+  },
 
-    },
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
 
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
+  },
 
-    }
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

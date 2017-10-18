@@ -1,4 +1,3 @@
-import utility from '../../../utils/utility';
 
 Page({
 
@@ -13,21 +12,21 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        utility.request(
-            '/product/productSearch.aspx',
-            {
-                'keyword': options.keyword,
-                'page': 1,
-                'page_size': 10
-            },
-            function (res) {
-                console.log(res.data.list);
-                this.setData({
-                    'keyword': options.keyword,
-                    'result': utility.doDecodeURI(res.data.list)
-                })
-            }.bind(this)
-        )
+        // utility.request(
+        //     '/product/productSearch.aspx',
+        //     {
+        //         'keyword': options.keyword,
+        //         'page': 1,
+        //         'page_size': 10
+        //     },
+        //     function (res) {
+        //         console.log(res.data.list);
+        //         this.setData({
+        //             'keyword': options.keyword,
+        //             'result': utility.doDecodeURI(res.data.list)
+        //         })
+        //     }.bind(this)
+        // )
 
     },
 

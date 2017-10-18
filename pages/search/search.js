@@ -1,5 +1,4 @@
 // pages/search/search.js
-import utility from '../../utils/utility';
 
 Page({
 
@@ -10,18 +9,18 @@ Page({
         searchKeywordList: []
     },
     toSearch: function(event){
-        wx.navigateTo({
-            url: '/pages/product/productSearch/productSearch?keyword=' + event.detail.value,
-        })
+        // wx.navigateTo({
+        //     url: '/pages/product/productSearch/productSearch?keyword=' + event.detail.value,
+        // })
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        utility.request('/search.aspx', {}, function(res){
-            console.log(res.data.list);
-            this.setData({ 'searchKeywordList': utility.doDecodeURI(res.data.list) });
-        }.bind(this))
+        // utility.request('/search.aspx', {}, function(res){
+        //     console.log(res.data.list);
+        //     this.setData({ 'searchKeywordList': utility.doDecodeURI(res.data.list) });
+        // }.bind(this))
     },
     loadData: function () {
 

@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<wxs src="./../tools.wxs" module="tools" />
+<wxs src="../../utils/tools.wxs" module="tools" />
 <view class="container">
     <view class="m-indexHd" style="height: 162rpx;">
         <view class="m-hd g-row">
@@ -35,8 +35,8 @@
         </view>
     </view>
 
-    <view class="zw-banner">
-        <swiper indicator-dots="true" indicator-color="#fff" circular="true" indicator-active-color="#d2ab44" autoplay="true" interval="5000" duration="500">
+    <view class="zw-banner ">
+        <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
             <block wx:for="{{swiperData}}">
                 <swiper-item>
                     <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
@@ -47,34 +47,34 @@
         </swiper>
     </view>
 
-    <view class="zw-tabs">
-        <view class="zw-tabs-item">
+    <view class="zw-tabs ">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
             </view>
             <text>领10元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=" "></image>
             </view>
             <text>领20元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=" "></image>
             </view>
             <text>领50元券</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=" "></image>
             </view>
             <text>下单返现</text>
         </view>
-        <view class="zw-tabs-item">
+        <view class="zw-tabs-item ">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=""></image>
+                <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=" "></image>
             </view>
             <text>买一送一</text>
         </view>
@@ -120,6 +120,7 @@
                 </navigator>
             </block>
         </view>
+
 
         <view class="zw-proul2">
             <block wx:for="{{home_yujia_list}}">

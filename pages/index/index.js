@@ -1,6 +1,6 @@
 //index.js
-import HomeChannel from '../../channels/home.js';
-import {TopCategoryArray} from '../../constant.js';
+import HomeChannel from '../../channels/home';
+import {TopCategoryArray} from '../../constant';
 
 const app = getApp();
 const homeChannel = new HomeChannel();

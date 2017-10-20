@@ -32,51 +32,6 @@
                             <text class="txt">运动</text>
                         </navigator>
                     </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
-                    <view>
-                        <text class="txt">瑜伽</text>
-                    </view>
-                    <view>
-                        <text class="txt">男鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">女鞋</text>
-                    </view>
-                    <view>
-                        <text class="txt">童装</text>
-                    </view>
-                    <view>
-                        <text class="txt">男装</text>
-                    </view>
                 </view>
             </view>
         </view>

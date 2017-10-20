@@ -1,3 +1,6 @@
+import ProductChannel from '../../../channels/product';
+
+const productChannel = new ProductChannel();
 
 Page({
 
@@ -12,22 +15,12 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        // utility.request(
-        //     '/product/productSearch.aspx',
-        //     {
-        //         'keyword': options.keyword,
-        //         'page': 1,
-        //         'page_size': 10
-        //     },
-        //     function (res) {
-        //         console.log(res.data.list);
-        //         this.setData({
-        //             'keyword': options.keyword,
-        //             'result': utility.doDecodeURI(res.data.list)
-        //         })
-        //     }.bind(this)
-        // )
-
+        productChannel.getProductSearch(options.keyword, 'desc', 1, 10).then(data => {
+            this.setData({
+                searchResult: data,
+                keyword: options.keyword
+            })
+        })
     },
 
     /**

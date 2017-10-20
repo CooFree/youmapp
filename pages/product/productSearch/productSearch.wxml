@@ -1,28 +1,31 @@
 <!--pages/product/productList/productList.wxml-->
-<view class="container">
-
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="container greybg">
     <view class="m-list-floor g-row">
         <view class="hd3">
             <view class="dtit">{{keyword}}</view>
             <view class="desc"></view>
         </view>
-        
+
         <view class="m-goods-grid">
-            <view class="list" >
-                <view class="item" wx:for="{{result}}">
-                    <view class="wraper">
-                        <view class="hd">
-                            <image class="pic" src="{{item.image_url}}!prodimg245" alt=""></image>
-                            <view class="specification">
-                                <view class="count">{{item.color_kinds}}</view>色可选
+            <view class="list">
+                <view class="item" wx:for="{{searchResult}}">
+                    <navigator url="../productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                        <view class="wraper">
+                            <view class="hd">
+                                <image class="pic" src="{{item.image_url}}!prodimg245" alt=""></image>
+                                <view class="specification">
+                                    <view class="count">{{item.color_kinds}}</view>色可选
+                                </view>
                             </view>
+                            <view class="desc" wx:if="{{item.intro}}">{{tools.decodeuri(item.intro)}}</view>
+                            <view class="name">{{tools.decodeuri(item.name)}}</view>
+                            <view class="price">￥{{item.last_price}}</view>
                         </view>
-                        <view class="desc" wx:if="{{item.intro}}">{{item.intro}}</view>
-                        <view class="name">{{item.name}}</view>
-                        <view class="price">￥{{item.last_price}}</view>
-                    </view>
+                    </navigator>
                 </view>
             </view>
+
         </view>
     </view>
 </view>

@@ -1,27 +1,11 @@
 <!--pages/product/productDetail/productDetail.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
 <view class="container greybg">
-
-    <!-- <view class="m-indexHd" style="height: 102rpx;">
-        <view class="m-hd g-row">
-            <view class="m-indextop">
-                <view class="top-line">
-                    <view class="logo"></view>
-                    <view class="m-searchTop">
-                        <navigator url="../search/search" hover-class="changestyle">
-                            <view class="zw-search-link">
-                                <view class="icon-search"></view>
-                                <text class="placeholder">点击输入搜索商品</text>
-                            </view>
-                        </navigator>
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view> -->
-
     <view class="zw-banner detail-swiper">
-        <swiper indicator-dots="{{indicatorDots}}" indicator-color="{{indicatorColor}}" circular="{{circular}}" indicator-active-color="{{indicatorActiveColor}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-            <block wx:for="{{imgUrls}}">
+        <swiper indicator-dots="{{swiperConfig.indicatorDots}}" indicator-color="{{swiperConfig.indicatorColor}}" circular="{{swiperConfig.circular}}" indicator-active-color="{{swiperConfig.indicatorActiveColor}}" autoplay="{{swiperConfig.autoplay}}" interval="{{swiperConfig.interval}}"
+            duration="{{swiperConfig.duration}}">
+            <block wx:for="{{productDetail.default_image_list}}">
                 <swiper-item>
                     <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
                         <image src="{{item}}" class="slide-image" width="750" height="376" />
@@ -34,9 +18,9 @@
     <view class="dt-section">
         <view class="m-detailBase">
             <view class="info">
-                <view class="name">Camel骆驼运动跑鞋 男女休闲透气运动鞋 轻便耐磨跑步鞋</view>
-                <view class="desc">中国田径协会马拉松赛指定款 竞速级跑步体验</view>
-                <view class="price">￥140.00</view>
+                <view class="name">{{tools.decodeuri(productDetail.product.name)}}</view>
+                <view class="desc">{{tools.decodeuri(productDetail.product.intro)}}</view>
+                <view class="price">￥{{productDetail.product.price}} -￥{{productDetail.product.market_price}} </view>
                 <!-- <view class="taglist">
                     <view class="wrap"></view>
                 </view> -->
@@ -87,30 +71,35 @@
     <view class="dt-section-2 dt-section-3 dt-comment">
         <view class="m-listItem">
             <view class="left">
-                <text class="txt">用户评价(999)</text>
+                <text class="txt">用户评价({{productDetail.comment_count > 99? '99+': productDetail.comment_count}})</text>
             </view>
             <view class="middle"></view>
             <view class="right">
-                <i class="icon ion-ios-arrow-right"></i>
+                <navigator url="../productComment/productComment?prod_id={{productDetail.product.id}}">
+                    <span class="more">查看全部</span>
+                    <i class="icon ion-ios-arrow-right"></i>
+                </navigator>
             </view>
         </view>
         <view class="comment-item">
-            <view class="comment-hd">
-                <view class="link">
-                    <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
-                    <text class="name">匿名***</text>
+            <block wx:for="{{productCommentList}}">
+                <view class="comment-hd">
+                    <view class="link">
+                        <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                        <text class="name">{{tools.decodeuri(item.member_name)}}</text>
+                    </view>
                 </view>
-            </view>
-            <view class="extraInfo">
-                <text class="time">2017年09月19日 17:54:00</text>
-                <text class="skus">女,粉红38</text>
-            </view>
-            <view class="content">
-                <p class="txt">物有所值，希望大家购买，穿着十分轻便、透气，优良鞋底很厚，鞋子是正品，鞋底防滑效果不错，价格也便宜，是运动健身很好的选择，推荐给大家放心、舒心、安心的购买</p>
-            </view>
-            <view class="commentPics">
-                <ul class="list"></ul>
-            </view>
+                <view class="extraInfo">
+                    <text class="time">{{item.comment_time}}</text>
+                    <text class="skus">,{{tools.decodeuri(item.color)}} {{tools.decodeuri(item.size)}}</text>
+                </view>
+                <view class="content">
+                    <p class="txt">{{tools.decodeuri(item.content)}}</p>
+                </view>
+                <view class="commentPics">
+                    <ul class="list"></ul>
+                </view>
+            </block>
         </view>
     </view>
 
@@ -122,12 +111,14 @@
                     <view class="item">
                         <view class="left">货号</view>
                         <view class="right">
-                            <view class="con">A712357085</view>
+                            <view class="con">{{productDetail.product.code}}</view>
                         </view>
                     </view>
                 </view>
             </view>
-            <image src="https://img01.camel.com.cn/product/detail/A712357085/7b743ca4-54fe-408a-aeb6-380603f20c73.jpg" alt="" mode="widthFix"></image>
+            <block wx:for="{{productDetail.detail_image_list}}">
+                <image src="{{item.url}}" alt="" mode="widthFix"></image>
+            </block>
         </view>
         <view class="m-commonIssues m-rmcdGoods">
             <view class="tt">
@@ -138,13 +129,82 @@
         </view>
     </view>
 
-    <view class="m-btnGroup">
-        <view class="inner">
-            <view class="btn btn1">
-                <i class="icon icon-kefu ion-ios-chatbubble-outline"></i>
+    <!-- 规格选择 -->
+    <view class="dt-paramselect g-row" style="">
+        <view class="info-con">
+            <view class="left">
+                <image class="pic" src="{{productDetail.default_image}}" alt=""></image>
             </view>
-            <view class="btn btn2">立即购买</view>
-            <view class="btn btn3">加入购物车</view>
+            <view class="right">
+                <view class="con">
+                    <view class="price">
+                        价格：¥79.00
+                    </view>
+                    <view class="sku">
+                        已选择：请选择
+                    </view>
+                </view>
+            </view>
         </view>
+        <view class="spec-con">
+            <view class="tt">
+                颜色
+            </view>
+            <view class="con">
+                <block wx:if="{{selectSize.length > 0}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}" bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                        <text class="txt">{{tools.decodeuri(item[0])}}</text>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}" bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                        <text class="txt">{{tools.decodeuri(item[0])}}</text>
+                    </view>
+                </block>
+            </view>
+            <view class="tt">
+                尺码
+            </view>
+            <view class="con">
+                <block wx:if="{{selectColor.length > 0}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}" bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                        <span class="txt">{{tools.decodeuri(item[0])}}</span>
+                    </view>
+                </block>
+                <block wx:else>
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                        <span class="txt">{{tools.decodeuri(item[0])}}</span>
+                    </view>
+                </block>
+            </view>
+            <view class="tt">
+                数量
+            </view>
+            <view class="con m-selNumRow">
+                <view class="m-selnum">
+                    <view class="less dis">
+                        <i class="icon ion-ios-minus-empty"></i>
+                    </view>
+                    <view class="textWrap">
+                        <input type="number" class="txt" value="1" />
+                    </view>
+                    <view class="plus">
+                        <i class="icon ion-ios-plus-empty"></i>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <view class="m-btnGroup">
+        <div class="inner">
+            <span class="btn btn1">《 返回</span>
+            <span class="btn btn1">
+                <image mode="widthFix" style="width:50rpx;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAYAAAEgvhuhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTA1Qzg4NTRBNThGMTFFNzk3NEZCRUU4M0E1MUZEOEQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTA1Qzg4NTVBNThGMTFFNzk3NEZCRUU4M0E1MUZEOEQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMDVDODg1MkE1OEYxMUU3OTc0RkJFRTgzQTUxRkQ4RCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMDVDODg1M0E1OEYxMUU3OTc0RkJFRTgzQTUxRkQ4RCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjFlkPAAAAOASURBVHjaYpg/f/4lIJ7GgAYYQQRQ4j8DNgCUYGQgFjAi6cJp3HtkPkAA4VRJ2Cg0UzbAGBXEevAWNmPAigACiIEky4GACYm9kAjH/mcgBQA1cFBmAskAaIMGNluQxQACCMyhiVMY0azUA1IXiXFzNSkR1ULAsGwmEpw8BVnxYlLCmYnU0PhPsyj/jEUsGYgj0YMOBHiAEnJoYqDCZQ6IARBAjEBJFpAiqIQzENcnJibq0crpVAsUbNHxFWiBKjUcic3wcCBeTaHBokDqH4bhwPDeCqT0KXQ4yHFxuFLpd6DtShQYbg905FIWHJIRQLwSiE2BlmgB6auDNtUMPcCIJ1iagVQNlFsKjKAeYoIQqA5uJkAAMaKHLbIkpQCUWgSR+O9pWQt+AtWEtCpb1gBxGDWDBRmsAuIOIG6iRlpHN3wnEG+nNHJBdSyQcmVCSynUypWhoMKLhUZpwx6IPXBVFsqUmg4MhR/YDF8D9RZNqrl1lCRHWC2Ey/AtQGxIgYNBDtuM1XBgWP2jMDRCYHUwCxHeJCd5euIzEFSHKtAiQmGRSnGKYcTh8jIg1UlhOmdkGAWkVtDJ0HZ2FDD8lhPRqP8DVCdITGphgDXggWAZAYOboe17ASC7hFjDf0HpbwR8vxStJoMDgAADNS1uAmk1PJpPAr1rMZTiE9SPegjEv4GYC+j4P4PJ4Ux4Mu8jUGgDMSsQ+w22ECdUmIPSlTkQB0OLSeQY4QVRQCxCZzeDWg4vGQnkPHkg9QCIfwIxNzAW/qLJ2wIpYTo6WgeIQaXBQ4JlOdBxp4GUCRAHAh2+YSCTB9AtU4FUFhC3ETPUswqpWTnQANZMW02Mw2GjC8FAHzMPYGg7QPPTHWDMXyDocKAiUBo/A8TsQOw9gKEdipwCiB0VXIPUthzwZEKKw2HJJYSYwUlaJxOiHQ5UfA9InQdiTiD2GehkQlRvAq10MYQml01IoQEqUtOBWIKGDo9Hi3kGJhIdDgJBaFNFjNBhGgEaYlDTYzosmeBtZOFIayCNoPFRH+hY6aBtq2ArXUAOr6fG0DSZ4Cgw0E6T6vApoKofiD8CscEAOfwNEJ8e7WEOmh4QERmVE1oEPgOmuZ9UqmiINpORDMNBTdxTaHpB7XRdoGXXyXQwyWaSU317YvEwqNXoRkFgk2wmuePJHtASBtSNAoVIFjBkDlCYTEgyEwAXr0MOvSilbgAAAABJRU5ErkJggg=="
+                    alt=""></image>
+            </span>
+            <span class="btn btn2">立即购买</span>
+            <span class="btn btn3">加入购物车</span>
+        </div>
     </view>
 </view>

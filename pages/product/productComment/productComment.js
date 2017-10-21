@@ -1,3 +1,4 @@
+// pages/product/productComment/productComment.js
 import ProductChannel from '../../../channels/product';
 const productChannel = new ProductChannel();
 
@@ -7,17 +8,24 @@ Page({
      * 页面的初始数据
      */
     data: {
-        keyword: ''
+
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        productChannel.getProductSearch(options.keyword, 'desc', 1, 10).then(data => {
+        console.log()
+        let prod_id = options.prod_id;
+        productChannel.getProductCommentList(prod_id, 1, 10).then(data => {
             this.setData({
-                searchResult: data,
-                keyword: options.keyword
+                productCommentList: data,
+            })
+        })
+
+        productChannel.getProductDetail(prod_id).then(data => {
+            this.setData({
+                commentCount: data.productData.comment_count,
             })
         })
     },

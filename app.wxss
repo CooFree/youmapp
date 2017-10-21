@@ -1736,7 +1736,7 @@ m-indexHd .inner {
     background-color: #fff;
     padding: 30rpx;
     position: fixed;
-    bottom: 129rpx;
+    bottom: 114rpx;
     right: 0;
     left: 0;
     margin: 0 auto;
@@ -1747,13 +1747,14 @@ m-indexHd .inner {
 
 .dt-paramselect .info-con {
     display: flex;
+    padding-top:30rpx;
 }
 
 .dt-paramselect .pic {
-    width: 245rpx;
-    height: 245rpx;
+    width: 200rpx;
+    height: 200rpx;
     background-color: #f4f4f4;
-    border-radius: 0.0300rpx;
+    border-radius: 6rpx;
 }
 
 .dt-paramselect .info-con .right {
@@ -1862,6 +1863,7 @@ m-indexHd .inner {
     height: 66rpx;
     font-size: 33rpx;
     text-align: center;
+    border:2rpx solid #999;
 }
 
 .m-flashSale {

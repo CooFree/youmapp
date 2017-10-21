@@ -39,7 +39,7 @@
         <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
             <block wx:for="{{swiperData}}">
                 <swiper-item>
-                    <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
                         <image src="{{item.image_url}}" class="slide-image" width="750" height="376"></image>
                     </navigator>
                 </swiper-item>
@@ -125,7 +125,7 @@
         <view class="zw-proul2">
             <block wx:for="{{home_yujia_list}}">
                 <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                         <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
                         <view class="zw-proli-info">
@@ -157,7 +157,7 @@
         <view class="zw-proul2">
             <block wx:for="{{home_yundong_list}}">
                 <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                         <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
                         <view class="zw-proli-info">
@@ -189,7 +189,7 @@
         <view class="zw-proshow">
             <block wx:for="{{home_huwai_list}}">
                 <view class="zw-proshow-li">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image class="zw-proshow-li-img" src="{{item.image_url}}" alt=""></image>
                         <view class="zw-pli-info">
                             <view class="pli-info-wrap">

@@ -26,7 +26,8 @@
         "pages/portal/helpList/helpList",
         "pages/member/ticketList/ticketList",
         "pages/member/productComment/productComment",
-        "pages/member/apply/apply"
+        "pages/member/apply/apply",
+        "pages/product/productComment/productComment"
     ],
     "window": {
         "backgroundTextStyle": "light",

@@ -1,0 +1,33 @@
+<!--pages/product/productComment/productComment.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="container greybg">
+    <view class="dt-section-2 dt-section-3 dt-comment">
+        <view class="m-listItem">
+            <view class="left">
+                <text class="txt">用户评价({{commentCount > 99? '99+': commentCount}}) </text>
+            </view>
+            <view class="middle"></view>
+            <view class="right"></view>
+        </view>
+        <block wx:for="{{productCommentList}}">
+            <view class="comment-item">
+                <view class="comment-hd">
+                    <view class="link">
+                        <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                        <text class="name">{{tools.decodeuri(item.member_name)}}</text>
+                    </view>
+                </view>
+                <view class="extraInfo">
+                    <text class="time">{{item.comment_time}}</text>
+                    <text class="skus">,{{tools.decodeuri(item.color)}} {{tools.decodeuri(item.size)}}</text>
+                </view>
+                <view class="content">
+                    <p class="txt">{{tools.decodeuri(item.content)}}</p>
+                </view>
+                <view class="commentPics">
+                    <ul class="list"></ul>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>

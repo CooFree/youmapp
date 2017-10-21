@@ -254,6 +254,45 @@ const cloneJSON = (json) => {
   }) || {};
 }
 
+const arrayContains = function (arr, needle) {
+    arr.forEach(function(value, index){
+        console.log(value.indexOf(needle))
+        if (value.indexOf(needle) != -1) return true;
+    })
+    return false;
+}
+
+const arrayUnique = function (arr) {
+    arr.sort();     
+    var res = [arr[0]];
+    for (var i = 1; i < arr.length; i++) {
+        if (arr[i] !== res[res.length - 1]) {
+            res.push(arr[i]);
+        }
+    }
+    return res;
+}
+
+const deepCopy = function (o) {
+    if (o instanceof Array) {
+        var n = [];
+        for (var i = 0; i < o.length; ++i) {
+            n[i] = deepCopy(o[i]);
+        }
+        return n;
+
+    } else if (o instanceof Object) {
+        var n = {}
+        for (var i in o) {
+            n[i] = deepCopy(o[i]);
+        }
+        return n;
+    } else {
+        return o;
+    }
+}
+
+
 module.exports = {
   formatTime,
   navigateRule,
@@ -272,5 +311,7 @@ module.exports = {
   decodeURI,
   md5,
   filterUrlBad,
-  jsonToFormData
+  jsonToFormData,
+  arrayUnique,
+  deepCopy
 }

@@ -10,7 +10,7 @@
         <view class="m-goods-grid">
             <view class="list">
                 <view class="item" wx:for="{{searchResult}}">
-                    <navigator url="../productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="../productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <view class="wraper">
                             <view class="hd">
                                 <image class="pic" src="{{item.image_url}}!prodimg245" alt=""></image>

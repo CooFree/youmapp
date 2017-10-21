@@ -1,4 +1,5 @@
-
+import config from './config';
+import memberState from './utils/memberState';
 //app.js
 App({
   onLaunch: function () {
@@ -10,7 +11,24 @@ App({
     // 登录
     wx.login({
       success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        wx.request({
+          url: config.Host + '/handlers/wxAppLoginCallback.ashx',
+          data: {
+            code: res.code
+          },
+          success: (res) => {
+            const data = res.data;
+            if (data.result === 1) {
+              //console.log(data.msg);
+            }
+            else {
+              console.warn(data.msg);
+            }
+          },
+          fail: (msg) => {
+            console.error(msg);
+          }
+        });
       }
     })
     // 获取用户信息

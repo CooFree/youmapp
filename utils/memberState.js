@@ -5,14 +5,21 @@ var LoginNemberID = null;
 export default class MemberLoginState {
   static initLogin() {
     if (LoginNemberID == null) {
-      let state = localStorage.getItem(LOGIN_MEMBER_STATE);
-      LoginNemberID = state || null;
+      wx.getStorage({
+        key: LOGIN_MEMBER_STATE,
+        success: function (res) {
+          LoginNemberID = res.data || null;
+        }
+      })
     }
   }
   static saveLogin(loginNemberId, save) {
     LoginNemberID = loginNemberId;
     if (save === true) {
-      localStorage.setItem(LOGIN_MEMBER_STATE, loginNemberId);
+      wx.setStorage({
+        key: LOGIN_MEMBER_STATE,
+        data: loginNemberId
+      });
     }
   }
   static isLogin() {

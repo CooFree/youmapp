@@ -16,6 +16,7 @@ Page({
         },
         selectColorIndex: -1,
         selectSizeIndex: -1,
+        showSelector: false,
         specificateData: [],
         arrayColor: [],
         arraySize: [],
@@ -25,7 +26,7 @@ Page({
         finlImg: '',
         finlColor: '',
         finlSize: '',
-        finlVolume: 0
+        finlVolume: 1
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
@@ -85,7 +86,8 @@ Page({
                     this.setData({
                         selectColor: tempArr2,
                         selectColorIndex: index,
-                        finlColor: keys
+                        finlColor: keys,
+                        finlVolume: 1
                     })
                 }
             } else {
@@ -100,17 +102,18 @@ Page({
                     this.setData({
                         selectSize: tempArr2,
                         selectSizeIndex: index,
-                        finlSize: keys
+                        finlSize: keys,
+                        finlVolume: 1
                     })
                 }
             }
 
             let finlColor = this.data.finlColor;
             let finlSize = this.data.finlSize;
-            if (this.data.finlColor && this.data.finlSize){
+            if (this.data.finlColor && this.data.finlSize) {
                 let temp = [];
-                specList.forEach(function(value, index){
-                    if (value.color === finlColor){
+                specList.forEach(function (value, index) {
+                    if (value.color === finlColor) {
                         temp.push(value);
                     }
                 });
@@ -129,6 +132,48 @@ Page({
     },
     selectSize: function (event) {
         this.selectOption(event, this.data.arrayColor, this.data.selectSizeIndex, 'size');
+    },
+    setVolume: function (event) {
+        let value = event.detail.value;
+        let reserve = this.data.specItem !== null ? this.data.specItem.reserve : this.data.productDetail.product.reserve;
+        if (reserve) {
+            if (value > reserve) {
+                this.setData({
+                    finlVolume: reserve
+                })
+            } else if (value < 1) {
+                this.setData({
+                    finlVolume: 1
+                })
+            } else {
+                this.setData({
+                    finlVolume: value
+                })
+            }
+        }
+    },
+    addVolume: function (event) {
+        let finlVolume = this.data.finlVolume;
+        let reserve = this.data.specItem !== null ? this.data.specItem.reserve : this.data.productDetail.product.reserve;
+
+        if (finlVolume < reserve) {
+            this.setData({
+                finlVolume: ++finlVolume
+            })
+        }
+    },
+    reduceVolume: function (event) {
+        let finlVolume = this.data.finlVolume;
+        if (finlVolume > 1) {
+            this.setData({
+                finlVolume: --finlVolume
+            })
+        }
+    },
+    toggleSelector: function(event){
+        this.setData({
+            showSelector: !this.data.showSelector
+        })
     },
     onLoad: function (options) {
         let prod_id = options.prod_id;

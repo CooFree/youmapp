@@ -1,7 +1,7 @@
 <!--pages/product/productDetail/productDetail.wxml-->
 <wxs src="../../../utils/tools.wxs" module="tools" />
 
-<view class="container greybg">
+<view class="container greybg {{showSelector? 'fullhide': ''}}">
     <view class="zw-banner detail-swiper">
         <swiper indicator-dots="{{swiperConfig.indicatorDots}}" indicator-color="{{swiperConfig.indicatorColor}}" circular="{{swiperConfig.circular}}" indicator-active-color="{{swiperConfig.indicatorActiveColor}}" autoplay="{{swiperConfig.autoplay}}" interval="{{swiperConfig.interval}}"
             duration="{{swiperConfig.duration}}">
@@ -16,6 +16,16 @@
     </view>
 
     <view class="dt-section">
+        <view class="m-flashSale detailFlashSale ">
+            <view class="left">
+                <span class="title">限时购</span>
+                <span class="status">抢购中...</span>
+            </view>
+            <view class="right">
+                <span class="s1">离结束还剩</span>
+                <span class="t1">0:7:34:8</span>
+            </view>
+        </view>
         <view class="m-detailBase">
             <view class="info">
                 <view class="name">{{tools.decodeuri(productDetail.product.name)}}</view>
@@ -37,10 +47,19 @@
     </view>
 
     <view class="dt-section-2">
-        <view class="m-listItem">
-            <view class="left">
-                <text class="txt">请选择规格数量</text>
-            </view>
+
+        <view class="m-listItem" bindtap="toggleSelector">
+            <block wx:if="{{finlColor && finlSize}}">
+                <view class="left">
+                    <text class="txt">已选：{{tools.decodeuri(finlColor)}}， {{tools.decodeuri(finlSize)}}</text>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="left">
+                    <text class="txt">请选择规格数量</text>
+                </view>
+            </block>
+
             <view class="middle"></view>
             <view class="right">
                 <i class="icon ion-ios-arrow-right"></i>
@@ -130,7 +149,7 @@
     </view>
 
     <!-- 规格选择 -->
-    <view class="dt-paramselect g-row" style="">
+    <view class="dt-paramselect g-row" wx:if="{{showSelector}}">
         <view class="info-con">
             <view class="left">
                 <image class="pic" src="{{finlImg? finlImg : productDetail.default_image}}" alt=""></image>
@@ -195,20 +214,20 @@
                         </view>
                     </block>
                     <block wx:else>
-                        <view class="less">
+                        <view class="less" bindtap="reduceVolume">
                             <i class="icon ion-ios-minus-empty"></i>
                         </view>
                     </block>
                     <view class="textWrap">
-                        <input type="number" class="txt" value="1" />
+                        <input type="number" value="{{finlVolume}}" bindinput="setVolume" class="txt" />
                     </view>
-                    <block wx:if="{{finlVolume >= specItem.reserve}}">
-                         <view class="plus dis">
+                    <block wx:if="{{finlVolume >= specItem.reserve || finlVolume >= productDetail.product.reserve}}">
+                        <view class="plus dis">
                             <i class="icon ion-ios-plus-empty"></i>
                         </view>
                     </block>
                     <block wx:else>
-                        <view class="plus">
+                        <view class="plus" bindtap="addVolume">
                             <i class="icon ion-ios-plus-empty"></i>
                         </view>
                     </block>
@@ -219,13 +238,19 @@
 
     <view class="m-btnGroup">
         <div class="inner">
-            <span class="btn btn1">《 返回</span>
-            <span class="btn btn1">
-                <image mode="widthFix" style="width:50rpx;" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAYAAAEgvhuhAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTA1Qzg4NTRBNThGMTFFNzk3NEZCRUU4M0E1MUZEOEQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTA1Qzg4NTVBNThGMTFFNzk3NEZCRUU4M0E1MUZEOEQiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMDVDODg1MkE1OEYxMUU3OTc0RkJFRTgzQTUxRkQ4RCIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMDVDODg1M0E1OEYxMUU3OTc0RkJFRTgzQTUxRkQ4RCIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PjFlkPAAAAOASURBVHjaYpg/f/4lIJ7GgAYYQQRQ4j8DNgCUYGQgFjAi6cJp3HtkPkAA4VRJ2Cg0UzbAGBXEevAWNmPAigACiIEky4GACYm9kAjH/mcgBQA1cFBmAskAaIMGNluQxQACCMyhiVMY0azUA1IXiXFzNSkR1ULAsGwmEpw8BVnxYlLCmYnU0PhPsyj/jEUsGYgj0YMOBHiAEnJoYqDCZQ6IARBAjEBJFpAiqIQzENcnJibq0crpVAsUbNHxFWiBKjUcic3wcCBeTaHBokDqH4bhwPDeCqT0KXQ4yHFxuFLpd6DtShQYbg905FIWHJIRQLwSiE2BlmgB6auDNtUMPcCIJ1iagVQNlFsKjKAeYoIQqA5uJkAAMaKHLbIkpQCUWgSR+O9pWQt+AtWEtCpb1gBxGDWDBRmsAuIOIG6iRlpHN3wnEG+nNHJBdSyQcmVCSynUypWhoMKLhUZpwx6IPXBVFsqUmg4MhR/YDF8D9RZNqrl1lCRHWC2Ey/AtQGxIgYNBDtuM1XBgWP2jMDRCYHUwCxHeJCd5euIzEFSHKtAiQmGRSnGKYcTh8jIg1UlhOmdkGAWkVtDJ0HZ2FDD8lhPRqP8DVCdITGphgDXggWAZAYOboe17ASC7hFjDf0HpbwR8vxStJoMDgAADNS1uAmk1PJpPAr1rMZTiE9SPegjEv4GYC+j4P4PJ4Ux4Mu8jUGgDMSsQ+w22ECdUmIPSlTkQB0OLSeQY4QVRQCxCZzeDWg4vGQnkPHkg9QCIfwIxNzAW/qLJ2wIpYTo6WgeIQaXBQ4JlOdBxp4GUCRAHAh2+YSCTB9AtU4FUFhC3ETPUswqpWTnQANZMW02Mw2GjC8FAHzMPYGg7QPPTHWDMXyDocKAiUBo/A8TsQOw9gKEdipwCiB0VXIPUthzwZEKKw2HJJYSYwUlaJxOiHQ5UfA9InQdiTiD2GehkQlRvAq10MYQml01IoQEqUtOBWIKGDo9Hi3kGJhIdDgJBaFNFjNBhGgEaYlDTYzosmeBtZOFIayCNoPFRH+hY6aBtq2ArXUAOr6fG0DSZ4Cgw0E6T6vApoKofiD8CscEAOfwNEJ8e7WEOmh4QERmVE1oEPgOmuZ9UqmiINpORDMNBTdxTaHpB7XRdoGXXyXQwyWaSU317YvEwqNXoRkFgk2wmuePJHtASBtSNAoVIFjBkDlCYTEgyEwAXr0MOvSilbgAAAABJRU5ErkJggg=="
-                    alt=""></image>
-            </span>
-            <span class="btn btn2">立即购买</span>
-            <span class="btn btn3">加入购物车</span>
+            <block wx:if="{{showSelector}}">
+                <text class="btn btn1" bindtap="toggleSelector">《 返回</text>
+            </block>
+            <block wx:else>
+                <view class="btn btn1">
+                    <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_mes.png" alt=""></image>
+                </view>
+            </block>
+            <view class="btn btn1">
+                <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_sci.png" alt=""></image>
+            </view>
+            <view class="btn btn2 ">立即购买</view>
+            <view class="btn btn3 ">加入购物车</view>
         </div>
     </view>
 </view>

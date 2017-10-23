@@ -233,7 +233,7 @@ const timing = (seconds) => {
     return time;
   }
   else {
-    return { day: '0', hour: '0', minute: '0', second: '0' };
+    return { day: 0, hour: 0, minute: 0, second: 0 };
   }
 }
 const cloneJSON = (json) => {

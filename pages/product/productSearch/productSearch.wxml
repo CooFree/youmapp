@@ -9,7 +9,7 @@
 
         <view class="m-goods-grid">
             <view class="list">
-                <view class="item" wx:for="{{searchResult}}">
+                <view class="item" wx:for="{{searchResult}}" wx:key="{{index}}">
                     <navigator url="../productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <view class="wraper">
                             <view class="hd">
@@ -20,7 +20,7 @@
                             </view>
                             <view class="desc" wx:if="{{item.intro}}">{{tools.decodeuri(item.intro)}}</view>
                             <view class="name">{{tools.decodeuri(item.name)}}</view>
-                            <view class="price">￥{{item.last_price}}</view>
+                            <view class="price">￥{{tools.tofixed(item.last_price,2)}}</view>
                         </view>
                     </navigator>
                 </view>

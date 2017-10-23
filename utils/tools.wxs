@@ -1,24 +1,26 @@
-
 var decodeURI = function (str) {
-  if (str && str.length > 0) {
-    return decodeURIComponent(str.toString().replace('+', '%20'));
+  if (str) {
+    return decodeURIComponent(str.toString());
   }
-  return '';
+  return str;
 }
 
 var httpsURI = function (uri) {
-  if (uri && uri.length > 0) {
+  if (uri) {
     return uri.replace('http://', 'https://');
   }
-  return '';
+  return uri;
 }
 
-var navigateUrl = function (rule) {
+var navigateUrl = function (rule, adlog) {
   var url;
   if (rule.name && rule.name.length > 0) {
     var ruleName = rule.name.toLowerCase();
     if (ruleName === 'productDetail'.toLowerCase()) {
-      url = '../product/productDetail/productDetail?prod_id=' + rule.prod_id;
+      if (!adlog) {
+        adlog = rule.location;
+      }
+      url = '../product/productDetail/productDetail?prod_id=' + rule.prod_id + (adlog && adlog.length > 0 ? '&adlog=' + adlog : '');
     }
     else if (ruleName === 'productList'.toLowerCase()) {
       url = '../product/productList/productList?prod_classid=' + rule.class_id + '&prod_brand=' + rule.brand;
@@ -42,8 +44,21 @@ var navigateUrl = function (rule) {
   return url;
 }
 
+var toFixed = function (num, fractionDigits) {
+  if (num !== undefined) {
+    var numberStr = num.toString();
+    if (fractionDigits) {
+      return parseFloat(numberStr).toFixed(fractionDigits);
+    }
+    else {
+      return numberStr;
+    }
+  }
+}
+
 module.exports = {
   decodeuri: decodeURI,
   httpsuri: httpsURI,
-  navigateurl: navigateUrl
+  navigateurl: navigateUrl,
+  tofixed: toFixed
 }

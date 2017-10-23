@@ -21,9 +21,11 @@ Page({
         arraySize: [],
         selectColor: [],
         selectSize: [],
-        selectImg: '',
-        finlColor:'',
-        finlSize:'',
+        specItem: null,
+        finlImg: '',
+        finlColor: '',
+        finlSize: '',
+        finlVolume: 0
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
@@ -35,6 +37,7 @@ Page({
             let tempArr1 = [];
             let tempArr2 = util.deepCopy(arrayData);
             let tempData = arrayData;
+
             specList.forEach(function (value, index) {
                 if (seType === 'color') {
                     if (value.color === keys) {
@@ -46,13 +49,15 @@ Page({
                     }
                 }
             })
+
+            //设置颜色图片
             colorImageList.forEach(function (value, index) {
                 if (value.color === keys) {
                     this.setData({
-                        selectImg: value.image_url,
-                    })
+                        finlImg: value.image_url,
+                    });
                 }
-            }.bind(this))
+            }.bind(this));
 
             for (let i = 0; i < tempArr2.length; i++) {
                 let isExist = false;
@@ -73,7 +78,7 @@ Page({
                     this.setData({
                         selectColor: tempData,
                         selectColorIndex: index,
-                        selectImg: '',
+                        finlImg: '',
                         finlColor: ''
                     })
                 } else {
@@ -92,13 +97,30 @@ Page({
                         finlSize: ''
                     })
                 } else {
-
                     this.setData({
                         selectSize: tempArr2,
                         selectSizeIndex: index,
                         finlSize: keys
                     })
                 }
+            }
+
+            let finlColor = this.data.finlColor;
+            let finlSize = this.data.finlSize;
+            if (this.data.finlColor && this.data.finlSize){
+                let temp = [];
+                specList.forEach(function(value, index){
+                    if (value.color === finlColor){
+                        temp.push(value);
+                    }
+                });
+                temp.forEach(function (value, index) {
+                    if (value.size === finlSize) {
+                        this.setData({
+                            specItem: value
+                        })
+                    }
+                }.bind(this));
             }
         }
     },
@@ -109,14 +131,7 @@ Page({
         this.selectOption(event, this.data.arrayColor, this.data.selectSizeIndex, 'size');
     },
     onLoad: function (options) {
-        console.log(options)
         let prod_id = options.prod_id;
-        productChannel.getProductInfo(prod_id).then(data => {
-            this.setData({
-                productInfo: data
-            })
-        })
-
         productChannel.getProductDetail(prod_id).then(data => {
             let specList = data.specificateData.spec_list;
             let tempArrayColor = [];

@@ -21,6 +21,9 @@ Page({
         arraySize: [],
         selectColor: [],
         selectSize: [],
+        selectImg: '',
+        finlColor:'',
+        finlSize:'',
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
@@ -28,20 +31,29 @@ Page({
             let keys = event.currentTarget.dataset.keys[0];
             let index = event.currentTarget.dataset.index;
             let specList = this.data.specificateData.spec_list;
+            let colorImageList = this.data.productDetail.color_image_list;
             let tempArr1 = [];
             let tempArr2 = util.deepCopy(arrayData);
-            let tempData= arrayData;
+            let tempData = arrayData;
             specList.forEach(function (value, index) {
-                if (seType === 'color'){
+                if (seType === 'color') {
                     if (value.color === keys) {
                         tempArr1.push(value.size);
                     }
-                }else {
+                } else {
                     if (value.size === keys) {
                         tempArr1.push(value.color);
                     }
                 }
             })
+            colorImageList.forEach(function (value, index) {
+                if (value.color === keys) {
+                    this.setData({
+                        selectImg: value.image_url,
+                    })
+                }
+            }.bind(this))
+
             for (let i = 0; i < tempArr2.length; i++) {
                 let isExist = false;
                 for (let j = 0; j < tempArr1.length; j++) {
@@ -55,33 +67,36 @@ Page({
                 }
             }
 
-            if (seType === 'color'){
+            if (seType === 'color') {
                 if (index === this.data.selectColorIndex) {
                     index = -1;
                     this.setData({
                         selectColor: tempData,
-                        selectColorIndex: index
+                        selectColorIndex: index,
+                        selectImg: '',
+                        finlColor: ''
                     })
                 } else {
                     this.setData({
                         selectColor: tempArr2,
-                        selectColorIndex: index
+                        selectColorIndex: index,
+                        finlColor: keys
                     })
                 }
-            } else{
-                console.log(this.data.selectSizeIndex)
-                console.log(index)
+            } else {
                 if (index === this.data.selectSizeIndex) {
                     index = -1;
                     this.setData({
                         selectSize: tempData,
-                        selectSizeIndex: index
+                        selectSizeIndex: index,
+                        finlSize: ''
                     })
                 } else {
 
                     this.setData({
                         selectSize: tempArr2,
-                        selectSizeIndex: index
+                        selectSizeIndex: index,
+                        finlSize: keys
                     })
                 }
             }

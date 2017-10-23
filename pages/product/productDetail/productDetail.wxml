@@ -133,7 +133,7 @@
     <view class="dt-paramselect g-row" style="">
         <view class="info-con">
             <view class="left">
-                <image class="pic" src="{{productDetail.default_image}}" alt=""></image>
+                <image class="pic" src="{{selectImg? selectImg : productDetail.default_image}}" alt=""></image>
             </view>
             <view class="right">
                 <view class="con">
@@ -141,7 +141,11 @@
                         价格：¥79.00
                     </view>
                     <view class="sku">
-                        已选择：请选择
+                        已选择：
+                        {{
+                            wx:if(finlColor){
+                            }
+                        }}
                     </view>
                 </view>
             </view>

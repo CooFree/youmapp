@@ -1,6 +1,7 @@
 // pages/search/search.js
 import util from '../../utils/util';
 import HomeChannel from '../../channels/home';
+import generalConfig from '../../generalConfig';
 const homeChannel = new HomeChannel();
 
 Page({
@@ -11,30 +12,26 @@ Page({
     data: {
         searchKeywordList: [],
         isTyping: false,
-        searchInput: ''
+        searchInput: '',
+        searchPlaceholder: ''
     },
     toSearch: function (event) {
-        let value = event.detail.value;
-        wx.navigateTo({
-            url: '../product/productSearch/productSearch?keyword=' + value,
-        })
+        var searchInput = this.data.searchInput;
+        if (searchInput.length === 0) {
+            searchInput = this.data.searchPlaceholder;
+        }
+        console.log('searchInput', searchInput);
+        wx.navigateTo({ url: '../product/productSearch/productSearch?keyword=' + encodeURIComponent(this.data.searchInput) })
     },
     listenerTypeing: function (event) {
-        let temp;
-        if (event.detail.value.length > 0) {
-            temp = true
-        } else {
-            temp = false
-        }
+        var inputValue = event.detail.value;
         this.setData({
-            searchInput: event.detail.value,
-            isTyping: temp
-        })
+            searchInput: inputValue,
+            isTyping: inputValue.length > 0
+        });
     },
     clearInput: function (event) {
-        this.setData({
-            searchInput: ''
-        })
+        this.setData({ searchInput: '' });
     },
     navgatorBack: function (event) {
         wx.navigateBack();
@@ -46,6 +43,7 @@ Page({
         homeChannel.getSearchKeyword().then(data => {
             this.setData({ searchKeywordList: data });
         });
+        this.setData({ searchPlaceholder: generalConfig.searchPlaceholder });
     },
 
     /**

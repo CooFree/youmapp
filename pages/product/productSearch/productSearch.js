@@ -1,27 +1,45 @@
 import ProductChannel from '../../../channels/product';
 const productChannel = new ProductChannel();
 
+const pageSize = 10;
 Page({
-
+    page: 1,
     /**
      * 页面的初始数据
      */
     data: {
-        keyword: ''
+        searchResult: [],
+        keyword: '',
+        loadEnd: false,
+        loading: true,
     },
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        productChannel.getProductSearch(options.keyword, 'desc', 1, 10).then(data => {
-            this.setData({
-                searchResult: data,
-                keyword: options.keyword
-            })
-        })
+        this.setData({ keyword: decodeURIComponent(options.keyword) });
+        this.loadData();
     },
-
+    loadData: function (more) {
+        const { keyword, loadEnd, loading } = this.data;
+        if (more) {
+            if (loading === false && loadEnd === false) {
+                this.page++;
+                productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
+                    productChannel.cache.productSearch = productChannel.cache.productSearch.concat(data);
+                    this.setData({ searchResult: productChannel.cache.productSearch });
+                });
+            }
+        }
+        else {
+            this.page = 1;
+            productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
+                productChannel.cache.productSearch = data;
+                this.setData({ searchResult: productChannel.cache.productSearch });
+            });
+        }
+    },
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
@@ -54,14 +72,14 @@ Page({
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh: function () {
-
+        this.loadData();
     },
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom: function () {
-
+        this.loadData(true);
     },
 
     /**

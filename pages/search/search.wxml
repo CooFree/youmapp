@@ -5,7 +5,7 @@
     <view class="search-box g-row">
         <view class="m-ipt m-searchIpt">
             <view class="icon ion-ios-search icon-search"></view>
-            <input placeholder="冲锋衣 买1赠1" value="{{searchInput}}" bindinput="listenerTypeing" bindconfirm="toSearch" class="search-input" name="search" focus="true" />
+            <input placeholder="{{searchPlaceholder}}" value="{{searchInput}}" bindinput="listenerTypeing" bindconfirm="toSearch" class="search-input" name="search" focus="true" />
             <view wx:if="{{isTyping}}" bindtap="clearInput" class="icon ion-ios-close icon-search-del"></view>
         </view>
         <view class="cancel-search" bindtap="navgatorBack">取消</view>
@@ -13,8 +13,8 @@
     <view class="m-search-section g-row">
         <view class="hd">热门搜索</view>
         <view class="list">
-            <view wx:for="{{searchKeywordList}}">
-                <navigator url="../product/productSearch/productSearch?keyword={{tools.decodeuri(item)}}">
+            <view wx:for="{{searchKeywordList}}" wx:key="{{index}}">
+                <navigator url="../product/productSearch/productSearch?keyword={{item}}">
                     {{tools.decodeuri(item)}}
                 </navigator>
             </view>

@@ -39,8 +39,8 @@
             </view>
             <view class="cate-wrap">
                 <view class="cate-list">
-                    <view class="item" wx:for="{{SubCateData.sub_class_list}}" wx:if="{{item.icon}}">
-                        <navigator url="../product/productList/productList??prod_classid={{item.id}}&prod_class_parentid={{SubCateData.id}}">
+                    <view class="item" wx:for="{{SubCateData.sub_class_list}}" wx:if="{{item.icon}}" wx:key="{{index}}">
+                        <navigator url="../product/productList/productList?prod_classid={{item.id}}&prod_class_parentid={{SubCateData.id}}">
                             <image src="{{item.icon}}" alt=""></image>
                             <text>{{tools.decodeuri(item.name)}}</text>
                         </navigator>

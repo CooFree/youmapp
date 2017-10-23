@@ -1,6 +1,9 @@
 import config from './config';
+import generalConfig from './generalConfig';
+import util from './utils/util';
 import memberState from './utils/memberState';
 import PortalChannel from './channels/portal';
+
 //app.js
 const portalChannel = new PortalChannel();
 App({
@@ -9,6 +12,16 @@ App({
     var logs = wx.getStorageSync('logs') || [];
     logs.unshift(Date.now());
     wx.setStorageSync('logs', logs);
+
+    //预加载通用配置
+    portalChannel.getGeneralConfig().then(data => {
+      if (data) {
+        generalConfig.openOutpay = data.open_outpay;
+        generalConfig.orderNotice = util.decodeURI(data.order_notice);
+        generalConfig.postageFreeAmount = data.postage_free_amount;
+        generalConfig.searchPlaceholder = util.decodeURI(data.search_placeholder);
+      }
+    });
 
     memberState.initLogin();
     if (memberState.isLogin() === false) {

@@ -133,20 +133,23 @@
     <view class="dt-paramselect g-row" style="">
         <view class="info-con">
             <view class="left">
-                <image class="pic" src="{{selectImg? selectImg : productDetail.default_image}}" alt=""></image>
+                <image class="pic" src="{{finlImg? finlImg : productDetail.default_image}}" alt=""></image>
             </view>
             <view class="right">
                 <view class="con">
                     <view class="price">
-                        价格：¥79.00
+                        价格：¥ {{specificateData.limittime_price? specificateData.limittime_price : specificateData.prod_price}}
                     </view>
-                    <view class="sku">
-                        已选择：
-                        {{
-                            wx:if(finlColor){
-                            }
-                        }}
-                    </view>
+                    <block wx:if="{{finlColor && finlSize}}">
+                        <view class="sku">
+                            已选择：{{tools.decodeuri(finlColor)}}， {{tools.decodeuri(finlSize)}}
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="sku">
+                            已选择：请选择
+                        </view>
+                    </block>
                 </view>
             </view>
         </view>
@@ -186,15 +189,29 @@
             </view>
             <view class="con m-selNumRow">
                 <view class="m-selnum">
-                    <view class="less dis">
-                        <i class="icon ion-ios-minus-empty"></i>
-                    </view>
+                    <block wx:if="{{finlVolume <= 1}}">
+                        <view class="less dis">
+                            <i class="icon ion-ios-minus-empty"></i>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="less">
+                            <i class="icon ion-ios-minus-empty"></i>
+                        </view>
+                    </block>
                     <view class="textWrap">
                         <input type="number" class="txt" value="1" />
                     </view>
-                    <view class="plus">
-                        <i class="icon ion-ios-plus-empty"></i>
-                    </view>
+                    <block wx:if="{{finlVolume >= specItem.reserve}}">
+                         <view class="plus dis">
+                            <i class="icon ion-ios-plus-empty"></i>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="plus">
+                            <i class="icon ion-ios-plus-empty"></i>
+                        </view>
+                    </block>
                 </view>
             </view>
         </view>

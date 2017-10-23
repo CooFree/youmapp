@@ -1,0 +1,58 @@
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<view class="container">
+    <view class="m-indexHd" style="height: 162rpx;">
+        <view class="m-hd g-row">
+            <view class="m-indextop">
+                <view class="top-line">
+                    <view class="logo"></view>
+                    <view class="m-searchTop">
+                        <navigator url="../search/search" hover-class="changestyle">
+                            <view class="zw-search-link">
+                                <view class="icon-search"></view>
+                                <text class="placeholder">点击输入搜索商品</text>
+                            </view>
+                        </navigator>
+                    </view>
+                </view>
+            </view>
+            <view class="inner">
+                <view class="m-navs disflex">
+                <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
+                    <view>
+                        <view hover-class="navigator-hover" data-hi="{{item.id}}" bindtap="onChangeTab">
+                            <text class="txt">{{item.name}}</text>
+                        </view>
+                    </view>
+                </block>
+                </view>
+            </view>
+        </view>
+    </view>
+
+ <block wx:for="{{productList}}" wx:key="{{index}}">
+    <view class="m-list-floor g-row">
+        <view class="hd3">
+            <view class="dtit">{{tools.decodeuri(item.name)}}</view>
+            <view class="desc">{{tools.decodeuri(item.title)}}</view>
+        </view>
+        <view class="m-goods-grid">
+            <view class="list">
+               <block wx:for="{{item.prod_list}}" wx:key="{{index}}">
+                <view class="item">
+                    <view class="wraper">
+                        <view class="hd">
+                            <image class="pic" src="{{tools.httpsuri(item.image_url + '!prodimg245')}}" alt=""></image>
+                            <view class="specification">
+                                <view class="count">{{item.color_kinds}}</view>色可选</view>
+                        </view>
+                        <view class="desc">{{tools.decodeuri(item.intro)}}</view>
+                        <view class="name">{{tools.decodeuri(item.name)}}</view>
+                        <view class="price">￥{{tools.tofixed(item.last_price, 2)}}</view>
+                    </view>
+                </view>
+                 </block>
+            </view>
+        </view>
+    </view>
+</block>
+</view>

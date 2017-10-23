@@ -19,13 +19,13 @@
       <view class="inner">
         <view class="m-navs disflex">
           <view class="active">
-            <navigator url="../product/productList/productList" hover-class="navigator-hover">
+            <navigator url="../index/index" hover-class="navigator-hover">
               <text class="txt">推荐</text>
             </navigator>
           </view>
           <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
             <view>
-              <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
+              <navigator url="../product/topProductList/topProductList?prod_classid={{item.id}}" hover-class="navigator-hover">
                 <text class="txt">{{item.name}}</text>
               </navigator>
             </view>

@@ -22,7 +22,7 @@ Page({
         this.loadData();
     },
     loadData: function (more) {
-        const { keyword, loadEnd, loading } = this.data;
+        const { keyword, loadEnd, loading,searchResult } = this.data;
 
         if (more) {
             if (loading === false && loadEnd === false) {
@@ -30,9 +30,8 @@ Page({
 
                 this.page++;
                 productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
-                    productChannel.cache.productSearch = productChannel.cache.productSearch.concat(data);
                     this.setData({
-                        searchResult: productChannel.cache.productSearch,
+                        searchResult: searchResult.concat(data),
                         loading: false,
                         loadEnd: data.length === 0
                     });
@@ -44,9 +43,8 @@ Page({
 
             this.page = 1;
             productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
-                productChannel.cache.productSearch = data;
                 this.setData({
-                    searchResult: productChannel.cache.productSearch,
+                    searchResult: data,
                     loading: false,
                     loadEnd: data.length === 0
                 });

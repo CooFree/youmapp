@@ -222,7 +222,10 @@ image {
     margin-top: -37rpx;
     z-index: 6;
 }
-
+.fullhide {
+    overflow:hidden;
+    height:100%;
+}
 .loadwrap {
     width: 75rpx;
     height: 75rpx;
@@ -1736,7 +1739,7 @@ m-indexHd .inner {
     background-color: #fff;
     padding: 30rpx;
     position: fixed;
-    bottom: 114rpx;
+    bottom: 104rpx;
     right: 0;
     left: 0;
     margin: 0 auto;

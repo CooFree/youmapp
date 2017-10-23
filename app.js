@@ -4,33 +4,38 @@ import memberState from './utils/memberState';
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    var logs = wx.getStorageSync('logs') || [];
+    logs.unshift(Date.now());
+    wx.setStorageSync('logs', logs);
 
-    // 登录
-    wx.login({
-      success: res => {
-        wx.request({
-          url: config.Host + '/handlers/wxAppLoginCallback.ashx',
-          data: {
-            code: res.code
-          },
-          success: (res) => {
-            const data = res.data;
-            if (data.result === 1) {
-              //console.log(data.msg);
+    memberState.initLogin();
+    if (memberState.isLogin() === false) {
+      console.log('wx.login');
+      // 登录
+      wx.login({
+        success: res => {
+          wx.request({
+            url: config.Host + '/handlers/wxAppLoginCallback.ashx',
+            data: {
+              code: res.code
+            },
+            success: (res) => {
+              const data = res.data;
+              if (data.result === 1) {
+                memberState.saveLogin(data.member_id, true);
+              }
+              else {
+                console.warn(data.msg);
+              }
+            },
+            fail: (msg) => {
+              console.error(msg);
             }
-            else {
-              console.warn(data.msg);
-            }
-          },
-          fail: (msg) => {
-            console.error(msg);
-          }
-        });
-      }
-    })
+          });
+        }
+      })
+    }
+
     // 获取用户信息
     wx.getSetting({
       success: res => {

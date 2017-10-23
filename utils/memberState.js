@@ -4,13 +4,8 @@ const LOGIN_MEMBER_STATE = 'login_memberid_state';
 var LoginNemberID = null;
 export default class MemberLoginState {
   static initLogin() {
-    if (LoginNemberID == null) {
-      wx.getStorage({
-        key: LOGIN_MEMBER_STATE,
-        success: function (res) {
-          LoginNemberID = res.data || null;
-        }
-      })
+    if (LoginNemberID === null) {
+      LoginNemberID = wx.getStorageSync(LOGIN_MEMBER_STATE) || null;
     }
   }
   static saveLogin(loginNemberId, save) {
@@ -23,7 +18,7 @@ export default class MemberLoginState {
     }
   }
   static isLogin() {
-    if (LoginNemberID == null) {
+    if (LoginNemberID === null) {
       return false;
     }
     else {
@@ -34,7 +29,7 @@ export default class MemberLoginState {
     return LoginNemberID;
   }
   static getLoginIdStr() {
-    return LoginNemberID == null ? '' : LoginNemberID;
+    return LoginNemberID === null ? '' : LoginNemberID;
   }
   static clearLogin() {
     LoginNemberID = null;

@@ -1,6 +1,8 @@
 import config from './config';
 import memberState from './utils/memberState';
+import PortalChannel from './channels/portal';
 //app.js
+const portalChannel = new PortalChannel();
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -14,22 +16,9 @@ App({
       // 登录
       wx.login({
         success: res => {
-          wx.request({
-            url: config.Host + '/handlers/wxAppLoginCallback.ashx',
-            data: {
-              code: res.code
-            },
-            success: (res) => {
-              const data = res.data;
-              if (data.result === 1) {
-                memberState.saveLogin(data.member_id, true);
-              }
-              else {
-                console.warn(data.msg);
-              }
-            },
-            fail: (msg) => {
-              console.error(msg);
+          portalChannel.postLogin(res.code).then(memberId => {
+            if (memberId) {
+              memberState.saveLogin(memberId, true);
             }
           });
         }

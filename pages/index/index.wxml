@@ -23,7 +23,7 @@
                             <text class="txt">推荐</text>
                         </navigator>
                     </view>
-                    <block wx:for="{{TopCategoryArray}}">
+                    <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
                         <view>
                             <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
                                 <text class="txt">{{item.name}}</text>
@@ -37,9 +37,9 @@
 
     <view class="zw-banner ">
         <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
-            <block wx:for="{{swiperData}}">
+            <block wx:for="{{swiperData}}" wx:key="{{index}}">
                 <swiper-item>
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="{{tools.navigateurl(item)}}" hover-class="changestyle">
                         <image src="{{item.image_url}}" class="slide-image" width="750" height="376"></image>
                     </navigator>
                 </swiper-item>
@@ -86,9 +86,9 @@
             <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title1.png' alt=""></image>
         </view>
         <view class="zw-pro1">
-            <block wx:for="{{home_sudi}}">
+            <block wx:for="{{home_sudi}}" wx:key="{{index}}">
                 <view class="zw-pro1-link">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
+                    <navigator url="{{tools.navigateurl(item)}}" hover-class="changestyle">
                         <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                     </navigator>
                 </view>
@@ -99,7 +99,7 @@
     <!-- WAP_首页_精选专题  wap_home_jingxuan_20171013 -->
     <view class="layort-h">
         <view class="zw-banner">
-            <block wx:for="{{home_jingxuan}}">
+            <block wx:for="{{home_jingxuan}}" wx:key="{{index}}">
                 <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
                     <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                 </navigator>
@@ -114,7 +114,7 @@
             <text class="more">更多></text>
         </view>
         <view class="zw-banner">
-            <block wx:for="{{home_yujia}}">
+            <block wx:for="{{home_yujia}}" wx:key="{{index}}">
                 <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
                     <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                 </navigator>
@@ -123,7 +123,7 @@
 
 
         <view class="zw-proul2">
-            <block wx:for="{{home_yujia_list}}">
+            <block wx:for="{{home_yujia_list}}" wx:key="{{index}}">
                 <view class="zw-proli2">
                     <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
@@ -147,7 +147,7 @@
             <text class="more">更多></text>
         </view>
         <view class="zw-banner">
-            <block wx:for="{{home_yundong}}">
+            <block wx:for="{{home_yundong}}" wx:key="{{index}}">
                 <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
                     <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                 </navigator>
@@ -155,7 +155,7 @@
         </view>
 
         <view class="zw-proul2">
-            <block wx:for="{{home_yundong_list}}">
+            <block wx:for="{{home_yundong_list}}" wx:key="{{index}}">
                 <view class="zw-proli2">
                     <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
@@ -179,7 +179,7 @@
             <text class="more">更多></text>
         </view>
         <view class="zw-banner">
-            <block wx:for="{{home_huwai}}">
+            <block wx:for="{{home_huwai}}" wx:key="{{index}}">
                 <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
                     <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
                 </navigator>
@@ -187,7 +187,7 @@
         </view>
 
         <view class="zw-proshow">
-            <block wx:for="{{home_huwai_list}}">
+            <block wx:for="{{home_huwai_list}}" wx:key="{{index}}">
                 <view class="zw-proshow-li">
                     <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
                         <image class="zw-proshow-li-img" src="{{item.image_url}}" alt=""></image>

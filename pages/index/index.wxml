@@ -1,212 +1,212 @@
 <!--index.wxml-->
 <wxs src="../../utils/tools.wxs" module="tools" />
 <view class="container">
-    <view class="m-indexHd" style="height: 162rpx;">
-        <view class="m-hd g-row">
-            <view class="m-indextop">
-                <view class="top-line">
-                    <view class="logo"></view>
-                    <view class="m-searchTop">
-                        <navigator url="../search/search" hover-class="changestyle">
-                            <view class="zw-search-link">
-                                <view class="icon-search"></view>
-                                <text class="placeholder">点击输入搜索商品</text>
-                            </view>
-                        </navigator>
-                    </view>
-                </view>
-            </view>
-            <view class="inner">
-                <view class="m-navs disflex">
-                    <view class="active">
-                        <navigator url="../product/productList/productList" hover-class="navigator-hover">
-                            <text class="txt">推荐</text>
-                        </navigator>
-                    </view>
-                    <block wx:for="{{TopCategoryArray}}">
-                        <view>
-                            <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
-                                <text class="txt">{{item.name}}</text>
-                            </navigator>
-                        </view>
-                    </block>
-                </view>
-            </view>
+  <view class="m-indexHd" style="height: 162rpx;">
+    <view class="m-hd g-row">
+      <view class="m-indextop">
+        <view class="top-line">
+          <view class="logo"></view>
+          <view class="m-searchTop">
+            <navigator url="../search/search" hover-class="changestyle">
+              <view class="zw-search-link">
+                <view class="icon-search"></view>
+                <text class="placeholder">点击输入搜索商品</text>
+              </view>
+            </navigator>
+          </view>
         </view>
-    </view>
-
-    <view class="zw-banner ">
-        <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
-            <block wx:for="{{swiperData}}">
-                <swiper-item>
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                        <image src="{{item.image_url}}" class="slide-image" width="750" height="376"></image>
-                    </navigator>
-                </swiper-item>
-            </block>
-        </swiper>
-    </view>
-
-    <view class="zw-tabs ">
-        <view class="zw-tabs-item ">
+      </view>
+      <view class="inner">
+        <view class="m-navs disflex">
+          <view class="active">
+            <navigator url="../product/productList/productList" hover-class="navigator-hover">
+              <text class="txt">推荐</text>
+            </navigator>
+          </view>
+          <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
             <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
+              <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
+                <text class="txt">{{item.name}}</text>
+              </navigator>
             </view>
-            <text>领10元券</text>
+          </block>
         </view>
-        <view class="zw-tabs-item ">
-            <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=" "></image>
-            </view>
-            <text>领20元券</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="zw-banner ">
+    <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
+      <block wx:for="{{swiperData}}" wx:key="{{index}}">
+        <swiper-item>
+          <navigator url="{{tools.navigateurl(item,'wap_home_focus_20171013')}}" hover-class="changestyle">
+            <image src="{{item.image_url}}" class="slide-image" width="750" height="376"></image>
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+
+  <view class="zw-tabs ">
+    <view class="zw-tabs-item ">
+      <view>
+        <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
+      </view>
+      <text>领10元券</text>
+    </view>
+    <view class="zw-tabs-item ">
+      <view>
+        <image src='https://img02.camel.com.cn/image/zw_icon2.png' alt=" "></image>
+      </view>
+      <text>领20元券</text>
+    </view>
+    <view class="zw-tabs-item ">
+      <view>
+        <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=" "></image>
+      </view>
+      <text>领50元券</text>
+    </view>
+    <view class="zw-tabs-item ">
+      <view>
+        <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=" "></image>
+      </view>
+      <text>下单返现</text>
+    </view>
+    <view class="zw-tabs-item ">
+      <view>
+        <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=" "></image>
+      </view>
+      <text>买一送一</text>
+    </view>
+  </view>
+
+  <!-- WAP_首页_新品速递 wap_home_sudi_20171013 -->
+  <view class="layort-h">
+    <view class="zw-title">
+      <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title1.png' alt=""></image>
+    </view>
+    <view class="zw-pro1">
+      <block wx:for="{{home_sudi}}" wx:key="{{index}}">
+        <view class="zw-pro1-link">
+          <navigator url="{{tools.navigateurl(item,'wap_home_sudi_20171013')}}" hover-class="changestyle">
+            <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+          </navigator>
         </view>
-        <view class="zw-tabs-item ">
-            <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon3.png' alt=" "></image>
-            </view>
-            <text>领50元券</text>
-        </view>
-        <view class="zw-tabs-item ">
-            <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon4.png' alt=" "></image>
-            </view>
-            <text>下单返现</text>
-        </view>
-        <view class="zw-tabs-item ">
-            <view>
-                <image src='https://img02.camel.com.cn/image/zw_icon5.png' alt=" "></image>
-            </view>
-            <text>买一送一</text>
-        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- WAP_首页_精选专题  wap_home_jingxuan_20171013 -->
+  <view class="layort-h">
+    <view class="zw-banner">
+      <block wx:for="{{home_jingxuan}}" wx:key="{{index}}">
+        <navigator url="{{tools.navigateurl(item,'wap_home_jingxuan_20171013')}}" hover-class="changestyle">
+          <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        </navigator>
+      </block>
+    </view>
+  </view>
+
+  <!-- WAP_首页_瑜伽专场 wap_home_yujia_20171013 -->
+  <view class="layort-h">
+    <view class="zw-title">
+      <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title2.png' alt=""></image>
+      <text class="more">更多></text>
+    </view>
+    <view class="zw-banner">
+      <block wx:for="{{home_yujia}}" wx:key="{{index}}">
+        <navigator url="{{tools.navigateurl(item,'wap_home_yujia_20171013')}}" hover-class="changestyle">
+          <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        </navigator>
+      </block>
     </view>
 
-    <!-- WAP_首页_新品速递 wap_home_sudi_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title1.png' alt=""></image>
+
+    <view class="zw-proul2">
+      <block wx:for="{{home_yujia_list}}" wx:key="{{index}}">
+        <view class="zw-proli2">
+          <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}&adlog=wap_home_yujia_20171013" hover-class="changestyle">
+            <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+            <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
+            <view class="zw-proli-info">
+              <view>{{tools.decodeuri(item.name)}}</view>
+              <view class="price-wrap">￥
+                <text class="price">{{tools.tofixed(item.last_price,2)}}</text>
+              </view>
+            </view>
+          </navigator>
         </view>
-        <view class="zw-pro1">
-            <block wx:for="{{home_sudi}}">
-                <view class="zw-pro1-link">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                    </navigator>
+      </block>
+    </view>
+  </view>
+
+  <!-- WAP_首页_运动专场 wap_home_yundong_20171013 -->
+  <view class="layort-h">
+    <view class="zw-title">
+      <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title3.png' alt=""></image>
+      <text class="more">更多></text>
+    </view>
+    <view class="zw-banner">
+      <block wx:for="{{home_yundong}}" wx:key="{{index}}">
+        <navigator url="{{tools.navigateurl(item,'wap_home_yundong_20171013')}}" hover-class="changestyle">
+          <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        </navigator>
+      </block>
+    </view>
+
+    <view class="zw-proul2">
+      <block wx:for="{{home_yundong_list}}" wx:key="{{index}}">
+        <view class="zw-proli2">
+          <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}&adlog=wap_home_yundong_20171013" hover-class="changestyle">
+            <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+            <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
+            <view class="zw-proli-info">
+              <view>{{tools.decodeuri(item.name)}}</view>
+              <view class="price-wrap">￥
+                <text class="price">{{tools.tofixed(item.last_price,2)}}</text>
+              </view>
+            </view>
+          </navigator>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- WAP_首页_户外热搜 wap_home_huwai_20171013 -->
+  <view class="layort-h">
+    <view class="zw-title">
+      <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title4.png' alt=""></image>
+      <text class="more">更多></text>
+    </view>
+    <view class="zw-banner">
+      <block wx:for="{{home_huwai}}" wx:key="{{index}}">
+        <navigator url="{{tools.navigateurl(item,'wap_home_huwai_20171013')}}" hover-class="changestyle">
+          <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
+        </navigator>
+      </block>
+    </view>
+
+    <view class="zw-proshow">
+      <block wx:for="{{home_huwai_list}}" wx:key="{{index}}">
+        <view class="zw-proshow-li">
+          <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}&adlog=wap_home_huwai_20171013" hover-class="changestyle">
+            <image class="zw-proshow-li-img" src="{{item.image_url}}" alt=""></image>
+            <view class="zw-pli-info">
+              <view class="pli-info-wrap">
+                <view>
+                  <text class="h2">{{tools.decodeuri(item.intro)}}</text>
                 </view>
-            </block>
-        </view>
-    </view>
-
-    <!-- WAP_首页_精选专题  wap_home_jingxuan_20171013 -->
-    <view class="layort-h">
-        <view class="zw-banner">
-            <block wx:for="{{home_jingxuan}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                </navigator>
-            </block>
-        </view>
-    </view>
-
-    <!-- WAP_首页_瑜伽专场 wap_home_yujia_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title2.png' alt=""></image>
-            <text class="more">更多></text>
-        </view>
-        <view class="zw-banner">
-            <block wx:for="{{home_yujia}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                </navigator>
-            </block>
-        </view>
-
-
-        <view class="zw-proul2">
-            <block wx:for="{{home_yujia_list}}">
-                <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                        <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
-                        <view class="zw-proli-info">
-                            <view>{{tools.decodeuri(item.name)}}</view>
-                            <view class="price-wrap">￥
-                                <text class="price">{{item.last_price}}</text>
-                            </view>
-                        </view>
-                    </navigator>
+                <view>
+                  <text class="p1">{{tools.decodeuri(item.name)}}</text>
                 </view>
-            </block>
-        </view>
-    </view>
-
-    <!-- WAP_首页_运动专场 wap_home_yundong_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title3.png' alt=""></image>
-            <text class="more">更多></text>
-        </view>
-        <view class="zw-banner">
-            <block wx:for="{{home_yundong}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                </navigator>
-            </block>
-        </view>
-
-        <view class="zw-proul2">
-            <block wx:for="{{home_yundong_list}}">
-                <view class="zw-proli2">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
-                        <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                        <view class="zw-proli-tips">{{tools.decodeuri(item.intro)}}</view>
-                        <view class="zw-proli-info">
-                            <view>{{tools.decodeuri(item.name)}}</view>
-                            <view class="price-wrap">￥
-                                <text class="price">{{item.last_price}}</text>
-                            </view>
-                        </view>
-                    </navigator>
+                <view class="h1">￥
+                  <text>{{tools.tofixed(item.last_price,2)}}</text>
                 </view>
-            </block>
+              </view>
+            </view>
+          </navigator>
         </view>
+      </block>
     </view>
-
-    <!-- WAP_首页_户外热搜 wap_home_huwai_20171013 -->
-    <view class="layort-h">
-        <view class="zw-title">
-            <image mode='widthFix' style="width:150rpx" src='https://img02.camel.com.cn/image/h5_20171013_title4.png' alt=""></image>
-            <text class="more">更多></text>
-        </view>
-        <view class="zw-banner">
-            <block wx:for="{{home_huwai}}">
-                <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}" hover-class="changestyle">
-                    <image mode='widthFix' src="{{item.image_url}}" alt=""></image>
-                </navigator>
-            </block>
-        </view>
-
-        <view class="zw-proshow">
-            <block wx:for="{{home_huwai_list}}">
-                <view class="zw-proshow-li">
-                    <navigator url="../product/productDetail/productDetail?prod_id={{item.id}}" hover-class="changestyle">
-                        <image class="zw-proshow-li-img" src="{{item.image_url}}" alt=""></image>
-                        <view class="zw-pli-info">
-                            <view class="pli-info-wrap">
-                                <view>
-                                    <text class="h2">{{tools.decodeuri(item.intro)}}</text>
-                                </view>
-                                <view>
-                                    <text class="p1">{{tools.decodeuri(item.name)}}</text>
-                                </view>
-                                <view class="h1">￥
-                                    <text>{{item.last_price}}</text>
-                                </view>
-                            </view>
-                        </view>
-                    </navigator>
-                </view>
-            </block>
-        </view>
-    </view>
+  </view>
 </view>

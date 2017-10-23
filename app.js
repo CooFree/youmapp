@@ -1,18 +1,30 @@
-
+import config from './config';
+import memberState from './utils/memberState';
+import PortalChannel from './channels/portal';
 //app.js
+const portalChannel = new PortalChannel();
 App({
   onLaunch: function () {
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    var logs = wx.getStorageSync('logs') || [];
+    logs.unshift(Date.now());
+    wx.setStorageSync('logs', logs);
 
-    // 登录
-    wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
-      }
-    })
+    memberState.initLogin();
+    if (memberState.isLogin() === false) {
+      console.log('wx.login');
+      // 登录
+      wx.login({
+        success: res => {
+          portalChannel.postLogin(res.code).then(memberId => {
+            if (memberId) {
+              memberState.saveLogin(memberId, true);
+            }
+          });
+        }
+      })
+    }
+
     // 获取用户信息
     wx.getSetting({
       success: res => {

@@ -23,20 +23,33 @@ Page({
     },
     loadData: function (more) {
         const { keyword, loadEnd, loading } = this.data;
+
         if (more) {
             if (loading === false && loadEnd === false) {
+                this.setData({ loading: true });
+
                 this.page++;
                 productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
                     productChannel.cache.productSearch = productChannel.cache.productSearch.concat(data);
-                    this.setData({ searchResult: productChannel.cache.productSearch });
+                    this.setData({
+                        searchResult: productChannel.cache.productSearch,
+                        loading: false,
+                        loadEnd: data.length === 0
+                    });
                 });
             }
         }
         else {
+            this.setData({ loading: true });
+
             this.page = 1;
             productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
                 productChannel.cache.productSearch = data;
-                this.setData({ searchResult: productChannel.cache.productSearch });
+                this.setData({
+                    searchResult: productChannel.cache.productSearch,
+                    loading: false,
+                    loadEnd: data.length === 0
+                });
             });
         }
     },

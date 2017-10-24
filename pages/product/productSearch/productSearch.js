@@ -10,8 +10,7 @@ Page({
     data: {
         searchResult: [],
         keyword: '',
-        loadEnd: false,
-        loading: true,
+        loadEnd: false
     },
 
     /**
@@ -22,32 +21,32 @@ Page({
         this.loadData();
     },
     loadData: function (more) {
-        const { keyword, loadEnd, loading,searchResult } = this.data;
+        const { keyword, loadEnd, searchResult } = this.data;
 
         if (more) {
-            if (loading === false && loadEnd === false) {
-                this.setData({ loading: true });
+            if (loadEnd === false) {
+                wx.showLoading();
 
                 this.page++;
                 productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
                     this.setData({
                         searchResult: searchResult.concat(data),
-                        loading: false,
                         loadEnd: data.length === 0
                     });
                 });
+                wx.hideLoading();
             }
         }
         else {
-            this.setData({ loading: true });
+            wx.showLoading();
 
             this.page = 1;
             productChannel.getProductSearch(keyword, '', this.page, pageSize).then(data => {
                 this.setData({
                     searchResult: data,
-                    loading: false,
                     loadEnd: data.length === 0
                 });
+                wx.hideLoading();
             });
         }
     },

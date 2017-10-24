@@ -1,7 +1,7 @@
 import { TopCategoryArray } from '../../../constant';
 import ProductChannel from '../../../channels/product';
-const productChannel = new ProductChannel();
 
+const productChannel = new ProductChannel();
 const pageSize = 10;
 Page({
 
@@ -9,7 +9,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-    loading: true,
     productList: [],
     prodClassId: 0,
     TopCategoryArray: TopCategoryArray
@@ -18,18 +17,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({ prodClassId: options.prod_classid });
-
-    this.loadData(options.prod_classid);
+    const prodClassId = parseInt(options.prod_classid) || 0;
+    this.setData({ prodClassId });
+    this.loadData(prodClassId);
   },
-  loadData: function () {
-    this.setData({ loading: true });
-    productChannel.getTopProductList(this.data.prod_classid, pageSize).then(data => {
-      this.setData({ productList: data, loading: false });
-    });
+  loadData: function (prodClassId) {
+    if (prodClassId > 0) {
+      wx.showLoading();
+      productChannel.getTopProductList(prodClassId, pageSize).then(data => {
+        this.setData({ productList: data });
+        wx.hideLoading();
+      });
+    }
   },
   onChangeTab: function (event) {
-    const classId = event.currentTarget.dataset.hi;
+    const classId = event.currentTarget.dataset.cateid;
     this.setData({ prodClassId: classId });
 
     this.loadData(classId);

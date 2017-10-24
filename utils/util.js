@@ -66,26 +66,6 @@ const fetch = (url, options) => {
   });
 }
 
-const parseInt = (s) => {
-  let num = parseInt(s, 0);
-  if (isNaN(num) === true) {
-    return 0;
-  }
-  else {
-    return num;
-  }
-}
-
-const parseFloat = (s) => {
-  let num = parseFloat(s, 0);
-  if (isNaN(num) === true) {
-    return 0;
-  }
-  else {
-    return num;
-  }
-}
-
 const getPageCount = (record_count, page_size) => {
   if (page_size === 0)
     return 0;

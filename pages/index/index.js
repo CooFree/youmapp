@@ -12,6 +12,8 @@ Page({
         TopCategoryArray: TopCategoryArray
     },
     onLoad: function (options) {
+        wx.showLoading();
+
         homeChannel.getPageModuleList('wap_home_focus_20171013').then(data => {
             if (data) {
                 this.setData({ swiperData: data.list });
@@ -63,6 +65,8 @@ Page({
         homeChannel.getPageProductList('wap_home_huwai_20171013').then(data => {
             if (data) {
                 this.setData({ home_huwai_list: data });
+
+                wx.hideLoading();
             }
         });
     },

@@ -121,6 +121,7 @@ export default class ProductChannel {
     }
     async addProductStore(productId) {
         let memberId = memberState.getLoginId();
+
         if (memberId) {
             let url = config.Host + '/product/productDetail.aspx?post=add_store&member_id=' + memberId;
             let post_data = {

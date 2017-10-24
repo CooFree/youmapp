@@ -1,23 +1,5 @@
-<!--pages/basket/basket.wxml-->
+
 <view class="container greybg">
-
-    <view class="m-indexHd" style="height: 44px;">
-        <view class="m-hd">
-            <view class="">
-                <view class="product-hd g-row">
-                    <view class="g-top g-row">
-                        <i class="icon tg-icon ion-ios-arrow-back"></i>
-                        <text class="topBarTitle">购物车</text>
-                        <view class="right">
-                            <i class="icon tg-icon ion-ios-home-outline"></i>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view>
-
-
     <view class="cart-wrap">
         <view class="mc-servicePolicy">
             <view class="item">
@@ -27,7 +9,7 @@
                 <text>48小时快速退款</text>
             </view>
             <view class="item">
-                <text>满59元免邮费</text>
+                <text>满{{postageFreeAmount}}元免邮费</text>
             </view>
         </view>
         <view class="m-cartGroup">

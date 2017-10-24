@@ -121,7 +121,11 @@ export default class ProductChannel {
     }
     async addProductStore(productId) {
         let memberId = memberState.getLoginId();
+<<<<<<< HEAD
 
+=======
+        console.log('addProductStore memberId',memberId);
+>>>>>>> 660aac7e29813325608ff949f92328d64f797c4c
         if (memberId) {
             let url = config.Host + '/product/productDetail.aspx?post=add_store&member_id=' + memberId;
             let post_data = {
@@ -148,6 +152,7 @@ export default class ProductChannel {
 
     async deleteProductStore(productId) {
         let memberId = memberState.getLoginId();
+        console.log('deleteProductStore memberId',memberId);
         if (memberId) {
             let url = config.Host + '/product/productDetail.aspx?post=delete_store&member_id=' + memberId;
             let post_data = {

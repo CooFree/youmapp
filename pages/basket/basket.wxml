@@ -12,6 +12,12 @@
                 <text>满{{postageFreeAmount}}元免邮费</text>
             </view>
         </view>
+        <view class="hd">
+            <view class="promotion">
+                <view class="w-tag tag">优惠</view>
+                <view class="txt">优惠优惠优惠优惠优惠优惠</view>
+            </view>
+        </view>
         <view class="m-cartGroup">
             <view class="list">
                 <view class="item">
@@ -19,7 +25,8 @@
                         <view class="m-good">
                             <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
                             <view class="imgWrap">
-                                <image src="https://img01.camel.com.cn/product/image/D6Y105770/cf2d08db-449d-4fb5-9561-c69b5c97ca5d.jpg!prodimg100" alt="" mode="widthFix"></image>
+                                <image src="https://img01.camel.com.cn/product/image/D6Y105770/cf2d08db-449d-4fb5-9561-c69b5c97ca5d.jpg!prodimg100" alt=""
+                                    mode="widthFix"></image>
                             </view>
                             <view class="cnt">
                                 <view class="line1">Camel骆驼男装 秋冬款新品男士流行纯色可脱卸帽羽绒服外套</view>
@@ -56,7 +63,9 @@
                 </view>
             </view>
             <view class="right">
-                <navigator url="../order/orderConfirm/orderConfirm" hover-class="navigator-hover"><view class="btn w-button">下单</view></navigator>
+                <navigator url="../order/orderConfirm/orderConfirm" hover-class="navigator-hover">
+                    <view class="btn w-button">下单</view>
+                </navigator>
             </view>
         </view>
     </view>

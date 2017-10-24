@@ -27,7 +27,8 @@ Page({
         finlColor: '',
         finlSize: '',
         limittime: 0,
-        finlVolume: 1
+        finlVolume: 1,
+        storeflag: 0,
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
@@ -171,10 +172,30 @@ Page({
             })
         }
     },
-    toggleSelector: function(event){
+    toggleSelector: function (event) {
         this.setData({
             showSelector: !this.data.showSelector
         })
+    },
+    setStore: function (event) {
+        let prodId = event.currentTarget.dataset.prodId;
+        let {storeflag} = this.data;
+        if (storeflag === 1) {
+            productChannel.deleteProductStore(prodId).then(data => {
+                console.log('0'+ data)
+                this.setData({
+                    storeflag: 0
+                })
+            })
+        } else {
+            productChannel.addProductStore(prodId).then(data => {
+                console.log('1'+ data)
+                
+                this.setData({
+                    storeflag: 1
+                })
+            })
+        }
     },
     onLoad: function (options) {
         let prod_id = options.prod_id;
@@ -196,21 +217,26 @@ Page({
             tempArraySize = util.arrayUnique(tempArraySize).forEach(function (value, index) {
                 tempArr2.push([value, 1]);
             })
-            
-            
-            let timeInterval = setInterval(()=>{
-                limitSeconds = --limitSeconds;
-                let time = util.timing(limitSeconds);
-                this.setData({
-                    limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second 
-                })
-            }, 1000)
+
+            let timeInterval = null;
+            if (limitSeconds > 0) {
+                timeInterval = setInterval(() => {
+                    limitSeconds = --limitSeconds;
+                    let time = util.timing(limitSeconds);
+                    this.setData({
+                        limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second
+                    })
+                }, 1000)
+            } else {
+                clearInterval(timeInterval);
+            }
 
             this.setData({
                 productDetail: data.productData,
                 specificateData: data.specificateData,
                 arrayColor: tempArr1,
-                arraySize: tempArr2
+                arraySize: tempArr2,
+                storeflag: data.specificateData.store_flag
             })
         })
 
@@ -219,7 +245,5 @@ Page({
                 productCommentList: data,
             })
         })
-
-
     }
 })

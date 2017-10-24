@@ -42,11 +42,11 @@
                 </view> -->
             </view>
             <view class="comment collet">
-                <view class="wrap">
-                    <i wx:if="{{specificateData.store_flag}}" class="icon-fullstar ion-ios-star-outline"></i>
+                <view class="wrap" bindtap="setStore" data-prod-id="{{productDetail.product.id}}">
+                    <i wx:if="{{storeflag}}" class="icon-fullstar ion-ios-star-outline"></i>
                     <i wx:else class="icon ion-ios-star-outline"></i>
                     <view class="more">
-                        <text>{{specificateData.store_flag? '取消': '收藏'}}</text>
+                        <text>{{storeflag? '取消': '收藏'}}</text>
                     </view>
                 </view>
             </view>

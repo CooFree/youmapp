@@ -30,16 +30,23 @@
             <view class="info">
                 <view class="name">{{tools.decodeuri(productDetail.product.name)}}</view>
                 <view class="desc">{{tools.decodeuri(productDetail.product.intro)}}</view>
-                <view class="price">￥{{productDetail.product.price}} -￥{{productDetail.product.market_price}} </view>
+                <block wx:if="{{specificateData.limittime_flag && limittime}}">
+                     <view class="price">￥{{specificateData.limittime_price}} -￥{{specificateData.prod_price}} </view>
+                </block>
+                <block wx:else>
+                    <view class="price">￥{{specificateData.prod_price}} </view>
+               </block>
+
                 <!-- <view class="taglist">
                     <view class="wrap"></view>
                 </view> -->
             </view>
             <view class="comment collet">
                 <view class="wrap">
-                    <i class="icon ion-ios-star-outline"></i>
+                    <i wx:if="{{specificateData.store_flag}}" class="icon-fullstar ion-ios-star-outline"></i>
+                    <i wx:else class="icon ion-ios-star-outline"></i>
                     <view class="more">
-                        <text>收藏</text>
+                        <text>{{specificateData.store_flag? '取消': '收藏'}}</text>
                     </view>
                 </view>
             </view>
@@ -48,7 +55,7 @@
 
     <view class="dt-section-2">
 
-        <view class="m-listItem" bindtap="toggleSelector">
+        <view class="m-listItem " bindtap="toggleSelector">
             <block wx:if="{{finlColor && finlSize}}">
                 <view class="left">
                     <text class="txt">已选：{{tools.decodeuri(finlColor)}}， {{tools.decodeuri(finlSize)}}</text>
@@ -104,7 +111,7 @@
             <block wx:for="{{productCommentList}}">
                 <view class="comment-hd">
                     <view class="link">
-                        <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                        <image class="avatar " src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
                         <text class="name">{{tools.decodeuri(item.member_name)}}</text>
                     </view>
                 </view>
@@ -136,7 +143,7 @@
                 </view>
             </view>
             <block wx:for="{{productDetail.detail_image_list}}">
-                <image src="{{item.url}}" alt="" mode="widthFix"></image>
+                <image src="{{item.url}} " alt=" " mode="widthFix"></image>
             </block>
         </view>
         <view class="m-commonIssues m-rmcdGoods">
@@ -149,10 +156,10 @@
     </view>
 
     <!-- 规格选择 -->
-    <view class="dt-paramselect g-row" wx:if="{{showSelector}}">
+    <view class="dt-paramselect g-row " wx:if="{{showSelector}}">
         <view class="info-con">
             <view class="left">
-                <image class="pic" src="{{finlImg? finlImg : productDetail.default_image}}" alt=""></image>
+                <image class="pic " src="{{finlImg? finlImg : productDetail.default_image}}" alt=""></image>
             </view>
             <view class="right">
                 <view class="con">
@@ -177,7 +184,7 @@
                 颜色
             </view>
             <view class="con">
-                <block wx:if="{{selectSize.length > 0}}">
+                <block wx:if="{{selectSize.length> 0}}">
                     <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}" bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
                         <text class="txt">{{tools.decodeuri(item[0])}}</text>
                     </view>
@@ -249,8 +256,8 @@
             <view class="btn btn1">
                 <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_sci.png" alt=""></image>
             </view>
-            <view class="btn btn2 ">立即购买</view>
-            <view class="btn btn3 ">加入购物车</view>
+            <view class="btn btn2">立即购买</view>
+            <view class="btn btn3">加入购物车</view>
         </div>
     </view>
 </view>

@@ -26,6 +26,7 @@ Page({
         finlImg: '',
         finlColor: '',
         finlSize: '',
+        limittime: 0,
         finlVolume: 1
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
@@ -179,6 +180,7 @@ Page({
         let prod_id = options.prod_id;
         productChannel.getProductDetail(prod_id).then(data => {
             let specList = data.specificateData.spec_list;
+            let limitSeconds = data.specificateData.limittime_seconds;
             let tempArrayColor = [];
             let tempArraySize = [];
             let tempArr1 = [];
@@ -194,6 +196,15 @@ Page({
             tempArraySize = util.arrayUnique(tempArraySize).forEach(function (value, index) {
                 tempArr2.push([value, 1]);
             })
+            
+            
+            let timeInterval = setInterval(()=>{
+                limitSeconds = --limitSeconds;
+                let time = util.timing(limitSeconds);
+                this.setData({
+                    limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second 
+                })
+            }, 1000)
 
             this.setData({
                 productDetail: data.productData,
@@ -208,5 +219,7 @@ Page({
                 productCommentList: data,
             })
         })
+
+
     }
 })

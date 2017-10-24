@@ -16,14 +16,14 @@
     </view>
 
     <view class="dt-section">
-        <view class="m-flashSale detailFlashSale ">
+        <view wx:if="{{specificateData.limittime_flag}}" class="m-flashSale detailFlashSale active">
             <view class="left">
                 <span class="title">限时购</span>
                 <span class="status">抢购中...</span>
             </view>
             <view class="right">
                 <span class="s1">离结束还剩</span>
-                <span class="t1">0:7:34:8</span>
+                <span class="t1">{{limittime? limittime : '0:00:00:0'}}</span>
             </view>
         </view>
         <view class="m-detailBase">

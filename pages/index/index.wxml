@@ -1,31 +1,19 @@
 <!--index.wxml-->
 <wxs src="../../utils/tools.wxs" module="tools" />
+<import src="../../components/head.wxml"/>
+
 <view class="container">
   <view class="m-indexHd" style="height: 162rpx;">
     <view class="m-hd g-row">
-      <view class="m-indextop">
-        <view class="top-line">
-          <view class="logo"></view>
-          <view class="m-searchTop">
-            <navigator url="../search/search" hover-class="changestyle">
-              <view class="zw-search-link">
-                <view class="icon-search"></view>
-                <text class="placeholder">点击输入搜索商品</text>
-              </view>
-            </navigator>
-          </view>
-        </view>
-      </view>
+      <template is="head" />
       <view class="inner">
         <view class="m-navs disflex">
           <view class="active">
-            <navigator url="../product/productList/productList" hover-class="navigator-hover">
               <text class="txt">推荐</text>
-            </navigator>
           </view>
           <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
             <view>
-              <navigator url="../product/productList/productList?prod_classid={{item.id}}" hover-class="navigator-hover">
+              <navigator url="../product/topProductList/topProductList?prod_classid={{item.id}}" hover-class="navigator-hover">
                 <text class="txt">{{item.name}}</text>
               </navigator>
             </view>

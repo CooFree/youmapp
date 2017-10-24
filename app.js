@@ -3,9 +3,11 @@ import generalConfig from './generalConfig';
 import util from './utils/util';
 import memberState from './utils/memberState';
 import PortalChannel from './channels/portal';
+import ProductChannel from './channels/product';
 
 //app.js
 const portalChannel = new PortalChannel();
+const productChannel = new ProductChannel();
 App({
   onLaunch: function () {
     // 展示本地存储能力
@@ -23,9 +25,14 @@ App({
       }
     });
 
+    //预加载标签
+    productChannel.getTagData().then(data => {
+      productChannel.cache.tagData = data;
+    });
+
     memberState.initLogin();
     if (memberState.isLogin() === false) {
-      console.log('wx.login');
+      //console.log('wx.login');
       // 登录
       wx.login({
         success: res => {

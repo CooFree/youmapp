@@ -1,29 +1,26 @@
 // pages/category/category.js
 import ProductChannel from '../../channels/product';
-import { TopCategoryArray } from '../../constant';
+import { TopCategoryArray, TopCategory } from '../../constant';
 
 const productChannel = new ProductChannel();
 
 Page({
-
     /**
      * 页面的初始数据
      */
     data: {
-        TopCategoryArray: TopCategoryArray,
-        CategoryData: [],
-        SubCateData: []
+        topCategoryArray: TopCategoryArray,
+        categoryData: [],
+        subCateData: {},
     },
-    getSubCates: function(event){
-        let id = event.currentTarget.dataset.cateid;
-        let cateData = this.data.CategoryData;
-        cateData.forEach(function(value, index){
-            if(value.id === id){
-                this.setData({
-                    SubCateData: value
-                })
+    getSubCates: function (event) {
+        let cateid = event.currentTarget.dataset.cateid;
+        const { categoryData } = this.data;
+        categoryData.forEach(function (value, index) {
+            if (value.id === cateid) {
+                this.setData({ subCateData: value });
             }
-        }.bind(this))
+        }.bind(this));
     },
     /**
      * 生命周期函数--监听页面加载
@@ -31,16 +28,11 @@ Page({
     onLoad: function (options) {
         productChannel.getCategoryData().then(data => {
             data.forEach(function (value, index) {
-                if (value.id === 30) {
-                    this.setData({
-                        SubCateData: value
-                    })
+                if (value.id === TopCategory.Huwai) {
+                    this.setData({ subCateData: value });
                 }
-            }.bind(this))
-
-            this.setData({
-                CategoryData: data
-            })
+            }.bind(this));
+            this.setData({ categoryData: data });
         });
     },
 
@@ -48,7 +40,7 @@ Page({
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady: function () {
-        
+
     },
 
     /**

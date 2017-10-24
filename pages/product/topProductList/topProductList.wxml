@@ -7,15 +7,15 @@
       <template is="head" data="{{search_url: '../../search/search'}}"/>
       <view class="inner">
         <view class="m-navs disflex">
-          <block wx:for="{{categoryData}}" wx:key="{{index}}">
-            <view wx:if="{{item.id==productClassId}}" class="active">
+          <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
+            <view wx:if="{{item.id==prodClassId}}" class="active">
               <view>
-                <text class="txt">{{tools.decodeuri(item.name)}}</text>
+                <text class="txt">{{item.name}}</text>
               </view>
             </view>
             <view wx:else>
               <view hover-class="navigator-hover" data-cateid="{{item.id}}" bindtap="onChangeTab">
-                <text class="txt">{{tools.decodeuri(item.name)}}</text>
+                <text class="txt">{{item.name}}</text>
               </view>
             </view>
 
@@ -25,14 +25,15 @@
     </view>
   </view>
 
+  <block wx:if="{{item.prod_list.length>0}}" wx:for="{{productList}}" wx:key="{{index}}">
     <view class="m-list-floor g-row">
       <view class="hd3">
-        <view class="dtit">{{tools.decodeuri(categoryInfo.class_name)}}</view>
-        <view class="desc">{{tools.decodeuri(categoryInfo.class_title)}}</view>
+        <view class="dtit">{{tools.decodeuri(item.name)}}</view>
+        <view class="desc">{{tools.decodeuri(item.title)}}</view>
       </view>
       <view class="m-goods-grid">
         <view class="list">
-          <block wx:for="{{productList}}" wx:key="{{index}}">
+          <block wx:for="{{item.prod_list}}" wx:key="{{index}}">
             <view class="item">
             <navigator url="../productDetail/productDetail?prod_id={{item.id}}">
               <view class="wraper">
@@ -51,5 +52,5 @@
         </view>
       </view>
     </view>
-
+  </block>
 </view>

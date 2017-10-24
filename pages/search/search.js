@@ -5,7 +5,6 @@ import generalConfig from '../../generalConfig';
 const homeChannel = new HomeChannel();
 
 Page({
-
     /**
      * 页面的初始数据
      */

@@ -66,6 +66,7 @@ const fetch = (url, options) => {
     });
 }
 
+<<<<<<< HEAD
 const parseInt = (s) => {
     let num = parseInt(s, 0);
     if (isNaN(num) === true) {
@@ -86,6 +87,8 @@ const parseFloat = (s) => {
     }
 }
 
+=======
+>>>>>>> c4672beb69dc9b8031fc67c1f480425130683cb8
 const getPageCount = (record_count, page_size) => {
     if (page_size === 0)
         return 0;

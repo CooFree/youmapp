@@ -182,15 +182,12 @@ Page({
         let {storeflag} = this.data;
         if (storeflag === 1) {
             productChannel.deleteProductStore(prodId).then(data => {
-                console.log('0'+ data)
                 this.setData({
                     storeflag: 0
                 })
             })
         } else {
             productChannel.addProductStore(prodId).then(data => {
-                console.log('1'+ data)
-                
                 this.setData({
                     storeflag: 1
                 })

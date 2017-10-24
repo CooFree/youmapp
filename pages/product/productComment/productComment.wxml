@@ -9,23 +9,27 @@
             <view class="middle"></view>
             <view class="right"></view>
         </view>
-        <block wx:for="{{productCommentList}}">
+        <block wx:for="{{productCommentList}}" wx:key="{{index}}">
             <view class="comment-item">
                 <view class="comment-hd">
                     <view class="link">
-                        <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                        <image class="avatar" src="{{tools.httpsuri(item.head_portrait)}}" alt=""/>
                         <text class="name">{{tools.decodeuri(item.member_name)}}</text>
                     </view>
                 </view>
                 <view class="extraInfo">
                     <text class="time">{{item.comment_time}}</text>
-                    <text class="skus">,{{tools.decodeuri(item.color)}} {{tools.decodeuri(item.size)}}</text>
+                    <text class="skus">{{tools.decodeuri(item.color)}}*{{tools.decodeuri(item.size)}}</text>
                 </view>
                 <view class="content">
                     <p class="txt">{{tools.decodeuri(item.content)}}</p>
                 </view>
                 <view class="commentPics">
-                    <ul class="list"></ul>
+                    <ul class="list" wx:for="{{item.images}}" wx:key="{{index}}">
+                         <li class="item">
+                             <image class="img" src="{{tools.httpsuri(item.image_url + '!prodimg78')}}" alt="" />
+                         </li>
+                    </ul>
                 </view>
             </view>
         </block>

@@ -26,6 +26,8 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
+        wx.showLoading();
+
         productChannel.getCategoryData().then(data => {
             data.forEach(function (value, index) {
                 if (value.id === TopCategory.Huwai) {
@@ -33,6 +35,8 @@ Page({
                 }
             }.bind(this));
             this.setData({ categoryData: data });
+
+            wx.hideLoading();
         });
     },
 

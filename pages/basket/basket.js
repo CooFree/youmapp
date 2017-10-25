@@ -1,5 +1,6 @@
 import OrderChannel from '../../channels/order';
 import generalConfig from '../../generalConfig';
+import buyTemp from '../../utils/buyTemp';
 
 const orderChannel = new OrderChannel();
 Page({
@@ -15,7 +16,8 @@ Page({
     giftList: [],
     checkAll: false,
     checkCount: 0,
-    postageFreeAmount: 0
+    postageFreeAmount: 0,
+    submiting: false
   },
 
   /**
@@ -26,6 +28,7 @@ Page({
     this.loadBasket();
   },
   loadBasket: function () {
+    wx.showLoading();
     orderChannel.getBasketData().then(data => {
       if (data) {
         let basketInfo = data.info;
@@ -51,18 +54,12 @@ Page({
           giftList: basketInfo.gift_list
         });
       }
+      wx.hideLoading();
     });
   },
   deleteBasket: function (event) {
-    const basketId = event.currentTarget.dataset.basketid;
-    orderChannel.deleteBasket(basketId).then(data => {
-      if (data) {
-        this.loadBasket();
-      }
-    });
-  },
-  clearBasket: function () {
-    orderChannel.clearBasket().then(data => {
+    const { basketid } = event.currentTarget.dataset;
+    orderChannel.deleteBasket(basketid).then(data => {
       if (data) {
         this.loadBasket();
       }
@@ -85,8 +82,8 @@ Page({
     });
   },
   goSettle: function () {
-    /*const { loading, productList } = this.props.basket;
-    if (loading === true) {
+    const { submiting, productList } = this.data;
+    if (submiting === true) {
       return;
     }
     let specIdArray = [], volumeArray = [], locationArray = [], imageArray = [];
@@ -101,23 +98,21 @@ Page({
     if (specIdArray.length === 0) {
       return;
     }
-    BuyTemp.addBasketBuy(specIdArray, volumeArray, locationArray, imageArray);
-    const { history } = this.props.route;
-    history.push('/order/orderConfirm');*/
+    buyTemp.addBasketBuy(specIdArray, volumeArray, locationArray, imageArray);
+    wx.navigateTo({ url: '../order/orderConfirm/orderConfirm' });
   },
   onCheckCart: function (event) {
-    const basketId = event.currentTarget.dataset.basketid;
-
+    let { basketid, checkflag } = event.currentTarget.dataset;
     let { productList } = this.data;
     productList.every((item, index) => {
-      if (item.basket_id === basketId) {
-        item.check_flag = 1;
+      if (item.basket_id === basketid) {
+        item.check_flag = checkflag === 1 ? 0 : 1;
         return true;
       }
     });
     this.setData({ productList });
 
-    orderChannel.checkBasket(basketId).then(data => {
+    orderChannel.checkBasket(basketid, checkflag === 1 ? 0 : 1).then(data => {
       if (data) {
         this.loadBasket();
       }
@@ -126,7 +121,7 @@ Page({
   onCheckAllCart: function () {
     const { checkAll, productList } = this.data;
     productList.every((item, index) => {
-      item.check_flag = 1;
+      item.check_flag = checkAll ? 0 : 1;
     });
     this.setData({ checkAll: !checkAll, productList });
     orderChannel.checkAllBasket(checkAll ? 0 : 1).then(data => {
@@ -151,14 +146,14 @@ Page({
   },
   changeVolume: function (event) {
     let { basketid, reserve } = event.currentTarget.dataset;
-    /*let volume = parseInt(text, 0);
-    if (isNaN(volume) || volume < 1) {
+    let volume = parseInt(event.detail.value) || 0;
+    if (volume < 1) {
       volume = 1;
     }
     if (volume > reserve) {
       volume = reserve;
     }
-    this.setBasketVolume(basket_id, volume);*/
+    this.setBasketVolume(basketid, volume);
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

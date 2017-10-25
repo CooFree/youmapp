@@ -3,14 +3,11 @@
 
 <view class="container greybg {{showSelector? 'fullhide': ''}}">
     <view class="zw-banner detail-swiper">
-        <swiper indicator-dots="{{swiperConfig.indicatorDots}}" indicator-color="{{swiperConfig.indicatorColor}}" circular="{{swiperConfig.circular}}"
-            indicator-active-color="{{swiperConfig.indicatorActiveColor}}" autoplay="{{swiperConfig.autoplay}}" interval="{{swiperConfig.interval}}"
-            duration="{{swiperConfig.duration}}">
+        <swiper indicator-dots="true" indicator-color="#fff" circular="true" indicator-active-color="#d2ab44" autoplay="true" interval="5000"
+            duration="500">
             <block wx:for="{{productDetail.default_image_list}}">
                 <swiper-item>
-                    <navigator url="../product/productDetail/productDetail" hover-class="changestyle">
-                        <image src="{{item}}" class="slide-image" width="750" height="376" />
-                    </navigator>
+                        <image src="{{tools.httpsuri(item)}}" class="slide-image" width="750" height="376" />
                 </swiper-item>
             </block>
         </swiper>

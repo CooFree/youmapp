@@ -1,3 +1,4 @@
+<wxs src="../../utils/tools.wxs" module="tools" />
 
 <view class="container greybg">
     <view class="cart-wrap">
@@ -12,54 +13,83 @@
                 <text>满{{postageFreeAmount}}元免邮费</text>
             </view>
         </view>
-        <view class="hd">
+        <view wx:for="{{preferList}}" wx:key="{{index}}" class="hd">
             <view class="promotion">
-                <view class="w-tag tag">优惠</view>
-                <view class="txt">优惠优惠优惠优惠优惠优惠</view>
+                <view class="w-tag tag">{{tools.decodeuri(item.prefer_class)}}</view>
+                <view class="txt">{{tools.decodeuri(item.prefer_name)}}</view>
             </view>
         </view>
         <view class="m-cartGroup">
             <view class="list">
-                <view class="item">
-                    <view class="inner">
-                        <view class="m-good">
-                            <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
-                            <view class="imgWrap">
-                                <image src="https://img01.camel.com.cn/product/image/D6Y105770/cf2d08db-449d-4fb5-9561-c69b5c97ca5d.jpg!prodimg100" alt=""
-                                    mode="widthFix"></image>
-                            </view>
-                            <view class="cnt">
-                                <view class="line1">Camel骆驼男装 秋冬款新品男士流行纯色可脱卸帽羽绒服外套</view>
-                                <view class="line2">咖啡*M(170/88A)</view>
-                                <view class="line3">￥218.00</view>
-                            </view>
-                            <view class="m-selnum">
-                                <view class="less dis">
-                                    <i class="icon ion-ios-minus-empty"></i>
+                <block wx:for="{{productList}}" wx:key="{{index}}">
+                    <view class="item">
+                        <view class="inner">
+                            <view class="m-good">
+                                <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
+                                <view class="imgWrap">
+                                    <image src="{{tools.httpsuri(item.image_url+!prodimg100)}}" alt="" mode="widthFix"></image>
                                 </view>
-                                <view class="textWrap">
-                                    <input class="txt" value="1" />
+                                <view class="cnt">
+                                    <view class="line1">{{tools.decodeuri(item.prod_name)}}</view>
+                                    <view class="line2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
+                                    <view class="line3">￥{{tools.tofixed(item.last_price,2)}}</view>
                                 </view>
-                                <view class="plus">
-                                    <i class="icon ion-ios-plus-empty"></i>
+                                <view class="m-selnum">
+                                    <view class="less dis">
+                                        <i class="icon ion-ios-minus-empty"></i>
+                                    </view>
+                                    <view class="textWrap">
+                                        <input class="txt" value="{{item.volume}}" />
+                                    </view>
+                                    <view class="plus">
+                                        <i class="icon ion-ios-plus-empty"></i>
+                                    </view>
                                 </view>
                             </view>
-                        </view>
-                        <view class="del">
-                            <i class="icon icon-trash ion-ios-trash-outline"></i>
+                            <view class="del">
+                                <i class="icon icon-trash ion-ios-trash-outline"></i>
+                            </view>
                         </view>
                     </view>
-                </view>
+                </block>
+                <block wx:for="{{giftList}}" wx:key="{{index}}">
+                    <view class="item">
+                        <view class="inner">
+                            <view class="m-good">
+                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':''}}"></i>
+                                <view class="imgWrap">
+                                    <image src="{{tools.httpsuri(item.gift_image_url+!prodimg100)}}" alt="" mode="widthFix"></image>
+                                </view>
+                                <view class="cnt">
+                                    <view class="line1">{{tools.decodeuri(item.gift_name)}}</view>
+                                    <view class="line2">{{tools.decodeuri(item.gift_specificate)}}</view>
+                                    <view class="line3">￥{{tools.tofixed(item.gift_price,2)}}</view>
+                                </view>
+                                <view class="m-selnum">
+                                    <view class="less dis">
+                                        <i class="icon ion-ios-minus-empty"></i>
+                                    </view>
+                                    <view class="textWrap">
+                                        <input class="txt" value="{{item.volume}}" />
+                                    </view>
+                                    <view class="plus">
+                                        <i class="icon ion-ios-plus-empty"></i>
+                                    </view>
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </block>
             </view>
         </view>
         <view class="m-cartFT">
             <view class="left">
                 <view class="checkAll">
-                    <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
-                    <text class="txt">已选 (1)</text>
+                    <i class="icon ion-checkmark-circled {{checkAll?'icon-ischecked-g':''}}"></i>
+                    <text class="txt">已选 ({{checkCount}})</text>
                 </view>
-                <view class="price">￥218.00
-                    <text class="prefer">（优惠:0）</text>
+                <view class="price">￥{{totalAmount}}
+                    <text class="prefer">（优惠:{{preferential}}）</text>
                 </view>
             </view>
             <view class="right">

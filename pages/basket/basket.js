@@ -14,13 +14,15 @@ Page({
     preferList: [],
     giftList: [],
     checkAll: false,
-    postageFreeAmount: generalConfig.postageFreeAmount
+    checkCount: 0,
+    postageFreeAmount: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({ postageFreeAmount: generalConfig.postageFreeAmount });
     this.loadBasket();
   },
   loadBasket: function () {
@@ -29,14 +31,18 @@ Page({
         let basketInfo = data.info;
         let productList = data.list;
         let checkAll = true;
-        productList.some((item, index) => {
+        let checkCount = 0;
+        productList.forEach((item, index) => {
           if (item.check_flag === 0) {
             checkAll = false;
-            return false;
+          }
+          else {
+            checkCount++;
           }
         });
         this.setData({
           checkAll,
+          checkCount,
           totalAmount: basketInfo.total_amount,
           totalVolume: basketInfo.total_volume,
           preferential: basketInfo.preferential,

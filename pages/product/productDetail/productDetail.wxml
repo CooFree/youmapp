@@ -3,7 +3,8 @@
 
 <view class="container greybg {{showSelector? 'fullhide': ''}}">
     <view class="zw-banner detail-swiper">
-        <swiper indicator-dots="{{swiperConfig.indicatorDots}}" indicator-color="{{swiperConfig.indicatorColor}}" circular="{{swiperConfig.circular}}" indicator-active-color="{{swiperConfig.indicatorActiveColor}}" autoplay="{{swiperConfig.autoplay}}" interval="{{swiperConfig.interval}}"
+        <swiper indicator-dots="{{swiperConfig.indicatorDots}}" indicator-color="{{swiperConfig.indicatorColor}}" circular="{{swiperConfig.circular}}"
+            indicator-active-color="{{swiperConfig.indicatorActiveColor}}" autoplay="{{swiperConfig.autoplay}}" interval="{{swiperConfig.interval}}"
             duration="{{swiperConfig.duration}}">
             <block wx:for="{{productDetail.default_image_list}}">
                 <swiper-item>
@@ -31,11 +32,11 @@
                 <view class="name">{{tools.decodeuri(productDetail.product.name)}}</view>
                 <view class="desc">{{tools.decodeuri(productDetail.product.intro)}}</view>
                 <block wx:if="{{specificateData.limittime_flag && limittime}}">
-                     <view class="price">￥{{specificateData.limittime_price}} -￥{{specificateData.prod_price}} </view>
+                    <view class="price">￥{{specificateData.limittime_price}} -￥{{specificateData.prod_price}} </view>
                 </block>
                 <block wx:else>
                     <view class="price">￥{{specificateData.prod_price}} </view>
-               </block>
+                </block>
 
                 <!-- <view class="taglist">
                     <view class="wrap"></view>
@@ -122,10 +123,14 @@
                 <view class="content">
                     <p class="txt">{{tools.decodeuri(item.content)}}</p>
                 </view>
-                <view class="commentPics">
-                    <ul class="list"></ul>
-                </view>
             </block>
+            <view class="commentPics" wx:if="{{productCommentList[0].images.length > 0}}">
+                <ul class="list">
+                    <li class="item" wx:for="{{productCommentList[0].images}}">
+                        <image class="img" mode="widthFix" src="{{item.image_url}}" alt=""></image>
+                    </li>
+                </ul>
+            </view>
         </view>
     </view>
 
@@ -185,12 +190,14 @@
             </view>
             <view class="con">
                 <block wx:if="{{selectSize.length> 0}}">
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}" bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}"
+                        bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
                         <text class="txt">{{tools.decodeuri(item[0])}}</text>
                     </view>
                 </block>
                 <block wx:else>
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}" bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}"
+                        bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
                         <text class="txt">{{tools.decodeuri(item[0])}}</text>
                     </view>
                 </block>
@@ -200,12 +207,14 @@
             </view>
             <view class="con">
                 <block wx:if="{{selectColor.length > 0}}">
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}" bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}"
+                        bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
                         <span class="txt">{{tools.decodeuri(item[0])}}</span>
                     </view>
                 </block>
                 <block wx:else>
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
+                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" bindtap="selectSize"
+                        data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
                         <span class="txt">{{tools.decodeuri(item[0])}}</span>
                     </view>
                 </block>

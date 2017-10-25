@@ -1,6 +1,7 @@
 @import "ionicons.wxss";
 
 /* reset css*/
+
 blockquote, body, button, caption, dd, div, dl, dt, fieldset, figure, form, h1,
 h2, h3, h4, h5, h6, hr, html, input, legend, li, menu, ol, p, pre, table, td,
 textarea, th, ul {
@@ -176,42 +177,37 @@ html, body {
 }
 
 page {
-    height:100%;
+    height: 100%;
 }
-
-
-
-
-
-
-
-
-
-
 
 image {
-    width:100%;
+    width: 100%;
     display: block;
 }
-.container  {
-    overflow:hidden;
+
+.container {
+    overflow: hidden;
 }
+
 .whitebg {
     background-color: #fff;
 }
 
 .greybg {
     background-color: #f4f4f4;
-    min-height:100%;
+    min-height: 100%;
 }
+
 .flexBox {
     display: flex;
-    width:100%;
+    width: 100%;
 }
+
 .greybgh100 {
     background-color: #f4f4f4;
-    height:100%;
+    height: 100%;
 }
+
 .loading {
     position: fixed;
     width: 75rpx;
@@ -222,10 +218,12 @@ image {
     margin-top: -37rpx;
     z-index: 6;
 }
+
 .fullhide {
-    overflow:hidden;
-    height:100%;
+    overflow: hidden;
+    height: 100%;
 }
+
 .loadwrap {
     width: 75rpx;
     height: 75rpx;
@@ -250,17 +248,18 @@ image {
     display: block;
     height: 376rpx;
 }
-.zw-banner swiper image{
+
+.zw-banner swiper image {
     display: block;
     height: 376rpx;
 }
-
 
 .detail-swiper swiper {
     display: block;
     height: 750rpx;
 }
-.detail-swiper swiper image{
+
+.detail-swiper swiper image {
     display: block;
     height: 750rpx;
 }
@@ -352,6 +351,7 @@ image {
 .show {
     display: none;
 }
+
 .m-indexHd .m-hd {
     background-color: #fff;
     position: fixed;
@@ -457,7 +457,7 @@ image {
     height: 60rpx;
     padding: 0 30rpx;
     overflow-y: hidden;
-    white-space: nowrap
+    white-space: nowrap;
 }
 
 .m-navs::-webkit-scrollbar {
@@ -520,7 +520,7 @@ image {
 
 m-indexHd .inner {
     width: 100%;
-    overflow:hidden;
+    overflow: hidden;
     background-color: #fff;
 }
 
@@ -883,7 +883,7 @@ m-indexHd .inner {
 .cate-right {
     margin-left: 164rpx;
     padding: 15rpx;
-     width: 585rpx; 
+    width: 585rpx;
 }
 
 .cate-bn image {
@@ -935,7 +935,7 @@ m-indexHd .inner {
 
 .cate-list .item image {
     width: 166rpx;
-    height:166rpx;
+    height: 166rpx;
 }
 
 .search-top {
@@ -1094,7 +1094,7 @@ m-indexHd .inner {
 .m-goods-grid .list .item {
     display: inline-block;
     width: 350rpx;
-    overflow:hidden;
+    overflow: hidden;
     margin-left: 19rpx;
     margin-bottom: 30rpx;
     /* height: 737rpx; */
@@ -1103,7 +1103,7 @@ m-indexHd .inner {
 
 .m-goods-grid .pic {
     width: 100%;
-    height:350rpx;
+    height: 350rpx;
     display: block;
     background-color: #f4f4f4;
     border-radius: 0.0399975rpx 0.0399975rpx 0 0;
@@ -1192,7 +1192,7 @@ m-indexHd .inner {
     font-size: 32rpx;
     text-align: left;
     color: #b4282d;
-    margin-top:10rpx;
+    margin-top: 10rpx;
     padding: 0 9rpx;
 }
 
@@ -1237,7 +1237,7 @@ m-indexHd .inner {
 
 .m-uc-wrap {
     background-color: #fff;
-    margin-top:20rpx;
+    margin-top: 20rpx;
 }
 
 .m-uc-wraptit {
@@ -1272,7 +1272,7 @@ m-indexHd .inner {
 
 .m-uc-menu .red-dot {
     background-color: #db2929;
-    font-size:25rpx;
+    font-size: 25rpx;
     color: #fff;
     width: 37rpx;
     height: 37rpx;
@@ -1298,7 +1298,7 @@ m-indexHd .inner {
 .m-uc-menu .menu-icon {
     width: 45rpx;
     height: 45rpx;
-    display: inline-block
+    display: inline-block;
 }
 
 .m-uc-menu .menu-icon-txt {
@@ -1346,7 +1346,7 @@ m-indexHd .inner {
 .m-detailBase .info .desc {
     font-size: 27rpx;
     line-height: 1;
-    margin-top:10rpx;
+    margin-top: 10rpx;
     color: #7f7f7f;
 }
 
@@ -1354,7 +1354,7 @@ m-indexHd .inner {
     font-size: 48rpx;
     color: #b4282d;
     font-weight: 700;
-    margin-top:10rpx;
+    margin-top: 10rpx;
 }
 
 .m-detailBase .comment {
@@ -1390,7 +1390,7 @@ m-indexHd .inner {
     border-radius: 2px;
     text-align: center;
     padding: 0 15rpx;
-    font-size:24rpx;
+    font-size: 24rpx;
 }
 
 .m-detailBase .collet .icon {
@@ -1569,12 +1569,14 @@ m-indexHd .inner {
 }
 
 .commentPics li.item {
+    width: 156rpx;
     margin-right: 15rpx;
     margin-top: 15rpx;
 }
 
 .commentPics li.item .img {
-    width: 100%;
+    width: 156rpx;
+    height: 156rpx;
 }
 
 .comment-item .extraInfo {
@@ -1689,7 +1691,7 @@ m-indexHd .inner {
 
 .m-btnGroup .inner {
     position: fixed;
-    width:100%;
+    width: 100%;
     height: 104rpx;
     bottom: 0;
     display: flex;
@@ -1750,7 +1752,7 @@ m-indexHd .inner {
 
 .dt-paramselect .info-con {
     display: flex;
-    padding-top:30rpx;
+    padding-top: 30rpx;
 }
 
 .dt-paramselect .pic {
@@ -1866,7 +1868,7 @@ m-indexHd .inner {
     height: 66rpx;
     font-size: 33rpx;
     text-align: center;
-    border:2rpx solid #999;
+    border: 2rpx solid #999;
 }
 
 .m-flashSale {
@@ -1950,9 +1952,11 @@ m-indexHd .inner {
     padding: 41rpx;
     padding-top: 115rpx;
 }
+
 .login-form .hd {
-    font-size:28rpx;
+    font-size: 28rpx;
 }
+
 .inputBox {
     height: 100rpx;
     line-height: 100rpx;
@@ -1969,7 +1973,7 @@ m-indexHd .inner {
 
 .inputBox .j-inputtext {
     width: 100%;
-    height:100rpx;
+    height: 100rpx;
     border: 0;
     border-bottom: 1px solid #d9d9d9;
     font-size: 29rpx;
@@ -1996,7 +2000,7 @@ m-indexHd .inner {
 }
 
 .ben-login-txt {
-    height:40rpx;
+    height: 40rpx;
     color: #f23030;
     font-size: 30rpx;
 }
@@ -2215,7 +2219,7 @@ m-indexHd .inner {
     margin-bottom: 22rpx;
     padding-left: 115rpx;
     overflow: hidden;
-    margin-top:20rpx;
+    margin-top: 20rpx;
 }
 
 .m-cartGroup .item {
@@ -2255,7 +2259,7 @@ m-indexHd .inner {
 
 .m-cartGroup .cnt {
     height: 160rpx;
-    line-height:30rpx;
+    line-height: 30rpx;
 }
 
 .m-cartGroup .cnt .line1 {
@@ -2300,11 +2304,11 @@ m-indexHd .inner {
 
 .m-cartGroup .m-selnum .textWrap .txt {
     line-height: 50rpx;
-    height:50rpx;
+    height: 50rpx;
 }
 
 .m-cartGroup .m-selnum .textWrap {
-    height:50rpx;
+    height: 50rpx;
     width: 75rpx;
     border: 1px solid #999;
 }
@@ -2369,7 +2373,7 @@ m-indexHd .inner {
     position: fixed;
     bottom: 123rpx;
     left: 0;
-    bottom:0;
+    bottom: 0;
     background-color: #fff;
 }
 
@@ -2735,7 +2739,7 @@ m-indexHd .inner {
     /* border: 1px solid #b4282d; */
     border-radius: 2px;
     position: fixed;
-    left:5%;
+    left: 5%;
     bottom: 0;
     z-index: 4;
 }
@@ -2985,7 +2989,7 @@ m-indexHd .inner {
 }
 
 .od-googs .hd, .order-item .hd {
-    height:80rpx;
+    height: 80rpx;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -3039,9 +3043,11 @@ m-indexHd .inner {
     display: flex;
     align-items: center;
 }
+
 .order-item .bd .goodInfo {
-    line-height:45rpx;
+    line-height: 45rpx;
 }
+
 .od-googs .hd .p2, .order-item .bd .p2 {
     color: #666;
     font-size: 24rpx;
@@ -3146,7 +3152,7 @@ m-indexHd .inner {
     background-color: #fff;
     margin-top: 22rpx;
     padding: 22rpx;
-    line-height:40rpx;
+    line-height: 40rpx;
 }
 
 .od-addr .p1 {
@@ -3162,7 +3168,7 @@ m-indexHd .inner {
 
 .od-addr .row-item .sp1 {
     flex: 1;
-    color:#666;
+    color: #666;
 }
 
 .od-addr .row-item .sp2 {
@@ -3427,7 +3433,7 @@ m-indexHd .inner {
     /* border: 1px solid #d9d9d9; */
     background-color: #fff;
     height: 50rpx;
-    line-height:50rpx;
+    line-height: 50rpx;
     width: 150rpx;
     font-size: 24rpx;
     border-radius: 3px;
@@ -3451,7 +3457,7 @@ m-indexHd .inner {
 .productStore .m-cartGroup .cnt {
     display: flex;
     align-items: center;
-    margin-right:20rpx;
+    margin-right: 20rpx;
 }
 
 .commentWrap .textarea {
@@ -3469,7 +3475,7 @@ m-indexHd .inner {
 }
 
 .comment-pics .pic {
-    width:100%;
+    width: 100%;
 }
 
 .comment-pics .item {
@@ -3805,7 +3811,7 @@ m-indexHd .inner {
 }
 
 .zw-title {
-    display:flex;
+    display: flex;
     height: 104rpx;
     line-height: 104rpx;
     padding: 0 28rpx;
@@ -3815,8 +3821,8 @@ m-indexHd .inner {
 }
 
 .zw-title image {
-    height:50rpx;
-    width:auto;
+    height: 50rpx;
+    width: auto;
 }
 
 .zw-title view {
@@ -3833,18 +3839,18 @@ m-indexHd .inner {
 .zw-pro1 {
     padding-top: 11rpx;
     overflow-y: hidden;
-    width:100%;
+    width: 100%;
     display: flex;
     background-color: #f4f4f4;
 }
 
 .zw-pro1-link {
-    width:50%;
+    width: 50%;
     margin-left: 6rpx;
 }
 
 .zw-pro1 image {
-    width:100%;
+    width: 100%;
 }
 
 .zw-pro1 .zw-pro1-link:first-child {
@@ -3908,22 +3914,22 @@ m-indexHd .inner {
 }
 
 .zw-pro3-left {
-    flex:1;
-    overflow:hidden;
+    flex: 1;
+    overflow: hidden;
 }
 
 .zw-pro3-left image {
-    width:100%;
+    width: 100%;
 }
 
 .zw-pro3-right {
     margin-left: 8rpx;
-    flex:1;
-    overflow:hidden;
+    flex: 1;
+    overflow: hidden;
 }
 
 .zw-pro3-right image {
-    width:100%;
+    width: 100%;
     display: block;
 }
 

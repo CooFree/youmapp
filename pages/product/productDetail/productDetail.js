@@ -14,6 +14,7 @@ Page({
             duration: 500,
             circular: true
         },
+        previewCommentpic: '',
         selectColorIndex: -1,
         selectSizeIndex: -1,
         showSelector: false,
@@ -179,18 +180,15 @@ Page({
     },
     setStore: function (event) {
         let prodId = event.currentTarget.dataset.prodId;
-        let {storeflag} = this.data;
+        let { storeflag } = this.data;
         if (storeflag === 1) {
             productChannel.deleteProductStore(prodId).then(data => {
-                console.log('0'+ data)
                 this.setData({
                     storeflag: 0
                 })
             })
         } else {
             productChannel.addProductStore(prodId).then(data => {
-                console.log('1'+ data)
-                
                 this.setData({
                     storeflag: 1
                 })

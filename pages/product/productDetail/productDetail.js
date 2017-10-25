@@ -31,6 +31,17 @@ Page({
         finlVolume: 1,
         storeflag: 0,
     },
+    showPreview: function(event){
+        let url = event.currentTarget.dataset.url;
+        this.setData({
+            previewCommentpic: url
+        })
+    },
+    hidePreview: function(event){
+        this.setData({
+            previewCommentpic: ''
+        })
+    },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
         if (isDis === false) {

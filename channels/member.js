@@ -21,6 +21,7 @@ export default class MemberChannel {
         let memberId = memberState.getLoginId();
         if (memberId) {
             let url = config.Host + '/member/info.aspx?member_id=' + memberId;
+            console.log(memberId);
             try {
                 let resData = await util.fetch(url);
                 if (resData.result === 1) {

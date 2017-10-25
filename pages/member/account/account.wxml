@@ -1,4 +1,5 @@
 <!--pages/member/account/account.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="account-wrap">
         <view class="hd">

@@ -1,18 +1,21 @@
 <!--pages/center/center.wxml-->
+<wxs src="../../utils/tools.wxs" module="tools" />
 <view class="m-ucenter g-row greybg">
     <view class="m-uc-top">
-        <view class="m-profile">
-            <image class="avatar" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
-            <view class="info">
-                <view class="nickname">
-                    camel1059205
+        <navigator url="../member/profile/profile">
+            <view class="m-profile">
+                <image class="avatar" src="{{memberOrderData.head_portrait}}" alt=""></image>
+                <view class="info">
+                    <view class="nickname">
+                        {{memberOrderData.member_login_name}}
+                    </view>
+                    <view class="membershipLevel">
+                        <text class="memberTitle1">{{tools.decodeuri(memberOrderData.member_level)}}</text>
+                    </view>
+                    <view class="icon ion-ios-arrow-right top_right"></view>
                 </view>
-                <view class="membershipLevel">
-                    <text class="memberTitle1">驼客</text>
-                </view>
-                <view class="icon ion-ios-arrow-right top_right"></view>
             </view>
-        </view>
+        </navigator>
     </view>
     <view class="m-uc-wrap">
         <view class="m-uc-wraptit">
@@ -25,28 +28,28 @@
                     <navigator url="../member/orderList/orderList">
                         <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon1.png" alt=""></image>
                         <text class="txt">待付款</text>
-                        <text class="red-dot">0</text>
+                        <text class="red-dot">{{memberOrderData.unpay_count}}</text>
                     </navigator>
                 </view>
                 <view class="item">
                     <navigator url="../member/orderList/orderList">
                         <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon2.png" alt=""></image>
                         <text class="txt">待发货</text>
-                        <text class="red-dot">0</text>
+                        <text class="red-dot">{{memberOrderData.undelivery_count}}</text>
                     </navigator>
                 </view>
                 <view class="item">
                     <navigator url="../member/orderList/orderList">
                         <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon3.png" alt=""></image>
                         <text class="txt">已发货</text>
-                        <text class="red-dot">0</text>
+                        <text class="red-dot">{{memberOrderData.delivered_count}}</text>
                     </navigator>
                 </view>
                 <view class="item">
                     <navigator url="../member/orderList/orderList">
                         <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon4.png" alt=""></image>
                         <text class="txt">待评价</text>
-                        <text class="red-dot">0</text>
+                        <text class="red-dot">{{memberOrderData.uncomment_count}}</text>
                     </navigator>
                 </view>
                 <view class="item">

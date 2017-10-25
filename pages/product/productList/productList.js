@@ -40,7 +40,6 @@ Page({
 
       productChannel.getProductClassInfo(productClassId).then(data => {
         if (data) {
-          console.log(data);
           this.setData({ categoryInfo: data });
         }
       });

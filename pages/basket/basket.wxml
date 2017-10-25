@@ -25,9 +25,10 @@
                     <view class="item">
                         <view class="inner">
                             <view class="m-good">
-                                <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
+                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':''}}" data-checkflag="{{item.check_flag}}" data-basketid="{{item.basket_id}}"
+                                    bindtap="onCheckCart"></i>
                                 <view class="imgWrap">
-                                    <image src="{{tools.httpsuri(item.image_url+!prodimg100)}}" alt="" mode="widthFix"></image>
+                                    <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
                                 </view>
                                 <view class="cnt">
                                     <view class="line1">{{tools.decodeuri(item.prod_name)}}</view>
@@ -35,18 +36,20 @@
                                     <view class="line3">￥{{tools.tofixed(item.last_price,2)}}</view>
                                 </view>
                                 <view class="m-selnum">
-                                    <view class="less dis">
+                                    <view class="less {{item.volume>1?'':'dis'}}" data-basketid="{{item.basket_id}}" data-volume="{{item.volume}}" bindtap="reduceVolume">
                                         <i class="icon ion-ios-minus-empty"></i>
                                     </view>
                                     <view class="textWrap">
-                                        <input class="txt" value="{{item.volume}}" />
+                                        <input class="txt" value="{{item.volume}}" type="number" data-basketid="{{item.basket_id}}" data-reserve="{{item.reserve}}"
+                                            bindinput="changeVolume" maxlength="3" />
                                     </view>
-                                    <view class="plus">
+                                    <view class="plus {{item.volume<item.reserve?'':'dis'}}" data-basketid="{{item.basket_id}}" data-volume="{{item.volume}}"
+                                        data-reserve="{{item.reserve}}" bindtap="addVolume">
                                         <i class="icon ion-ios-plus-empty"></i>
                                     </view>
                                 </view>
                             </view>
-                            <view class="del">
+                            <view class="del" data-basketid="{{item.basket_id}}" bindtap="deleteBasket">
                                 <i class="icon icon-trash ion-ios-trash-outline"></i>
                             </view>
                         </view>
@@ -56,9 +59,8 @@
                     <view class="item">
                         <view class="inner">
                             <view class="m-good">
-                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':''}}"></i>
                                 <view class="imgWrap">
-                                    <image src="{{tools.httpsuri(item.gift_image_url+!prodimg100)}}" alt="" mode="widthFix"></image>
+                                    <image src="{{tools.httpsuri(item.gift_image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
                                 </view>
                                 <view class="cnt">
                                     <view class="line1">{{tools.decodeuri(item.gift_name)}}</view>
@@ -70,7 +72,7 @@
                                         <i class="icon ion-ios-minus-empty"></i>
                                     </view>
                                     <view class="textWrap">
-                                        <input class="txt" value="{{item.volume}}" />
+                                        {{item.volume}} 件
                                     </view>
                                     <view class="plus">
                                         <i class="icon ion-ios-plus-empty"></i>
@@ -84,18 +86,16 @@
         </view>
         <view class="m-cartFT">
             <view class="left">
-                <view class="checkAll">
+                <view class="checkAll" bindtap="onCheckAllCart">
                     <i class="icon ion-checkmark-circled {{checkAll?'icon-ischecked-g':''}}"></i>
                     <text class="txt">已选 ({{checkCount}})</text>
                 </view>
-                <view class="price">￥{{totalAmount}}
-                    <text class="prefer">（优惠:{{preferential}}）</text>
+                <view class="price">￥{{tools.tofixed(totalAmount,2)}}
+                    <text class="prefer">（优惠：{{tools.tofixed(preferential,2)}}）</text>
                 </view>
             </view>
             <view class="right">
-                <navigator url="../order/orderConfirm/orderConfirm" hover-class="navigator-hover">
-                    <view class="btn w-button">下单</view>
-                </navigator>
+                <view class="btn w-button" bindtap="goSettle">下单</view>
             </view>
         </view>
     </view>

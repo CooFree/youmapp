@@ -4,6 +4,7 @@ import util from '../../../utils/util';
 const productChannel = new ProductChannel();
 
 Page({
+    timeout: 0,
     data: {
         previewCommentpic: '',
         selectColorIndex: -1,
@@ -18,7 +19,7 @@ Page({
         finlImg: '',
         finlColor: '',
         finlSize: '',
-        limittime: 0,
+        limittime: null,
         finlVolume: 1,
         storeflag: 0,
     },
@@ -29,102 +30,93 @@ Page({
     hidePreview: function (event) {
         this.setData({ previewCommentpic: '' });
     },
+    onOption: function () {
+        const { specificateData, productDetail } = this.data;
+
+        let tempArrayColor1 = [], tempArraySize1 = [], tempArrayColor2 = [], tempArraySize2 = [];
+        specificateData.spec_list.forEach(function (spec_item, index) {
+            if (tempArrayColor1.indexOf(spec_item.color) < 0) {
+                tempArrayColor1.push(spec_item.color);
+
+                let image_url = '';
+                productDetail.color_image_list.some((item, index) => {
+                    if (spec_item.color === item.color) {
+                        image_url = item.image_url;
+                        return true;
+                    }
+                });
+                tempArrayColor2.push({ color: spec_item.color, sale: 1, image_url });
+            }
+            if (tempArraySize1.indexOf(value.color) < 0) {
+                tempArraySize1.push(value.size);
+                tempArraySize2.push({ size: spec_item.size, sale: 1 });
+            }
+        });
+
+        this.setData({ arrayColor: tempArrayColor2, arraySize: tempArraySize2 });
+    },
     selectOption: function (event, arrayData, selectIndex, seType) {
-        let isDis = event.currentTarget.dataset.dis;
-        if (isDis === false) {
-            let keys = event.currentTarget.dataset.keys[0];
-            let index = event.currentTarget.dataset.index;
+        const { dis, option, index } = event.currentTarget.dataset;
+        if (dis === false) {
             let specList = this.data.specificateData.spec_list;
-            let colorImageList = this.data.productDetail.color_image_list;
             let tempArr1 = [];
             let tempArr2 = util.deepCopy(arrayData);
             let tempData = arrayData;
 
-            specList.forEach(function (value, index) {
+            specList.forEach((item, index) => {
                 if (seType === 'color') {
-                    if (value.color === keys) {
-                        tempArr1.push(value.size);
+                    if (item.color === option.color) {
+                        tempArr1.push(item.size);
                     }
                 } else {
-                    if (value.size === keys) {
-                        tempArr1.push(value.color);
+                    if (item.size === option.size) {
+                        tempArr1.push(item.color);
                     }
                 }
-            })
+            });
 
-            //设置颜色图片
-            colorImageList.forEach(function (value, index) {
-                if (value.color === keys) {
-                    this.setData({
-                        finlImg: value.image_url,
-                    });
-                }
-            }.bind(this));
-
-            for (let i = 0; i < tempArr2.length; i++) {
-                let isExist = false;
-                for (let j = 0; j < tempArr1.length; j++) {
-                    if (tempArr2[i][0] === tempArr1[j]) {
-                        isExist = true;
-                        break;
+            tempArr2.forEach((item2, index2) => {
+                let saleFlag = false;
+                tempArr1.some((item1, index1) => {
+                    if (item2.value === item1.value) {
+                        saleFlag = true;
+                        return true;
                     }
+                });
+                if (saleFlag === false) {
+                    item2.sale = 0;
                 }
-                if (!isExist) {
-                    tempArr2[i][1] = 0;
-                }
-            }
+            });
 
             if (seType === 'color') {
                 if (index === this.data.selectColorIndex) {
-                    index = -1;
-                    this.setData({
-                        selectColor: tempData,
-                        selectColorIndex: index,
-                        finlImg: '',
-                        finlColor: ''
-                    })
+                    this.setData({ selectColor: tempData, selectColorIndex: -1, finlImg: '', finlColor: '' });
                 } else {
-                    this.setData({
-                        selectColor: tempArr2,
-                        selectColorIndex: index,
-                        finlColor: keys,
-                        finlVolume: 1
-                    })
+                    this.setData({ selectColor: tempArr2, selectColorIndex: index, finlColor: value, finlVolume: 1 });
                 }
             } else {
                 if (index === this.data.selectSizeIndex) {
-                    index = -1;
-                    this.setData({
-                        selectSize: tempData,
-                        selectSizeIndex: index,
-                        finlSize: ''
-                    })
+                    this.setData({ selectSize: tempData, selectSizeIndex: -1, finlSize: '' });
                 } else {
-                    this.setData({
-                        selectSize: tempArr2,
-                        selectSizeIndex: index,
-                        finlSize: keys,
-                        finlVolume: 1
-                    })
+                    this.setData({ selectSize: tempArr2, selectSizeIndex: index, finlSize: value, finlVolume: 1 });
                 }
             }
 
-            let finlColor = this.data.finlColor;
-            let finlSize = this.data.finlSize;
-            if (this.data.finlColor && this.data.finlSize) {
+            let { finlColor, finlSize } = this.data;
+            if (finlColor.length > 0 && finlSize.length > 0) {
                 let temp = [];
-                specList.forEach(function (value, index) {
+                specList.forEach((value, index) => {
                     if (value.color === finlColor) {
                         temp.push(value);
                     }
                 });
-                temp.forEach(function (value, index) {
+                temp.forEach((value, index) => {
                     if (value.size === finlSize) {
                         this.setData({
                             specItem: value
                         })
                     }
-                }.bind(this));
+                });
             }
         }
     },
@@ -194,53 +186,36 @@ Page({
     onLoad: function (options) {
         let prod_id = options.prod_id;
         productChannel.getProductDetail(prod_id).then(data => {
-            let specList = data.specificateData.spec_list;
-            let limitSeconds = data.specificateData.limittime_seconds;
-
-
-
-            let tempArrayColor = [];
-            let tempArraySize = [];
-            let tempArr1 = [];
-            let tempArr2 = [];
-            specList.forEach(function (value, index) {
-                tempArrayColor.push(value.color);
-                tempArraySize.push(value.size);
-            });
-
-            tempArrayColor = util.arrayUnique(tempArrayColor).forEach(function (value, index) {
-                tempArr1.push([value, 1]);
-            })
-            tempArraySize = util.arrayUnique(tempArraySize).forEach(function (value, index) {
-                tempArr2.push([value, 1]);
-            })
-
-            let timeInterval = null;
-            if (limitSeconds > 0) {
-                timeInterval = setInterval(() => {
-                    limitSeconds = --limitSeconds;
-                    let time = util.timing(limitSeconds);
-                    this.setData({
-                        limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second
-                    })
-                }, 1000)
-            } else {
-                clearInterval(timeInterval);
-            }
 
             this.setData({
                 productDetail: data.productData,
                 specificateData: data.specificateData,
-                arrayColor: tempArr1,
-                arraySize: tempArr2,
                 storeflag: data.specificateData.store_flag
-            })
-        })
+            });
+
+            this.onTiming(data.specificateData.limittime_seconds);
+            this.onOption();
+        });
 
         productChannel.getProductCommentList(prod_id, 1, 1).then(data => {
-            this.setData({
-                productCommentList: data,
-            })
-        })
+            this.setData({ productCommentList: data });
+        });
+    },
+    onTiming: function (limitSeconds) {
+        if (limitSeconds > 0) {
+            limitSeconds--;
+            let time = util.timing(limitSeconds);
+            this.setData({ limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second });
+            this.timeout = setTimeout(() => this.onTiming(limitSeconds), 1000);
+        }
+        else {
+            this.setData({ limittime: null });
+        }
+    },
+    /**
+     * 生命周期函数--监听页面卸载
+     */
+    onUnload: function () {
+        clearTimeout(this.timeout);
     }
 })

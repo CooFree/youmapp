@@ -1,11 +1,15 @@
 // pages/member/account/account.js
+import MemberChannel from '../../../channels/member';
+import util from '../../../utils/util';
+const memberChannel = new MemberChannel();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    
   },
 
   /**

@@ -126,7 +126,7 @@
             </block>
             <view class="commentPics" wx:if="{{productCommentList[0].images.length > 0}}">
                 <ul class="list">
-                    <li class="item" wx:for="{{productCommentList[0].images}}">
+                    <li class="item" wx:for="{{productCommentList[0].images}}" bindtap="showPreview" data-url="{{item.image_url}}">
                         <image class="img" mode="widthFix" src="{{item.image_url}}" alt=""></image>
                     </li>
                 </ul>
@@ -251,6 +251,12 @@
             </view>
         </view>
     </view>
+
+    <div class="commentpic-preview" wx:if="{{previewCommentpic}}" bindtap="hidePreview">
+        <div class="pic-box">
+            <image mode="widthFix" style="width:96%; margin-right:-1.5%;" src="{{previewCommentpic}}" alt=""></image>
+        </div>
+    </div>
 
     <view class="m-btnGroup">
         <div class="inner">

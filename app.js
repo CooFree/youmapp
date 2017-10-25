@@ -30,6 +30,9 @@ App({
       productChannel.cache.tagData = data;
     });
 
+    //预加载地区数据
+    portalChannel.getRegionData();
+
     memberState.initLogin();
     if (memberState.isLogin() === false) {
       //console.log('wx.login');

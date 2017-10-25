@@ -4,16 +4,8 @@ import util from '../../../utils/util';
 const productChannel = new ProductChannel();
 
 Page({
+    timeInterval = null,
     data: {
-        swiperConfig: {
-            indicatorDots: true,
-            indicatorColor: '#fff',
-            indicatorActiveColor: '#d2ab44',
-            autoplay: true,
-            interval: 5000,
-            duration: 500,
-            circular: true
-        },
         previewCommentpic: '',
         selectColorIndex: -1,
         selectSizeIndex: -1,
@@ -31,16 +23,12 @@ Page({
         finlVolume: 1,
         storeflag: 0,
     },
-    showPreview: function(event){
+    showPreview: function (event) {
         let url = event.currentTarget.dataset.url;
-        this.setData({
-            previewCommentpic: url
-        })
+        this.setData({ previewCommentpic: url });
     },
-    hidePreview: function(event){
-        this.setData({
-            previewCommentpic: ''
-        })
+    hidePreview: function (event) {
+        this.setData({ previewCommentpic: '' });
     },
     selectOption: function (event, arrayData, selectIndex, seType) {
         let isDis = event.currentTarget.dataset.dis;
@@ -185,9 +173,7 @@ Page({
         }
     },
     toggleSelector: function (event) {
-        this.setData({
-            showSelector: !this.data.showSelector
-        })
+        this.setData({ showSelector: !this.data.showSelector });
     },
     setStore: function (event) {
         let prodId = event.currentTarget.dataset.prodId;
@@ -211,6 +197,9 @@ Page({
         productChannel.getProductDetail(prod_id).then(data => {
             let specList = data.specificateData.spec_list;
             let limitSeconds = data.specificateData.limittime_seconds;
+
+
+
             let tempArrayColor = [];
             let tempArraySize = [];
             let tempArr1 = [];
@@ -222,10 +211,10 @@ Page({
 
             tempArrayColor = util.arrayUnique(tempArrayColor).forEach(function (value, index) {
                 tempArr1.push([value, 1]);
-            })
+            });
             tempArraySize = util.arrayUnique(tempArraySize).forEach(function (value, index) {
                 tempArr2.push([value, 1]);
-            })
+            });
 
             let timeInterval = null;
             if (limitSeconds > 0) {
@@ -254,5 +243,9 @@ Page({
                 productCommentList: data,
             })
         })
+    },
+    onTime:function()
+    {
+
     }
 })

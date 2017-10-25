@@ -4,7 +4,6 @@ import util from '../../../utils/util';
 const productChannel = new ProductChannel();
 
 Page({
-    timeInterval = null,
     data: {
         previewCommentpic: '',
         selectColorIndex: -1,
@@ -211,10 +210,10 @@ Page({
 
             tempArrayColor = util.arrayUnique(tempArrayColor).forEach(function (value, index) {
                 tempArr1.push([value, 1]);
-            });
+            })
             tempArraySize = util.arrayUnique(tempArraySize).forEach(function (value, index) {
                 tempArr2.push([value, 1]);
-            });
+            })
 
             let timeInterval = null;
             if (limitSeconds > 0) {
@@ -243,9 +242,5 @@ Page({
                 productCommentList: data,
             })
         })
-    },
-    onTime:function()
-    {
-
     }
 })

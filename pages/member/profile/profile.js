@@ -23,12 +23,6 @@ Page({
     areas: [{ 'region_id': 0, 'region_name': encodeURIComponent('请选择') }],
     areaInfo: ''
   },
-  bindDateChange: function (event) {
-    let date = event.detail.value;
-    this.setData({
-      date: date
-    })
-  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -80,6 +74,41 @@ Page({
     }
     return regionData;
   },
+  startAddressAnimation: function (isShow) {
+    var animation = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease',
+    });
+    this.animation = animation;
+    var that = this;
+    if (isShow) {
+      // vh是用来表示尺寸的单位，高度全屏是100vh
+      that.animation.translateY(0 + 'vh').step();
+    } else {
+      that.animation.translateY(40 + 'vh').step();
+    }
+    that.setData({
+      animationAddressMenu: that.animation.export(),
+      addressMenuIsShow: isShow,
+    })
+  },
+  // 点击地区选择取消按钮
+  cityCancel: function (e) {
+    this.startAddressAnimation(false);
+  },
+  // 点击地区选择确定按钮
+  citySure: function (e) {
+    var that = this;
+    var city = that.data.city;
+    var value = that.data.value;
+    that.startAddressAnimation(false);
+    // 将选择的城市信息显示到输入框
+    var areaInfo = that.data.provinces[value[0]].region_name + ',' + that.data.citys[value[1]].region_name + ',' + that.data.areas[value[2]].region_name
+    that.setData({
+      areaInfo: areaInfo,
+    })
+  },
+
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

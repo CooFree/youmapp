@@ -2,21 +2,17 @@ import config from '../config';
 import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import util from '../utils/util';
 import memberState from '../utils/memberState';
-
+var cache = {
+    orderList: [],
+    storeList: [],
+    scoreLogList: [],
+    ticketList: [],
+    commentList: [],
+    commentData: [],
+    applyList: [],
+};
 export default class MemberChannel {
-    constructor(options) {
-        this.options = options;
 
-        this.cache = {
-            orderList: [],
-            storeList: [],
-            scoreLogList: [],
-            ticketList: [],
-            commentList: [],
-            commentData: [],
-            applyList: [],
-        };
-    }
     async getMemberInfo() {
         let memberId = memberState.getLoginId();
         if (memberId) {

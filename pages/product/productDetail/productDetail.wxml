@@ -1,11 +1,10 @@
-<!--pages/product/productDetail/productDetail.wxml-->
 <wxs src="../../../utils/tools.wxs" module="tools" />
 
 <view class="container greybg {{showSelector? 'fullhide': ''}}">
     <view class="zw-banner detail-swiper">
         <swiper indicator-dots="true" indicator-color="#fff" circular="true" indicator-active-color="#d2ab44" autoplay="true" interval="5000"
             duration="500">
-            <block wx:for="{{productDetail.default_image_list}}">
+            <block wx:for="{{productDetail.default_image_list}}" wx:key="{{index}}">
                 <swiper-item>
                     <image src="{{tools.httpsuri(item)}}" class="slide-image" width="750" height="376" />
                 </swiper-item>
@@ -14,7 +13,7 @@
     </view>
 
     <view class="dt-section">
-        <view wx:if="{{specificateData.limittime_flag}}" class="m-flashSale detailFlashSale active">
+        <view wx:if="{{limitseconds>0}}" class="m-flashSale detailFlashSale active">
             <view class="left">
                 <span class="title">限时购</span>
                 <span class="status">抢购中...</span>
@@ -28,23 +27,23 @@
             <view class="info">
                 <view class="name">{{tools.decodeuri(productDetail.product.name)}}</view>
                 <view class="desc">{{tools.decodeuri(productDetail.product.intro)}}</view>
-                <block wx:if="{{specificateData.limittime_flag && limittime}}">
-                    <view class="price">￥{{specificateData.limittime_price}} -￥{{specificateData.prod_price}} </view>
-                </block>
-                <block wx:else>
-                    <view class="price">￥{{specificateData.prod_price}} </view>
-                </block>
 
-                <!-- <view class="taglist">
-                    <view class="wrap"></view>
-                </view> -->
+                <view wx:if="{{limitseconds>0}}" class="price">
+                    ￥{{tools.tofixed(specificateData.limittime_price,2)}} -￥{{tools.tofixed(specificateData.prod_price,2)}}
+                </view>
+                <view wx:else class="price">￥{{tools.tofixed(specificateData.prod_price,2)}} </view>
+
+                <view class="taglist" wx:for="{{tagList}}" wx:if="{{tools.indexof(',' + productDetail.product.tag + ',',',' + item.id + ',')>=0}}"
+                    wx:key="{{index}}">
+                    <view class="wrap">{{tools.decodeuri(item.name)}}</view>
+                </view>
             </view>
             <view class="comment collet">
-                <view class="wrap" bindtap="setStore" data-prod-id="{{productDetail.product.id}}">
-                    <i wx:if="{{storeflag}}" class="icon-fullstar ion-ios-star-outline"></i>
+                <view class="wrap" bindtap="setStore" data-prodid="{{productDetail.product.id}}">
+                    <i wx:if="{{storeflag===1}}" class="icon-fullstar ion-ios-star-outline"></i>
                     <i wx:else class="icon ion-ios-star-outline"></i>
                     <view class="more">
-                        <text>{{storeflag? '取消': '收藏'}}</text>
+                        <text>{{storeflag===1? '取消': '收藏'}}</text>
                     </view>
                 </view>
             </view>
@@ -54,16 +53,12 @@
     <view class="dt-section-2">
 
         <view class="m-listItem " bindtap="toggleSelector">
-            <block wx:if="{{finlColor && finlSize}}">
-                <view class="left">
-                    <text class="txt">已选：{{tools.decodeuri(finlColor)}}， {{tools.decodeuri(finlSize)}}</text>
-                </view>
-            </block>
-            <block wx:else>
-                <view class="left">
-                    <text class="txt">请选择规格数量</text>
-                </view>
-            </block>
+            <view wx:if="{{finlColor.length>0 && finlSize.length>0}}" class="left">
+                <text class="txt">已选：{{tools.decodeuri(finlColor)}}*{{tools.decodeuri(finlSize)}} x{{tools.decodeuri(finlVolume)}}</text>
+            </view>
+            <view wx:else class="left">
+                <text class="txt">请选择规格数量</text>
+            </view>
 
             <view class="middle"></view>
             <view class="right">
@@ -86,48 +81,47 @@
                     </view>
                 </view>
             </view>
-            <view class="right">
-                <i class="icon ion-ios-arrow-right"></i>
-            </view>
         </view>
     </view>
 
     <view class="dt-section-2 dt-section-3 dt-comment">
-        <view class="m-listItem">
-            <view class="left">
-                <text class="txt">用户评价({{productDetail.comment_count > 99? '99+': productDetail.comment_count}})</text>
-            </view>
-            <view class="middle"></view>
-            <view class="right">
-                <navigator url="../productComment/productComment?prod_id={{productDetail.product.id}}">
+        <navigator url="../productComment/productComment?prod_id={{productDetail.product.id}}&comment_count={{productDetail.comment_count}}">
+            <view class="m-listItem">
+
+                <view class="left">
+                    <text class="txt">用户评价({{productDetail.comment_count > 99? '99+': productDetail.comment_count}})</text>
+                </view>
+                <view class="middle"></view>
+                <view class="right">
                     <span class="more">查看全部</span>
                     <i class="icon ion-ios-arrow-right"></i>
-                </navigator>
+                </view>
             </view>
-        </view>
+        </navigator>
         <view class="comment-item">
-            <block wx:for="{{productCommentList}}">
+            <block wx:for="{{productCommentList}}" wx:key="{{index}}">
                 <view class="comment-hd">
                     <view class="link">
-                        <image class="avatar " src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                        <image class="avatar " src="{{tools.httpsuri(item.head_portrait)}}" alt=""></image>
                         <text class="name">{{tools.decodeuri(item.member_name)}}</text>
                     </view>
                 </view>
                 <view class="extraInfo">
                     <text class="time">{{item.comment_time}}</text>
-                    <text class="skus">,{{tools.decodeuri(item.color)}} {{tools.decodeuri(item.size)}}</text>
+                    <text class="skus">，{{tools.decodeuri(item.color)}}*{{tools.decodeuri(item.size)}}</text>
                 </view>
                 <view class="content">
                     <p class="txt">{{tools.decodeuri(item.content)}}</p>
                 </view>
+                <view class="commentPics" wx:if="{{item.images.length > 0}}">
+                    <ul class="list">
+                        <li class="item" wx:for="{{item.images}}" bindtap="showPreview" data-url="{{item.image_url}}">
+                            <image class="img" mode="widthFix" src="{{tools.httpsuri(item.image_url+'!prodimg78')}}" alt=""></image>
+                        </li>
+                    </ul>
+                </view>
             </block>
-            <view class="commentPics" wx:if="{{productCommentList[0].images.length > 0}}">
-                <ul class="list">
-                    <li class="item" wx:for="{{productCommentList[0].images}}" bindtap="showPreview" data-url="{{item.image_url}}">
-                        <image class="img" mode="widthFix" src="{{item.image_url}}" alt=""></image>
-                    </li>
-                </ul>
-            </view>
+
         </view>
     </view>
 
@@ -144,8 +138,8 @@
                     </view>
                 </view>
             </view>
-            <block wx:for="{{productDetail.detail_image_list}}">
-                <image src="{{item.url}} " alt=" " mode="widthFix"></image>
+            <block wx:for="{{detailImageList}}" wx:key="{{index}}">
+                <image src="{{tools.httpsuri(item.url)}} " alt="" mode="widthFix" />
             </block>
         </view>
         <view class="m-commonIssues m-rmcdGoods">
@@ -161,85 +155,64 @@
     <view class="dt-paramselect g-row " wx:if="{{showSelector}}">
         <view class="info-con">
             <view class="left">
-                <image class="pic " src="{{finlImg? finlImg : productDetail.default_image}}" alt=""></image>
+                <image class="pic " src="{{tools.httpsuri((finlImg.length>0? finlImg : productDetail.default_image)+'!prodimg245')}}" alt=""></image>
             </view>
             <view class="right">
                 <view class="con">
-                    <view class="price">
-                        价格：¥ {{specificateData.limittime_price? specificateData.limittime_price : specificateData.prod_price}}
+
+                    <view wx:if="{{limitseconds>0}}" class="price">
+                        价格：¥ {{tools.tofixed(specItem?specItem.limit_price: specificateData.limittime_price,2)}}
                     </view>
-                    <block wx:if="{{finlColor && finlSize}}">
-                        <view class="sku">
-                            已选择：{{tools.decodeuri(finlColor)}}， {{tools.decodeuri(finlSize)}}
-                        </view>
-                    </block>
-                    <block wx:else>
-                        <view class="sku">
-                            已选择：请选择
-                        </view>
-                    </block>
+                    <view wx:else class="price">
+                        价格：¥ {{tools.tofixed(specItem?specItem.price : specificateData.prod_price,2)}}
+                    </view>
+
+                    <view wx:if="{{finlColor.length>0 && finlSize.length>0}}" class="sku">
+                        已选择：{{tools.decodeuri(finlColor)}}*{{tools.decodeuri(finlSize)}}
+                    </view>
+                    <view wx:else class="sku">
+                        已选择：请选择
+                    </view>
+
                 </view>
             </view>
         </view>
         <view class="spec-con">
             <view class="tt">颜色</view>
             <view class="con">
-                <block wx:if="{{selectSize.length> 0}}">
-                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}"
-                        bindtap="selectColor" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
-                        <text class="txt">{{tools.decodeuri(item.color)}}</text>
-                    </view>
-                </block>
-                <block wx:else>
-                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}"
-                        bindtap="selectColor" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
-                        <text class="txt">{{tools.decodeuri(item.color)}}</text>
-                    </view>
-                </block>
+                <view class="tab {{item.sale === 1? '':'tab-dis'}} {{item.color === finlColor ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}"
+                    wx:key="{{index}}" bindtap="selectColor" data-specitem="{{item}}">
+                    <text class="txt">{{tools.decodeuri(item.color)}}</text>
+                </view>
             </view>
-            <view class="tt">尺码</view>
-            <view class="con">
-                <block wx:if="{{selectColor.length > 0}}">
-                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}"
-                        bindtap="selectSize" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
-                        <span class="txt">{{tools.decodeuri(item.size)}}</span>
-                    </view>
-                </block>
-                <block wx:else>
-                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}"
-                        bindtap="selectSize" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
-                        <span class="txt">{{tools.decodeuri(item.size)}}</span>
-                    </view>
-                </block>
+            <view wx:if="{{specificateData.size_flag===1}}" class="tt">尺码</view>
+            <view wx:if="{{specificateData.size_flag===1}}" class="con">
+                <view class="tab {{item.sale === 1? '':'tab-dis'}} {{item.size === finlSize ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" wx:key="{{index}}"
+                    bindtap="selectSize" data-specitem="{{item}}">
+                    <span class="txt">{{tools.decodeuri(item.size)}}</span>
+                </view>
             </view>
-            <view class="tt">
-                数量
-            </view>
+            <view class="tt">数量</view>
             <view class="con m-selNumRow">
                 <view class="m-selnum">
-                    <block wx:if="{{finlVolume <= 1}}">
-                        <view class="less dis">
-                            <i class="icon ion-ios-minus-empty"></i>
-                        </view>
-                    </block>
-                    <block wx:else>
-                        <view class="less" bindtap="reduceVolume">
-                            <i class="icon ion-ios-minus-empty"></i>
-                        </view>
-                    </block>
+
+                    <view wx:if="{{finlVolume > 1}}" class="less" bindtap="reduceVolume">
+                        <i class="icon ion-ios-minus-empty"></i>
+                    </view>
+                    <view wx:else class="less dis">
+                        <i class="icon ion-ios-minus-empty"></i>
+                    </view>
+
                     <view class="textWrap">
                         <input type="number" value="{{finlVolume}}" bindinput="setVolume" class="txt" />
                     </view>
-                    <block wx:if="{{finlVolume >= specItem.reserve || finlVolume >= productDetail.product.reserve}}">
-                        <view class="plus dis">
-                            <i class="icon ion-ios-plus-empty"></i>
-                        </view>
-                    </block>
-                    <block wx:else>
-                        <view class="plus" bindtap="addVolume">
-                            <i class="icon ion-ios-plus-empty"></i>
-                        </view>
-                    </block>
+
+                    <view wx:if="{{specItem? finlVolume < specItem.reserve : finlVolume < productDetail.product.reserve}}" class="plus" bindtap="addVolume">
+                        <i class="icon ion-ios-plus-empty"></i>
+                    </view>
+                    <view wx:else class="plus dis">
+                        <i class="icon ion-ios-plus-empty"></i>
+                    </view>
                 </view>
             </view>
         </view>
@@ -261,11 +234,13 @@
                     <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_mes.png" alt=""></image>
                 </view>
             </block>
-            <view class="btn btn1">
+
+            <navigator open-type="switchTab" url="../../basket/basket" class="btn btn1">
                 <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_sci.png" alt=""></image>
-            </view>
-            <view class="btn btn2">立即购买</view>
-            <view class="btn btn3">加入购物车</view>
+            </navigator>
+
+            <view class="btn btn2" bindtap="onBuy">立即购买</view>
+            <view class="btn btn3" bindtap="onBasket">加入购物车</view>
         </div>
     </view>
 </view>

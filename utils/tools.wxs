@@ -56,9 +56,20 @@ var toFixed = function (num, fractionDigits) {
   }
 }
 
+var indexOf=function(str1,str2){
+if(str1&&str2)
+{
+return str1.indexOf(str2);
+}
+else{
+return -1;
+}
+}
+
 module.exports = {
   decodeuri: decodeURI,
   httpsuri: httpsURI,
   navigateurl: navigateUrl,
-  tofixed: toFixed
+  tofixed: toFixed,
+  indexof:indexOf
 }

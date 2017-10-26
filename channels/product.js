@@ -148,7 +148,7 @@ export default class ProductChannel {
             let post_data = {
                 product_id: productId
             }
-            let headers = {
+            const headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {

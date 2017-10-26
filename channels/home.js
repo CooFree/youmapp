@@ -2,18 +2,15 @@ import config from '../config';
 import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import util from '../utils/util';
 import memberState from '../utils/memberState';
+var cache = {
+    pageModuleData: [],
+    pageListData: []
+};
 
 export default class HomeChannel {
-    constructor(options) {
-        this.options = options;
 
-        this.cache = {
-            pageModuleData: [],
-            pageListData: []
-        };
-    }
     findPageModuleCache(code) {
-        let item = this.cache.pageModuleData.find((item, index) => {
+        let item = cache.pageModuleData.find((item, index) => {
             return item.code === code;
         });
         if (item) {
@@ -21,7 +18,7 @@ export default class HomeChannel {
         }
     }
     findPageListCache(code) {
-        let item = this.cache.pageListData.find((item, index) => {
+        let item = cache.pageListData.find((item, index) => {
             return item.code === code;
         });
         if (item) {
@@ -42,7 +39,7 @@ export default class HomeChannel {
                 if (resData.result === 1) {
                     data = resData.list;
                     if (data.length > 0) {
-                        this.cache.pageListData.push({ code: listCode + '_' + page, list: data });
+                        cache.pageListData.push({ code: listCode + '_' + page, list: data });
                     }
                 }
                 else {
@@ -65,7 +62,7 @@ export default class HomeChannel {
                 const responseData = await util.fetch(url + '&' + post_data);
                 if (responseData.result === 1) {
                     data = responseData;
-                    this.cache.pageModuleData.push({ code: moduleCode, data });
+                    cache.pageModuleData.push({ code: moduleCode, data });
                 }
                 else {
                     console.warn(responseData.msg);

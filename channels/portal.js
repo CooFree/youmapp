@@ -2,17 +2,14 @@ import config from '../config';
 import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import util from '../utils/util';
 import memberState from '../utils/memberState';
+var cache = {
+  regionData: [],
+  helpList: [],
+  topicList: []
+};
 
 export default class PortalChannel {
-  constructor(options) {
-    this.options = options;
 
-    this.cache = {
-      regionData: [],
-      helpList: [],
-      topicList: []
-    };
-  }
 
   async getGeneralConfig() {
     let url = config.Host + '/config.aspx';
@@ -41,7 +38,7 @@ export default class PortalChannel {
   }
 
   async getHelpList() {
-    if (this.cache.helpList.length === 0) {
+    if (cache.helpList.length === 0) {
       let url = config.Host + '/portal/helpList.aspx';
       let headers = {
         'Content-Platform': 'wxapp'
@@ -49,7 +46,7 @@ export default class PortalChannel {
       try {
         let resData = await util.fetch(url, { headers });
         if (resData.result === 1) {
-          this.cache.helpList = resData.list;
+          cache.helpList = resData.list;
         }
         else {
           console.warn(resData.msg);
@@ -59,17 +56,17 @@ export default class PortalChannel {
         console.error(error);
       }
     }
-    return this.cache.helpList;
+    return cache.helpList;
   }
 
   async getTopicList(page, pageSize) {
-    if (this.cache.topicList.length === 0) {
+    if (cache.topicList.length === 0) {
       let url = config.Host + '/portal/topicList.aspx';
       let post_data = 'page=' + page + '&page_size=' + pageSize;
       try {
         let resData = await util.fetch(url + '?' + post_data);
         if (resData.result === 1) {
-          this.cache.topicList = resData.list;
+          cache.topicList = resData.list;
         }
         else {
           console.warn(resData.msg);
@@ -79,7 +76,7 @@ export default class PortalChannel {
         console.error(error);
       }
     }
-    return this.cache.topicList;
+    return cache.topicList;
   }
 
   async getHelpData(code) {
@@ -201,17 +198,18 @@ export default class PortalChannel {
   }
 
   async getRegionData() {
-    if (this.cache.regionData.length === 0) {
+    console.log(cache.regionData);
+    if (cache.regionData.length === 0) {
       let url = config.Host + '/temp/region.json';
       try {
         let resData = await util.fetch(url);
-        this.cache.regionData = resData;
+        cache.regionData = resData;
       }
       catch (error) {
         console.error(error);
       }
     }
-    return this.cache.regionData;
+    return cache.regionData;
   }
 
   async getTopicInfo(code) {

@@ -3,29 +3,24 @@ import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import util from '../utils/util';
 import memberState from '../utils/memberState';
 import { TopCategoryArray } from '../constant';
-
+var cache = {
+    tagData: [],
+    categoryData: [],
+    productList: [],
+    commentList: [],
+    vproductList: [],
+    topicProductList: [],
+    productSearch: []
+};
 export default class ProductChannel {
-    constructor(options) {
-        this.options = options;
-
-        this.cache = {
-            tagData: [],
-            categoryData: [],
-            productList: [],
-            commentList: [],
-            vproductList: [],
-            topicProductList: [],
-            productSearch: []
-        };
-    }
 
     async getCategoryData() {
-        if (this.cache.categoryData.length === 0) {
+        if (cache.categoryData.length === 0) {
             let url = config.Host + '/category.aspx';
             try {
                 let resData = await util.fetch(url);
                 if (resData.result === 1) {
-                    this.cache.categoryData = resData.list;
+                    cache.categoryData = resData.list;
                 }
                 else {
                     console.warn(resData.msg);
@@ -35,16 +30,16 @@ export default class ProductChannel {
                 console.error(error);
             }
         }
-        return this.cache.categoryData;
+        return cache.categoryData;
     }
 
     async getTagData() {
-        if (this.cache.tagData.length === 0) {
+        if (cache.tagData.length === 0) {
             let url = config.Host + '/product/tagList.aspx';
             try {
                 let resData = await util.fetch(url);
                 if (resData.result === 1) {
-                    this.cache.tagData = resData.list;
+                    cache.tagData = resData.list;
                 }
                 else {
                     console.warn(resData.msg);
@@ -54,7 +49,7 @@ export default class ProductChannel {
                 console.error(error);
             }
         }
-        return this.cache.tagData;
+        return cache.tagData;
     }
     async getProductInfo(productId) {
         let url = config.Host + '/product/productDetail.aspx';

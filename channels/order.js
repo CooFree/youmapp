@@ -2,16 +2,12 @@ import config from '../config';
 import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import util from '../utils/util';
 import memberState from '../utils/memberState';
-
+var cache = {
+    basketData: {},
+    confirmOrderData: {}
+};
 export default class OrderChannel {
-    constructor(options) {
-        this.options = options;
 
-        this.cache = {
-            basketData: {},
-            confirmOrderData: {}
-        };
-    }
 
     async getBasketData() {
         let memberId = memberState.getLoginId();
@@ -208,7 +204,7 @@ export default class OrderChannel {
             try {
                 let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
                 if (resData.result === 1) {
-                    this.cache.confirmOrderData = resData.info.order;
+                    cache.confirmOrderData = resData.info.order;
                     return resData.info;
                 }
                 else {

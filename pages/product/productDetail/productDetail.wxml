@@ -21,7 +21,7 @@
             </view>
             <view class="right">
                 <span class="s1">离结束还剩</span>
-                <span class="t1">{{limittime? limittime : '0:00:00:0'}}</span>
+                <span class="t1">{{limittime}}</span>
             </view>
         </view>
         <view class="m-detailBase">
@@ -182,37 +182,33 @@
             </view>
         </view>
         <view class="spec-con">
-            <view class="tt">
-                颜色
-            </view>
+            <view class="tt">颜色</view>
             <view class="con">
                 <block wx:if="{{selectSize.length> 0}}">
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}"
-                        bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
-                        <text class="txt">{{tools.decodeuri(item[0])}}</text>
+                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectSize}}"
+                        bindtap="selectColor" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
+                        <text class="txt">{{tools.decodeuri(item.color)}}</text>
                     </view>
                 </block>
                 <block wx:else>
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}"
-                        bindtap="selectColor" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
-                        <text class="txt">{{tools.decodeuri(item[0])}}</text>
+                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectColorIndex === index ? 'tab-sel' : ''}}" wx:for="{{arrayColor}}"
+                        bindtap="selectColor" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
+                        <text class="txt">{{tools.decodeuri(item.color)}}</text>
                     </view>
                 </block>
             </view>
-            <view class="tt">
-                尺码
-            </view>
+            <view class="tt">尺码</view>
             <view class="con">
                 <block wx:if="{{selectColor.length > 0}}">
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}"
-                        bindtap="selectSize" data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
-                        <span class="txt">{{tools.decodeuri(item[0])}}</span>
+                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{selectColor}}"
+                        bindtap="selectSize" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
+                        <span class="txt">{{tools.decodeuri(item.size)}}</span>
                     </view>
                 </block>
                 <block wx:else>
-                    <view class="tab {{item[1] === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" bindtap="selectSize"
-                        data-dis="{{item[1] === 1? false: true}}" data-keys="{{item}}" data-index="{{index}}">
-                        <span class="txt">{{tools.decodeuri(item[0])}}</span>
+                    <view class="tab {{item.sale === 1? '':'tab-dis'}} {{selectSizeIndex === index ? 'tab-sel' : ''}}" wx:for="{{arraySize}}"
+                        bindtap="selectSize" data-dis="{{item.sale === 1? false: true}}" data-option="{{item}}" data-index="{{index}}">
+                        <span class="txt">{{tools.decodeuri(item.size)}}</span>
                     </view>
                 </block>
             </view>

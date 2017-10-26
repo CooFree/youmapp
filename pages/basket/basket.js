@@ -70,7 +70,7 @@ Page({
     productList.every((item, index) => {
       if (item.basket_id === basketId) {
         item.volume = volume;
-        return true;
+        return false;
       }
     });
     this.setData({ productList });
@@ -107,7 +107,7 @@ Page({
     productList.every((item, index) => {
       if (item.basket_id === basketid) {
         item.check_flag = checkflag === 1 ? 0 : 1;
-        return true;
+        return false;
       }
     });
     this.setData({ productList });
@@ -120,7 +120,7 @@ Page({
   },
   onCheckAllCart: function () {
     const { checkAll, productList } = this.data;
-    productList.every((item, index) => {
+    productList.forEach((item, index) => {
       item.check_flag = checkAll ? 0 : 1;
     });
     this.setData({ checkAll: !checkAll, productList });

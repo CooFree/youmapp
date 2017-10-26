@@ -198,7 +198,6 @@ export default class PortalChannel {
   }
 
   async getRegionData() {
-    console.log(cache.regionData);
     if (cache.regionData.length === 0) {
       let url = config.Host + '/temp/region.json';
       try {

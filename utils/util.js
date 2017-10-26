@@ -135,6 +135,10 @@ const decodeURI = (uri) => {
     return '';
 }
 
+const strReplace = (str, str2, str3) => {
+    let result = str.replace(str2, str3);
+    return result;
+}
 const httpsURI = (uri) => {
     if (uri && uri.length > 0) {
         return uri.replace('http://', 'https://');
@@ -293,5 +297,6 @@ module.exports = {
     filterUrlBad,
     jsonToFormData,
     arrayUnique,
-    deepCopy
+    deepCopy,
+    strReplace
 }

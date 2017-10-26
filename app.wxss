@@ -4225,10 +4225,10 @@ m-indexHd .inner {
     margin-left: 20px;
 }
 
-/* 转换后 */
+
 
 .picker-view {
-    width: 100%;
+    width: 100.5%;
     display: flex;
     z-index:12;
     background-color: #fff;
@@ -4237,10 +4237,29 @@ m-indexHd .inner {
     align-items: center;
     position: fixed;
     bottom: 0rpx;
-    left: 0rpx;
+    left: -2rpx;
     height: 40vh;
 }
-  
+.picker-view .hd {
+    display:flex;
+    height:100rpx;
+    width:100%;
+    border-bottom:2rpx solid #e6e6e6;
+    padding:0 40rpx;
+    justify-content: space-between;
+    align-items: center;
+    font-size:32rpx;
+}
+.picker-view .hd .t1 {
+    margin-left:20rpx;
+}
+.picker-view .hd .t2 {
+    margin-right:20rpx;
+    color:#1AAD16;
+}
+.picker-view .hd .t3 {
+    margin-right:20rpx;
+}
 .picker-item {
     line-height: 70rpx;
     margin-left: 5rpx;

@@ -26,9 +26,7 @@ App({
     });
 
     //预加载标签
-    productChannel.getTagData().then(data => {
-      productChannel.cache.tagData = data;
-    });
+    productChannel.getTagData();
 
     //预加载地区数据
     portalChannel.getRegionData();

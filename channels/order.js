@@ -8,7 +8,6 @@ var cache = {
 };
 export default class OrderChannel {
 
-
     async getBasketData() {
         let memberId = memberState.getLoginId();
         if (memberId) {
@@ -18,6 +17,7 @@ export default class OrderChannel {
             }
             try {
                 let resData = await util.fetch(url, { headers });
+                console.log('resData',resData);
                 if (resData.result === 1) {
                     return resData;
                 }

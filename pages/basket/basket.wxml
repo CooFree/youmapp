@@ -68,15 +68,7 @@
                                     <view class="line3">￥{{tools.tofixed(item.gift_price,2)}}</view>
                                 </view>
                                 <view class="m-selnum">
-                                    <view class="less dis">
-                                        <i class="icon ion-ios-minus-empty"></i>
-                                    </view>
-                                    <view class="textWrap">
-                                        {{item.volume}} 件
-                                    </view>
-                                    <view class="plus">
-                                        <i class="icon ion-ios-plus-empty"></i>
-                                    </view>
+                                    <text class="txt">x{{item.volume}}</text>
                                 </view>
                             </view>
                         </view>

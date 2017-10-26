@@ -43,6 +43,7 @@ Page({
             checkCount++;
           }
         });
+
         this.setData({
           checkAll,
           checkCount,

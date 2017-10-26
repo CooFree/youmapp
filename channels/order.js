@@ -76,16 +76,16 @@ export default class OrderChannel {
         return false;
     }
 
-    async addBasket(productIds, specificateIds, volumes, locations, images) {
+    async addBasket(productId, specificateId, volume, location, image) {
         let memberId = memberState.getLoginId();
         if (memberId) {
             let url = config.Host + '/order/basket.aspx?post=add&member_id=' + memberId;
             let post_data = {
-                product_id: productIds,
-                specificate_id: specificateIds,
-                volume: volumes,
-                location: locations,
-                image: Utility.decodeURI(images)
+                product_id: productId,
+                specificate_id: specificateId,
+                volume: volume,
+                location: location,
+                image: image
             };
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'

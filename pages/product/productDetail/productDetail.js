@@ -1,27 +1,30 @@
-// pages/product/productDetail/productDetail.js
 import ProductChannel from '../../../channels/product';
+import OrderChannel from '../../../channels/order';
 import util from '../../../utils/util';
-const productChannel = new ProductChannel();
+import buyTemp from '../../../utils/buyTemp';
 
+const orderChannel = new OrderChannel();
+const productChannel = new ProductChannel();
 Page({
     timeout: 0,
     data: {
+        productId: 0,
+        location: '',
         previewCommentpic: '',
-        selectColorIndex: -1,
-        selectSizeIndex: -1,
         showSelector: false,
+        detailImageList: [],
         specificateData: [],
         arrayColor: [],
         arraySize: [],
-        selectColor: [],
-        selectSize: [],
         specItem: null,
         finlImg: '',
         finlColor: '',
         finlSize: '',
-        limittime: null,
         finlVolume: 1,
+        limitseconds: 0,
+        limittime: '',
         storeflag: 0,
+        tagList: [],
     },
     showPreview: function (event) {
         let url = event.currentTarget.dataset.url;
@@ -47,174 +50,197 @@ Page({
                 });
                 tempArrayColor2.push({ color: spec_item.color, sale: 1, image_url });
             }
-            if (tempArraySize1.indexOf(value.color) < 0) {
-                tempArraySize1.push(value.size);
+            if (tempArraySize1.indexOf(spec_item.size) < 0) {
+                tempArraySize1.push(spec_item.size);
                 tempArraySize2.push({ size: spec_item.size, sale: 1 });
             }
         });
 
         this.setData({ arrayColor: tempArrayColor2, arraySize: tempArraySize2 });
     },
-    selectOption: function (event, arrayData, selectIndex, seType) {
-        const { dis, option, index } = event.currentTarget.dataset;
-        if (dis === false) {
-            let specList = this.data.specificateData.spec_list;
-            let tempArr1 = [];
-            let tempArr2 = util.deepCopy(arrayData);
-            let tempData = arrayData;
-
-            specList.forEach((item, index) => {
-                if (seType === 'color') {
-                    if (item.color === option.color) {
-                        tempArr1.push(item.size);
-                    }
-                } else {
-                    if (item.size === option.size) {
-                        tempArr1.push(item.color);
-                    }
-                }
-            });
-
-            tempArr2.forEach((item2, index2) => {
-                let saleFlag = false;
-                tempArr1.some((item1, index1) => {
-                    if (item2.value === item1.value) {
-                        saleFlag = true;
-                        return true;
-                    }
-                });
-                if (saleFlag === false) {
-                    item2.sale = 0;
-                }
-            });
-
-            if (seType === 'color') {
-                if (index === this.data.selectColorIndex) {
-                    this.setData({ selectColor: tempData, selectColorIndex: -1, finlImg: '', finlColor: '' });
-                } else {
-                    this.setData({ selectColor: tempArr2, selectColorIndex: index, finlColor: value, finlVolume: 1 });
-                }
-            } else {
-                if (index === this.data.selectSizeIndex) {
-                    this.setData({ selectSize: tempData, selectSizeIndex: -1, finlSize: '' });
-                } else {
-                    this.setData({ selectSize: tempArr2, selectSizeIndex: index, finlSize: value, finlVolume: 1 });
-                }
+    selectColor: function (event) {
+        const { specitem } = event.currentTarget.dataset;
+        let { specificateData, arraySize, finlColor } = this.data;
+        if (specitem.sale === 1) {
+            if (specitem.color === finlColor) {
+                arraySize.forEach((item, index) => { item.sale = 1; });
+                this.setData({ selectColorIndex: -1, finlImg: '', finlColor: '', arraySize });
             }
-
-            let { finlColor, finlSize } = this.data;
-            if (finlColor.length > 0 && finlSize.length > 0) {
-                let temp = [];
-                specList.forEach((value, index) => {
-                    if (value.color === finlColor) {
-                        temp.push(value);
+            else {
+                arraySize.forEach((item, index) => { item.sale = 0; });
+                specificateData.spec_list.forEach((spec, index) => {
+                    if (spec.color === specitem.color) {
+                        arraySize.some((item, index) => {
+                            if (item.size === spec.size) {
+                                item.sale = 1;
+                                return true;
+                            }
+                        });
                     }
                 });
-                temp.forEach((value, index) => {
-                    if (value.size === finlSize) {
-                        this.setData({
-                            specItem: value
-                        })
-                    }
-                });
+                this.setData({ finlImg: specitem.image_url, finlColor: specitem.color, finlVolume: 1, arraySize });
             }
         }
-    },
-    selectColor: function (event) {
-        this.selectOption(event, this.data.arraySize, this.data.selectColorIndex, 'color');
+
+        this.selectSpecItem();
     },
     selectSize: function (event) {
-        this.selectOption(event, this.data.arrayColor, this.data.selectSizeIndex, 'size');
-    },
-    setVolume: function (event) {
-        let value = event.detail.value;
-        let reserve = this.data.specItem !== null ? this.data.specItem.reserve : this.data.productDetail.product.reserve;
-        if (reserve) {
-            if (value > reserve) {
-                this.setData({
-                    finlVolume: reserve
-                })
-            } else if (value < 1) {
-                this.setData({
-                    finlVolume: 1
-                })
-            } else {
-                this.setData({
-                    finlVolume: value
-                })
+        const { specitem } = event.currentTarget.dataset;
+        const { specificateData, arrayColor, finlSize } = this.data;
+        if (specitem.sale === 1) {
+            if (specitem.size === finlSize) {
+                arrayColor.forEach((item, index) => { item.sale = 1; });
+                this.setData({ finlSize: '', arrayColor });
+            }
+            else {
+                arrayColor.forEach((item, index) => { item.sale = 0; });
+                specificateData.spec_list.forEach((spec, index) => {
+                    if (spec.size === specitem.size) {
+                        arrayColor.some((item, index) => {
+                            if (item.color === spec.color) {
+                                item.sale = 1;
+                                return true;
+                            }
+                        });
+                    }
+                });
+                this.setData({ finlSize: specitem.size, finlVolume: 1, arrayColor });
             }
         }
+
+        this.selectSpecItem();
+    },
+    selectSpecItem: function () {
+        const { finlColor, finlSize, specificateData } = this.data;
+        let specItem = null;
+        specificateData.spec_list.some((spec, index) => {
+            if (spec.size === finlSize && spec.color === finlColor) {
+                specItem = spec;
+                return true;
+            }
+        });
+        this.setData({ specItem });
+    },
+    setVolume: function (event) {
+        const { specItem, productDetail } = this.data;
+        const reserve = specItem ? specItem.reserve : productDetail.product.reserve;
+        let volume = parseInt(event.detail.value) || 0;
+        if (volume === 0) {
+            volume = 1;
+        }
+        if (volume > reserve) {
+            volume = reserve;
+        }
+        this.setData({ finlVolume: volume });
     },
     addVolume: function (event) {
-        let finlVolume = this.data.finlVolume;
-        let reserve = this.data.specItem !== null ? this.data.specItem.reserve : this.data.productDetail.product.reserve;
+        let { finlVolume, specItem, productDetail } = this.data;
+        const reserve = specItem ? specItem.reserve : productDetail.product.reserve;
 
         if (finlVolume < reserve) {
-            this.setData({
-                finlVolume: ++finlVolume
-            })
+            this.setData({ finlVolume: ++finlVolume });
         }
     },
     reduceVolume: function (event) {
-        let finlVolume = this.data.finlVolume;
+        let { finlVolume } = this.data;
         if (finlVolume > 1) {
-            this.setData({
-                finlVolume: --finlVolume
-            })
+            this.setData({ finlVolume: --finlVolume });
         }
     },
     toggleSelector: function (event) {
         this.setData({ showSelector: !this.data.showSelector });
     },
     setStore: function (event) {
-        let prodId = event.currentTarget.dataset.prodId;
+        const { prodid } = event.currentTarget.dataset;
         let { storeflag } = this.data;
         if (storeflag === 1) {
-            productChannel.deleteProductStore(prodId).then(data => {
-                this.setData({
-                    storeflag: 0
-                })
-            })
+            productChannel.deleteProductStore(prodid).then(data => {
+                if (data) {
+                    this.setData({ storeflag: 0 });
+                }
+            });
         } else {
-            productChannel.addProductStore(prodId).then(data => {
-                this.setData({
-                    storeflag: 1
-                })
-            })
+            productChannel.addProductStore(prodid).then(data => {
+                if (data) {
+                    this.setData({ storeflag: 1 });
+                }
+            });
         }
     },
+    onBuy: function (event) {
+        let { specItem, finlImg, finlColor, finlSize, finlVolume, location } = this.data;
+        if (!specItem) {
+            this.setData({ showSelector: true });
+            return;
+        }
+        if (finlVolume === 0) {
+            this.setData({ showSelector: true });
+            return;
+        }
+        buyTemp.addBuy(specItem.id, finlVolume, location, finlImg);
+        this.setData({ showSelector: false });
+        wx.navigateTo({ url: '../../order/orderConfirm/orderConfirm' });
+    },
+    onBasket: function (event) {
+        let { specItem, finlImg, finlColor, finlSize, finlVolume, productId, location } = this.data;
+        if (!specItem) {
+            this.setData({ showSelector: true });
+            return;
+        }
+        if (finlVolume === 0) {
+            this.setData({ showSelector: true });
+            return;
+        }
+        orderChannel.addBasket(productId, specItem.id, finlVolume, location, finlImg);
+        this.setData({ showSelector: false });
+        wx.showToast({ title: '已加入购物车', icon: 'success', duration: 2000 });
+    },
     onLoad: function (options) {
-        let prod_id = options.prod_id;
-        productChannel.getProductDetail(prod_id).then(data => {
 
-            this.setData({
-                productDetail: data.productData,
-                specificateData: data.specificateData,
-                storeflag: data.specificateData.store_flag
-            });
+        const productId = parseInt(options.prod_id) || 0;
 
-            this.onTiming(data.specificateData.limittime_seconds);
-            this.onOption();
+        wx.showLoading();
+        productChannel.getProductDetail(productId).then(data => {
+            if (data) {
+                this.setData({
+                    location: options.location || '',
+                    productId,
+                    productDetail: data.productData,
+                    specificateData: data.specificateData,
+                    storeflag: data.specificateData.store_flag
+                });
+
+                this.onTiming(data.specificateData.limittime_seconds);
+                this.onOption();
+            }
+            wx.hideLoading();
         });
 
-        productChannel.getProductCommentList(prod_id, 1, 1).then(data => {
+        productChannel.getProductCommentList(productId, 1, 1).then(data => {
             this.setData({ productCommentList: data });
+        });
+
+        productChannel.getTagData().then(data => {
+            this.setData({ tagList: data });
         });
     },
     onTiming: function (limitSeconds) {
         if (limitSeconds > 0) {
             limitSeconds--;
             let time = util.timing(limitSeconds);
-            this.setData({ limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second });
+            this.setData({ limittime: time.day + ':' + time.hour + ':' + time.minute + ':' + time.second, limitseconds: limitSeconds });
             this.timeout = setTimeout(() => this.onTiming(limitSeconds), 1000);
         }
         else {
-            this.setData({ limittime: null });
+            this.setData({ limittime: '', limitseconds: 0 });
         }
     },
-    /**
-     * 生命周期函数--监听页面卸载
-     */
+    onReachBottom: function () {
+        const { productDetail, detailImageList } = this.data;
+        if (detailImageList.length === 0) {
+            this.setData({ detailImageList: productDetail.detail_image_list });
+        }
+    },
     onUnload: function () {
         clearTimeout(this.timeout);
     }

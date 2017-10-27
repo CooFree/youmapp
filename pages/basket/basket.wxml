@@ -23,7 +23,7 @@
             <view class="list">
                 <block wx:for="{{productList}}" wx:key="{{index}}">
                     <view class="item">
-                        <view class="inner">
+                        <view class="inner" bindtouchstart="touchStart"bindtouchmove="touchMove"bindtouchend="touchEnd"data-index="{{index}}"style="{{item.txtStyle}}">
                             <view class="m-good">
                                 <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':'icon-nochecked-g'}}" data-checkflag="{{item.check_flag}}" data-basketid="{{item.basket_id}}"
                                     bindtap="onCheckCart"></i>

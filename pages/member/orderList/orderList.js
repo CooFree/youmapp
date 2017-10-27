@@ -1,66 +1,52 @@
-// pages/member/orderList/orderList.js
+import MemberChannel from '../../../channels/member';
+
+const orderChannel = new MemberChannel();
+const pageSize=10;
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  page:1,
   data: {
-  
+    orderList: [],
+    showStatus: '',
+    loadEnd: false,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
-  },
+    this.setData({ showStatus: options.show_status || '' });
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+    this.loadData();
   },
+  loadData: function (more) {
+    const { loadEnd, showStatus, orderList } = this.data;
+    if (more) {
+      if (loadEnd === false) {
+        wx.showLoading();
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+        this.page++;
+        orderChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
+          this.setData({
+            orderList: orderList.concat(data),
+            loadEnd: data.length === 0
+          });
+          wx.hideLoading();
+        });
+      }
+    }
+    else {
+      wx.showLoading();
+
+      this.page = 1;
+      orderChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
+        this.setData({
+          orderList: data,
+          loadEnd: data.length === 0
+        });
+        wx.hideLoading();
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-  
+    this.loadData();
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.loadData(true);
   }
 })

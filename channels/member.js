@@ -63,6 +63,7 @@ export default class MemberChannel {
                 birth_day: birthDay,
                 area
             }
+            console.log(post_data);
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

@@ -4,19 +4,20 @@
     <view class="m-shipAddress ma-layort">
         <view class="u-icon u-address-bg">
         </view>
-        <view class="item">
-            <view class="left">
-            </view>
-            <view class="middle">
-                <view class="phone"></view>
-                <view class="addr">
-                    + 新建收货地址
+        <navigator url="../orderReceive/orderReceive">
+            <view class="item">
+
+                <view class="middle">
+                    <view class="phone"></view>
+                    <view class="addr">
+                        + 新建收货地址
+                    </view>
+                </view>
+                <view class="right">
+                    <view class="icon icon-right ion-ios-arrow-right"></view>
                 </view>
             </view>
-            <view class="right">
-                <i class="icon icon-right ion-ios-arrow-right"></i>
-            </view>
-        </view>
+        </navigator>
     </view>
 
     <view class="Payway ma-layort">
@@ -25,14 +26,14 @@
         </view>
         <view class="ma-list">
             <view class="item" data-paytype="weixin" bindtap="selectPaytype">
-                <i class="icon ion-ios-circle-outline {{paytype==='weixin'?'icon-ischecked-g':'icon-nochecked-g'}}"></i>
+                <view class="icon ion-checkmark-circled {{paytype==='weixin'?'icon-ischecked-g':'icon-nochecked-g'}}"></view>
                 <view class="paywayItem">
                     <image class="pic" src="https://img02.camel.com.cn/image/wx_icon.png" alt=""></image>
                     <text class="txt">微信</text>
                 </view>
             </view>
             <view class="item" data-paytype="outpay" bindtap="selectPaytype">
-                <i class="icon ion-ios-circle-outline"></i>
+                <view class="icon ion-ios-circle-outline icon-nochecked-g"></view>
                 <text class="txt">货到付款，客服会和您电话确认订单</text>
             </view>
         </view>
@@ -41,9 +42,8 @@
     <view class="Payway EXPway ma-layort">
         <view class="hd">配送方式</view>
         <view class="ma-list">
-            <view class="item" wx:for="{{deliveryList}}" wx:key="{{index}}" data-deliveryid="{{item.id}}" bindtap="selecDelivery"
-            wx:if="{{(paytype === 'outpay' && item.outpay_flag === 1)||(paytype !== 'outpay' && item.outpay_flag === 0)}}">
-                <i class="icon ion-checkmark-circled {{item.id===deliveryId?'icon-ischecked-g':'icon-nochecked-g'}}"></i>
+            <view class="item" wx:for="{{deliveryList}}" wx:key="{{index}}" data-deliveryid="{{item.id}}" bindtap="selecDelivery" wx:if="{{(paytype === 'outpay' && item.outpay_flag === 1)||(paytype !== 'outpay' && item.outpay_flag === 0)}}">
+                <view class="icon {{item.id===deliveryId?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <text class="txt">{{tools.decodeuri(item.name)}}{{item.free_amount > 0 ? '（满' + item.free_amount + '元包邮）' : ''}}</text>
             </view>
         </view>
@@ -53,6 +53,24 @@
         <view class="left">
             <view class="item">
                 <text class="txt">暂无优惠活动</text>
+            </view>
+        </view>
+        <view class="right"></view>
+    </view>
+
+    <view class="campaigns">
+        <view class="left">
+            <view class="item">
+                <view class="promotion">
+                    <view class="w-tag tag">赠品</view>
+                    <text class="txt">国庆节 买冲锋衣送包，限量500</text>
+                </view>
+            </view>
+            <view class="item">
+                <view class="promotion">
+                    <view class="w-tag tag">满减</view>
+                    <text class="txt">国庆节 满100减10</text>
+                </view>
             </view>
         </view>
         <view class="right"></view>
@@ -70,11 +88,11 @@
                             </view>
                             <view class="cnt">
                                 <view class="xbox">
-                                    <text class="line1">{{tools.decodeuri(item.prod_name)}}</text>
-                                    <text class="count">x{{item.volume}}</text>
+                                    <view class="line1">{{tools.decodeuri(item.prod_name)}}</view>
+                                    <view class="count">x{{item.volume}}</view>
                                 </view>
-                                <text class="line2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</text>
-                                <text class="line3">￥{{tools.tofixed(item.last_price,2)}}</text>
+                                <view class="line2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
+                                <view class="line3">￥{{tools.tofixed(item.last_price,2)}}</view>
                             </view>
                         </view>
                     </view>
@@ -88,7 +106,7 @@
                             </view>
                             <view class="cnt">
                                 <view class="xbox">
-                                    <text class="line1">{{tools.decodeuri(item.gift_name)}}</text>
+                                    <text class="line1">{{tools.decodeuri(item.gift_name)}}<text class="w-tag tag">赠品</text></text>
                                     <text class="count">x{{item.volume}}</text>
                                 </view>
                                 <text class="line2">{{tools.decodeuri(item.specificate)}}</text>
@@ -100,26 +118,28 @@
             </ul>
             <view class="extraInfo" style="display: none;">
                 <text class="txt">不支持无理由退换货</text>
-                <i class="icon ion-information-circled"></i>
+                <view class="icon ion-information-circled"></view>
             </view>
         </view>
     </view>
 
     <view class="ma-layort">
-        <view class="m-listItem">
-            <view class="left">你拥有优惠券</view>
-            <view class="middel">{{ticketList.length}}张
+        <navigator url="../orderTicketList/orderTicketList">
+            <view class="m-listItem">
+                <view class="left">你拥有优惠券</view>
+                <view class="middel">{{ticketList.length}}张
+                </view>
+                <view class="right">
+                    <view class="icon icon-right ion-ios-arrow-right"></view>
+                </view>
             </view>
-            <view class="right">
-                <i class="icon icon-right ion-ios-arrow-right"></i>
-            </view>
-        </view>
+        </navigator>
     </view>
 
     <view class="ma-layort">
         <view class="m-listItem">
             <view class="left" bindtap="checkInvoice">
-                <i class="icon ion-ios-circle-outline {{invoiceFlag===1?'icon-ischecked-g':'icon-nochecked-g'}}"></i>
+                <view class="icon {{invoiceFlag===1?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <text class="txt">我要开发票</text>
             </view>
         </view>

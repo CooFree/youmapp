@@ -2,51 +2,34 @@
 <wxs src="../../../utils/tools.wxs" module="tools" />
 
 <view class="container greybg">
-    <view class="m-indexHd" style="height: 44px;">
-        <view class="m-hd">
-            <view class="">
-                <view class="product-hd g-row">
-                    <view class="g-top g-row">
-                        <i class="icon tg-icon ion-ios-arrow-back"></i>
-                        <text class="topBarTitle">个人资料</text>
-                        <view class="right">
-                            <i class="icon tg-icon ion-ios-home-outline"></i>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view>
-
-
     <view class="userProfile">
         <view class="avatar">
             <view class="wrap">
-                <image class="pic" mode="widthFix" src="{{memberOrderData.head_portrait}}" alt=""></image>
+                <image class="pic" mode="widthFix" src="{{Profile.head_portrait}}" alt=""></image>
             </view>
         </view>
         <view class="infos">
             <view class="item">
                 <text class="label">帐号</text>
                 <view class="right">
-                    <text>{{memberOrderData.member_login_name}}</text>
+                    <text>{{Profile.login_name}}</text>
                 </view>
             </view>
             <view class="item">
                 <text class="label">姓名</text>
                 <view class="right">
-                    <input type="text" class="txtInput" value="" placeholder="请输入姓名" />
+                    <input type="text" class="txtInput" value="{{name}}" bindinput="setName" placeholder="请输入姓名" />
                 </view>
             </view>
             <view class="item">
                 <text class="label">性别</text>
                 <view class="right">
-                    <view class="sex-wrap">
-                        <i class="icon icon-nochecked-g ion-ios-circle-outline"></i>
+                    <view class="sex-wrap" bindtap="setSex" data-sex="0">
+                        <view class="icon {{setProfile.sex === 0? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
                         <text class="spanTxt">男</text>
                     </view>
-                    <view class="sex-wrap">
-                        <i class="icon icon-nochecked-g ion-ios-circle-outline"></i>
+                    <view class="sex-wrap" bindtap="setSex" data-sex="1">
+                        <view class="icon {{setProfile.sex === 1? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
                         <text class="spanTxt">女</text>
                     </view>
                 </view>
@@ -56,7 +39,7 @@
                 <view class="right">
                     <picker mode="date" value="{{date}}" start="1949-01-01" end="2050-01-01" bindchange="bindDateChange">
                         <view class="picker">
-                            {{date}}
+                            {{setProfile.birth_year? date : '请选择'}}
                         </view>
                     </picker>
                 </view>
@@ -65,7 +48,7 @@
                 <text class="label">地区</text>
                 <view class="right">
                     <view class="picker" bindtap="selectDistrict">
-                            
+
                         {{tools.decodeuri(areaInfo? areaInfo : '请选择')}}
                     </view>
                     <view class="m-sliding" wx:if="{{addressMenuIsShow}}">
@@ -103,8 +86,8 @@
             </view>
         </view>
         <view class="orderRFT">
-            <view class="left">取消</view>
-            <view class="right">保存</view>
+            <view class="left"><navigator open-type="navigateBack" delta="1">取消</navigator></view>
+            <view class="right" bindtap="saveProfile">保存</view>
         </view>
     </view>
 

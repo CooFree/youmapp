@@ -2328,7 +2328,7 @@ m-indexHd .inner {
 }
 
 .icon-nochecked-g {
-    font-size: 48rpx;
+    font-size: 45rpx;
     color: #999;
 }
 

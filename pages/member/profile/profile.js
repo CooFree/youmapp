@@ -12,7 +12,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    date: today,
+    date: 0,
     endDate: date,
     animationAddressMenu: {},
     addressMenuIsShow: false,
@@ -24,6 +24,7 @@ Page({
     areaInfo: '',
     checkArea: false,
     memberOrderData: {},
+    setProfile: null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -36,14 +37,55 @@ Page({
       })
     })
 
-    memberChannel.getMemberOrderData().then((data) => {
+    memberChannel.getProfile().then((data) => {
       this.setData({
-        memberOrderData: data
+        Profile: data,
+        setProfile: data,
+        date: data.birth_year + '-' +data.birth_month + '-' +data.birth_day,
       })
     })
   },
-  selectDistrict: function (e) {
-    console.log(e);
+  saveProfile: function(event){
+    let name = this.data.setProfile.name;
+    let sex = this.data.setProfile.sex;
+    let birthYear = this.data.setProfile.birth_year;
+    let birthMonth = this.data.setProfile.birth_month;
+    let birthDay = this.data.setProfile.birth_day;
+    let area = this.data.setProfile.area_id;
+
+    memberChannel.saveProfile(name, sex, birthYear, birthMonth, birthDay, area).then(data=>{
+      if(data){
+        wx.showToast({
+          title: '保存成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    })
+  },
+  setName: function (event) {
+    let name = event.detail.value;
+    this.setData({
+      'setProfile.name': name
+    })
+  },
+  setSex: function(event){
+    let sex = parseInt(event.currentTarget.dataset.sex);
+    this.setData({
+      'setProfile.sex': sex
+    })
+  },
+  bindDateChange: function (event) {
+    let value = event.detail.value;
+    let date = value.split('-');
+    this.setData({
+      date: value,
+      'setProfile.birth_year': date[0],
+      'setProfile.birth_month': date[1],
+      'setProfile.birth_day': date[2]
+    })
+  },
+  selectDistrict: function (event) {
     var that = this
     // 如果已经显示，不在执行显示动画
     if (that.data.addressMenuIsShow) {
@@ -75,12 +117,13 @@ Page({
       // 滑动选择了第二项数据，即市，此时区显示省市对应的第一组数据
       let id = citys[cityNum].region_id;
       let resultReginData = this.findRegionData(citys[cityNum].region_id, data);
-      console.log(cityNum);
       if (resultReginData.length === 1 && cityNum !== 0) {
         this.setData({
           value: [provinceNum, cityNum, 0],
           areas: resultReginData,
-          checkArea: true
+          checkArea: true,
+          'setProfile.province_id': this.data.provinces[provinceNum].region_id,
+          'setProfile.city_id': this.data.citys[cityNum].region_id,
         })
       } else {
         this.setData({
@@ -93,7 +136,10 @@ Page({
       if (countyNum !== 0) {
         this.setData({
           value: [provinceNum, cityNum, countyNum],
-          checkArea: true
+          checkArea: true,
+          'setProfile.province_id': this.data.provinces[provinceNum].region_id,
+          'setProfile.city_id': this.data.citys[cityNum].region_id,
+          'setProfile.area_id': this.data.areas[countyNum].region_id,
         })
       } else {
         this.setData({

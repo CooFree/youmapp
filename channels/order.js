@@ -195,7 +195,7 @@ export default class OrderChannel {
         let memberId = memberState.getLoginId();
         if (memberId) {
             let url = config.Host + '/order/orderConfirm.aspx?member_id=' + memberId;
-            let post_data = { ticket_id: ticketId, delivery_id: deliveryId, pay_type: payType, receive_id: receiveId, location: '' };
+            let post_data = { ticket_id: ticketId, delivery_id: deliveryId, pay_type: payType, receive_id: receiveId };
             post_data = Object.assign({}, post_data, postBuyData);
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',

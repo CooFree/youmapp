@@ -1,66 +1,148 @@
-// pages/order/orderConfirm/orderConfirm.js
+import OrderChannel from '../../../channels/order';
+import generalConfig from '../../../generalConfig';
+import buyTemp from '../../../utils/buyTemp';
+
+const orderChannel = new OrderChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    submiting: false,
+    prodAmount: 0,
+    preferential: 0,
+    deliveryFee: 0,
+    giveScore: 0,
+    orderAmount: 0,
+    ticketUseflag: 1,
+    deliveryList: [],
+    receive: null,
+    ticketList: [],
+    preferList: [],
+    productList: [],
+    giftList: [],
+    deliveryFeeResult: -1,
+    paytype: 'weixin',
+    deliveryId: 0,
+    ticketId: 0,
+    receiveId: 0,
+    invoiceFlag: 0,
+    invoiceHead: '',
+    postageFreeAmount: 0,
+    orderNotice: '',
+    reserveFlag: 1,
+    amountFlag: 1
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
-  },
+    this.setData({
+      postageFreeAmount: generalConfig.postageFreeAmount,
+      orderNotice: generalConfig.orderNotice
+    });
+    const pages = getCurrentPages();
+    console.log('pages', pages);
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+    this.loadData();
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  loadData: function () {
+    const { paytype, deliveryId, ticketId, receiveId } = this.data;
+    let buyData = buyTemp.jsonData();
+    if (buyData) {
+      wx.showLoading();
+      orderChannel.getOrderConfirmData(ticketId, deliveryId, paytype, receiveId, buyData).then(data => {
+        if (data) {
+          this.setData({
+            deliveryList: data.delivery_list,
+            productList: data.basket_product_list,
+            giftList: data.basket_gift_list,
+            prodAmount: data.order.product_amount,
+            orderAmount: data.order.amount,
+            preferential: data.order.preferential,
+            deliveryFee: data.order.delivery_fee,
+            giveScore: data.order.give_score,
+            ticketUseflag: data.ticket_useflag,
+            receive: data.receive,
+            ticketList: data.member_ticket_list,
+            preferList: data.prefer_list,
+            deliveryFeeResult: data.delivery_fee_result,
+            paytype: data.order.pay_type,
+            deliveryId: data.order.delivery_type,
+            receiveId: data.receive.id || 0,
+          });
+        }
+        wx.hideLoading();
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  selectPaytype: function (event) {
+    const { paytype } = event.currentTarget.dataset;
+    let deliveryId = 0;
+    for (let item of this.data.deliveryList) {
+      if (paytype === 'outpay' && item.outpay_flag === 1) {
+        deliveryId = item.id;
+        break;
+      }
+      else if (paytype !== 'outpay' && item.outpay_flag === 0) {
+        deliveryId = item.id;
+        break;
+      }
+    }
+    this.setData({ paytype, deliveryId });
+    this.loadData();
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
+  selectReceive: function (receiveId) {
+    this.setData({ receiveId });
+    this.loadData();
+  },
+  selecTicket: function (ticketId) {
+    this.setData({ ticketId });
+    this.loadData();
+  },
+  selecDelivery: function (event) {
+    const { deliveryid } = event.currentTarget.dataset;
+    this.setData({ deliveryId: deliveryid });
+    this.loadData();
+  },
+  checkInvoice: function () {
+    this.setData({ invoiceFlag: this.data.invoiceFlag === 1 ? 0 : 1 });
+  },
   onUnload: function () {
-  
-  },
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
   },
+  onOrder: function () {
+    const { submiting, paytype, deliveryId, ticketId, receiveId, invoiceHead, invoiceFlag, reserveFlag, amountFlag } = this.data;
+    if (submiting === true) {
+      return;
+    }
+    if (receiveId === 0) {
+      wx.showToast({ title: '先选择收货地址', icon: 'loading', duration: 2000 });
+      return;
+    }
+    if (reserveFlag === 0) {
+      wx.showToast({ title: '库存不足', icon: 'loading', duration: 2000 });
+      return;
+    }
+    let buyData = buyTemp.jsonData();
+    if (!buyData) {
+      wx.showToast({ title: '没有商品', icon: 'loading', duration: 2000 });
+      return;
+    }
+    if (amountFlag === 0) {
+      wx.showToast({ title: '金额不符', icon: 'loading', duration: 2000 });
+      return;
+    }
+    const productVolume = buyTemp.getVolume();
+    if (paytype === 'outpay' && productVolume > 3) {
+      wx.showToast({ title: '货到付款不能超过3件', icon: 'loading', duration: 2000 });
+      return;
+    }
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    this.setData({ submiting: true });
+    orderChannel.postOrderConfirm(ticketId, deliveryId, paytype, receiveId, buyData, invoiceFlag === 1 ? invoiceHead.trim() : '').then(orderId => {
+      this.setData({ submiting: false });
+      if (orderId > 0) {
+        buyTemp.clear();
+        wx.navigateTo({ url: '../order/orderPay/orderPay?order_id=' + orderId });
+      }
+      else {
+        wx.showToast({ title: '提交失败', icon: 'loading', duration: 2000 });
+      }
+    });
   }
 })

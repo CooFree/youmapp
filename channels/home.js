@@ -33,7 +33,7 @@ export default class HomeChannel {
         if (data.length === 0) {
             let url = config.Host + '/index.aspx?post=list';
             let post_data = 'code=' + listCode + '&page=' + page + '&page_size=' + pageSize;
-            
+
             try {
                 let resData = await util.fetch(url + '&' + post_data);
                 if (resData.result === 1) {

@@ -25,7 +25,7 @@
                     <view class="item">
                         <view class="inner">
                             <view class="m-good">
-                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':''}}" data-checkflag="{{item.check_flag}}" data-basketid="{{item.basket_id}}"
+                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':'icon-nochecked-g'}}" data-checkflag="{{item.check_flag}}" data-basketid="{{item.basket_id}}"
                                     bindtap="onCheckCart"></i>
                                 <view class="imgWrap">
                                     <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
@@ -79,7 +79,7 @@
         <view class="m-cartFT">
             <view class="left">
                 <view class="checkAll" bindtap="onCheckAllCart">
-                    <i class="icon ion-checkmark-circled {{checkAll?'icon-ischecked-g':''}}"></i>
+                    <i class="icon ion-checkmark-circled {{checkAll?'icon-ischecked-g':'icon-nochecked-g'}}"></i>
                     <text class="txt">已选 ({{checkCount}})</text>
                 </view>
                 <view class="price">￥{{tools.tofixed(totalAmount,2)}}
@@ -87,7 +87,7 @@
                 </view>
             </view>
             <view class="right">
-                <view class="btn w-button" bindtap="goSettle">下单</view>
+                <view class="btn w-button" bindtap="goSettle">去下单</view>
             </view>
         </view>
     </view>

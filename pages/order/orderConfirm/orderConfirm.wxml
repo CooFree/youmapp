@@ -33,7 +33,7 @@
                 </view>
             </view>
             <view class="item" data-paytype="outpay" bindtap="selectPaytype">
-                <view class="icon ion-checkmark-circled icon-nochecked-g"></view>
+                <view class="icon ion-ios-circle-outline icon-nochecked-g"></view>
                 <text class="txt">货到付款，客服会和您电话确认订单</text>
             </view>
         </view>
@@ -43,7 +43,7 @@
         <view class="hd">配送方式</view>
         <view class="ma-list">
             <view class="item" wx:for="{{deliveryList}}" wx:key="{{index}}" data-deliveryid="{{item.id}}" bindtap="selecDelivery" wx:if="{{(paytype === 'outpay' && item.outpay_flag === 1)||(paytype !== 'outpay' && item.outpay_flag === 0)}}">
-                <view class="icon ion-checkmark-circled {{item.id===deliveryId?'icon-ischecked-g':'icon-nochecked-g'}}"></view>
+                <view class="icon {{item.id===deliveryId?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <text class="txt">{{tools.decodeuri(item.name)}}{{item.free_amount > 0 ? '（满' + item.free_amount + '元包邮）' : ''}}</text>
             </view>
         </view>
@@ -139,7 +139,7 @@
     <view class="ma-layort">
         <view class="m-listItem">
             <view class="left" bindtap="checkInvoice">
-                <view class="icon ion-checkmark-circled {{invoiceFlag===1?'icon-ischecked-g':'icon-nochecked-g'}}"></view>
+                <view class="icon {{invoiceFlag===1?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <text class="txt">我要开发票</text>
             </view>
         </view>

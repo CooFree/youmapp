@@ -22,14 +22,14 @@
     <view class="userProfile">
         <view class="avatar">
             <view class="wrap">
-                <image class="pic" mode="widthFix" src="https://img02.camel.com.cn/image/headportrait345.png" alt=""></image>
+                <image class="pic" mode="widthFix" src="{{memberOrderData.head_portrait}}" alt=""></image>
             </view>
         </view>
         <view class="infos">
             <view class="item">
                 <text class="label">帐号</text>
                 <view class="right">
-                    <span>camel1059205</span>
+                    <text>{{memberOrderData.member_login_name}}</text>
                 </view>
             </view>
             <view class="item">
@@ -43,11 +43,11 @@
                 <view class="right">
                     <view class="sex-wrap">
                         <i class="icon icon-nochecked-g ion-ios-circle-outline"></i>
-                        <span class="spanTxt">男</span>
+                        <text class="spanTxt">男</text>
                     </view>
                     <view class="sex-wrap">
                         <i class="icon icon-nochecked-g ion-ios-circle-outline"></i>
-                        <span class="spanTxt">女</span>
+                        <text class="spanTxt">女</text>
                     </view>
                 </view>
             </view>
@@ -64,28 +64,40 @@
             <view class="item">
                 <text class="label">地区</text>
                 <view class="right">
-                    <view class="picker-view" animation="{{animationAddressMenu}}">
-                        <view style="height:10% ;width:95%;margin-top:10rpx">
-                            <text bindtap="cityCancel">取消</text>
-                            <text style="float: right" bindtap="citySure">确定</text>
+                    <view class="picker" bindtap="selectDistrict">
+                            
+                        {{tools.decodeuri(areaInfo? areaInfo : '请选择')}}
+                    </view>
+                    <view class="m-sliding" wx:if="{{addressMenuIsShow}}">
+                        <view class="m-mask" bindtap="cityCancel"></view>
+                        <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
+                            <view class="hd">
+                                <text class="t1" bindtap="cityCancel">取消</text>
+                                <block wx:if="{{checkArea}}">
+                                    <text class="t2" bindtap="citySure">确定</text>
+                                </block>
+                                <block wx:else>
+                                    <text class="t3">确定</text>
+                                </block>
+                            </view>
+                            <picker-view style="width: 100%; height: 300px;" bindchange="cityChange" value="{{value}}" wx:key="">
+                                <picker-view-column>
+                                    <view wx:for="{{provinces}}" class="picker-item">
+                                        {{tools.decodeuri(item.region_name)}}
+                                    </view>
+                                </picker-view-column>
+                                <picker-view-column>
+                                    <view wx:for="{{citys}}" class="picker-item">
+                                        {{tools.decodeuri(item.region_name)}}
+                                    </view>
+                                </picker-view-column>
+                                <picker-view-column>
+                                    <view wx:for="{{areas}}" class="picker-item">
+                                        {{tools.decodeuri(item.region_name)}}
+                                    </view>
+                                </picker-view-column>
+                            </picker-view>
                         </view>
-                        <picker-view style="width: 100%; height: 300px;" bindchange="cityChange" value="{{value}}" wx:key="">
-                            <picker-view-column>
-                                <view wx:for="{{provinces}}" class="picker-item">
-                                    {{tools.decodeuri(item.region_name)}}
-                                </view>
-                            </picker-view-column>
-                            <picker-view-column>
-                                <view wx:for="{{citys}}" class="picker-item">
-                                    {{tools.decodeuri(item.region_name)}}
-                                </view>
-                            </picker-view-column>
-                            <picker-view-column>
-                                <view wx:for="{{areas}}" class="picker-item">
-                                    {{tools.decodeuri(item.region_name)}}
-                                </view>
-                            </picker-view-column>
-                        </picker-view>
                     </view>
                 </view>
             </view>

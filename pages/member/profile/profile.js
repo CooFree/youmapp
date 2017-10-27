@@ -6,8 +6,8 @@ const memberChannel = new MemberChannel();
 const portalChannel = new PortalChannel();
 let date = new Date();
 let today = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate();
+let defualtData = [{ 'region_id': 0, 'region_name': encodeURIComponent('请选择') }];
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -18,10 +18,12 @@ Page({
     addressMenuIsShow: false,
     regionData: [],
     value: [0, 0, 0],
-    provinces: [{ 'region_id': 0, 'region_name': encodeURIComponent('请选择') }],
-    citys: [{ 'region_id': 0, 'region_name': encodeURIComponent('请选择') }],
-    areas: [{ 'region_id': 0, 'region_name': encodeURIComponent('请选择') }],
-    areaInfo: ''
+    provinces: defualtData,
+    citys: defualtData,
+    areas: defualtData,
+    areaInfo: '',
+    checkArea: false,
+    memberOrderData: {},
   },
   /**
    * 生命周期函数--监听页面加载
@@ -33,6 +35,22 @@ Page({
         provinces: this.findRegionData(-1, data)
       })
     })
+
+    memberChannel.getMemberOrderData().then((data) => {
+      this.setData({
+        memberOrderData: data
+      })
+    })
+  },
+  selectDistrict: function (e) {
+    console.log(e);
+    var that = this
+    // 如果已经显示，不在执行显示动画
+    if (that.data.addressMenuIsShow) {
+      return
+    }
+    // 执行显示动画
+    that.startAddressAnimation(true)
   },
   cityChange: function (event) {
     let value = event.detail.value;
@@ -46,22 +64,43 @@ Page({
 
     if (this.data.value[0] != provinceNum) {
       let id = provinces[provinceNum].region_id;
+      let resultReginData = this.findRegionData(id, data);
       this.setData({
         value: [provinceNum, 0, 0],
-        citys: this.findRegionData(id, data),
+        citys: resultReginData,
+        areas: defualtData,
+        checkArea: false,
       })
     } else if (this.data.value[1] != cityNum) {
       // 滑动选择了第二项数据，即市，此时区显示省市对应的第一组数据
-      let id = citys[cityNum].region_id
-      this.setData({
-        value: [provinceNum, cityNum, 0],
-        areas: this.findRegionData(citys[cityNum].region_id, data),
-      })
+      let id = citys[cityNum].region_id;
+      let resultReginData = this.findRegionData(citys[cityNum].region_id, data);
+      console.log(cityNum);
+      if (resultReginData.length === 1 && cityNum !== 0) {
+        this.setData({
+          value: [provinceNum, cityNum, 0],
+          areas: resultReginData,
+          checkArea: true
+        })
+      } else {
+        this.setData({
+          value: [provinceNum, cityNum, cityNum],
+          areas: resultReginData,
+          checkArea: false
+        })
+      }
     } else {
-      // 滑动选择了区
-      this.setData({
-        value: [provinceNum, cityNum, countyNum]
-      })
+      if (countyNum !== 0) {
+        this.setData({
+          value: [provinceNum, cityNum, countyNum],
+          checkArea: true
+        })
+      } else {
+        this.setData({
+          value: [provinceNum, cityNum, countyNum],
+          checkArea: false
+        })
+      }
     }
   },
   findRegionData: function (parentRegionId, data) {
@@ -103,7 +142,7 @@ Page({
     var value = that.data.value;
     that.startAddressAnimation(false);
     // 将选择的城市信息显示到输入框
-    var areaInfo = that.data.provinces[value[0]].region_name + ',' + that.data.citys[value[1]].region_name + ',' + that.data.areas[value[2]].region_name
+    var areaInfo = (that.data.provinces[value[0]].region_name + '，' + that.data.citys[value[1]].region_name + '，' + that.data.areas[value[2]].region_name).replace('，%E8%AF%B7%E9%80%89%E6%8B%A9', '');
     that.setData({
       areaInfo: areaInfo,
     })

@@ -4,9 +4,6 @@ import buyTemp from '../../utils/buyTemp';
 
 const orderChannel = new OrderChannel();
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
     totalAmount: 0,
     totalVolume: 0,
@@ -17,14 +14,13 @@ Page({
     checkAll: false,
     checkCount: 0,
     postageFreeAmount: 0,
-    submiting: false
+    orderNotice: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    this.setData({ postageFreeAmount: generalConfig.postageFreeAmount });
+    this.setData({
+      postageFreeAmount: generalConfig.postageFreeAmount,
+      orderNotice: generalConfig.orderNotice
+    });
     this.loadBasket();
   },
   loadBasket: function () {
@@ -83,10 +79,7 @@ Page({
     });
   },
   goSettle: function () {
-    const { submiting, productList } = this.data;
-    if (submiting === true) {
-      return;
-    }
+    const { productList } = this.data;
     let specIdArray = [], volumeArray = [], locationArray = [], imageArray = [];
     productList.forEach((item, index) => {
       if (item.check_flag === 1 && item.volume > 0) {
@@ -167,7 +160,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.loadBasket();
   },
 
   /**

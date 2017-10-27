@@ -13,8 +13,8 @@ export default class BuyTemp {
     wx.setStorageSync(sessionkey, buyTempData);
   }
   static jsonData() {
-    const buyTempType = wx.getStorageSync(sessionkey);
-    if (buyTempType) {
+    const buyTempData = wx.getStorageSync(sessionkey);
+    if (buyTempData) {
       return { specificate: buyTempData.specificateIdArray, volume: buyTempData.volumeArray, location: buyTempData.locationArray, image: buyTempData.imageArray };
     }
     else {
@@ -23,16 +23,13 @@ export default class BuyTemp {
   }
   static getVolume() {
     let totalVolume = 0;
-    const buyTempType = wx.getStorageSync(sessionkey);
-    if (buyTempType) {
+    const buyTempData = wx.getStorageSync(sessionkey);
+    if (buyTempData) {
       for (let volume of buyTempData.volumeArray) {
         totalVolume += volume;
       }
     }
     return totalVolume;
-  }
-  static getBuyType() {
-    return wx.getStorageSync(typeSessionkey);
   }
 }
 

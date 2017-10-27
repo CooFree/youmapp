@@ -10,10 +10,13 @@ const portalChannel = new PortalChannel();
 const productChannel = new ProductChannel();
 App({
   onLaunch: function () {
+
+    let systemInfo = wx.getSystemInfoSync();
+    console.log('systemInfo',systemInfo);
     // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || [];
-    logs.unshift(Date.now());
-    wx.setStorageSync('logs', logs);
+    //var logs = wx.getStorageSync('logs') || [];
+    //logs.unshift(Date.now());
+    //wx.setStorageSync('logs', logs);
 
     //预加载通用配置
     portalChannel.getGeneralConfig().then(data => {

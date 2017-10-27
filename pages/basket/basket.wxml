@@ -63,7 +63,7 @@
                                     <image src="{{tools.httpsuri(item.gift_image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
                                 </view>
                                 <view class="cnt">
-                                    <view class="line1">{{tools.decodeuri(item.gift_name)}}</view>
+                                    <view class="line1">{{tools.decodeuri(item.gift_name)}}<text class="w-tag tag">赠品</text></view>
                                     <view class="line2">{{tools.decodeuri(item.gift_specificate)}}</view>
                                     <view class="line3">￥{{tools.tofixed(item.gift_price,2)}}</view>
                                 </view>

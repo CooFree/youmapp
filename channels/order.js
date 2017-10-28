@@ -230,9 +230,9 @@ export default class OrderChannel {
                 pay_type: paytype,
                 receive_id: receiveId,
                 post_script: '',
-                invoice: encodeURIComponent(invoice),
-                src: encodeURIComponent(src),
-                src_url: encodeURIComponent(src_url)
+                invoice: invoice,
+                src: src,
+                src_url: src_url
             };
             post_data = Object.assign({}, post_data, postBuyData);
 

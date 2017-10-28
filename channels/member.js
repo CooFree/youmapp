@@ -56,14 +56,13 @@ export default class MemberChannel {
         if (memberId) {
             let url = config.Host + '/member/profile.aspx?post=set_profile&member_id=' + memberId;
             let post_data = {
-                name: encodeURIComponent(name),
+                name,
                 sex,
                 birth_year: birthYear,
                 birth_month: birthMonth,
                 birth_day: birthDay,
                 area
             }
-            console.log(post_data);
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -315,7 +314,7 @@ export default class MemberChannel {
                 receive_region: receiveRegion,
                 receive_zipcode: '',
                 default_flag: receiveDefault,
-                receive_address: encodeURIComponent(receiveAddress)
+                receive_address: receiveAddress
             };
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -581,7 +580,7 @@ export default class MemberChannel {
                 image: imageUrlArray.join(','),
                 image_w: imageWidthArray.join(','),
                 image_h: imageHeightArray.join(','),
-                content: encodeURIComponent(content)
+                content: content
             };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -630,7 +629,7 @@ export default class MemberChannel {
                 order_id: orderId,
                 type: applyType,
                 title: Utility.filterUrlBad(title),
-                content: encodeURIComponent(content)
+                content: content
             };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -657,7 +656,7 @@ export default class MemberChannel {
             let url = config.Host + '/member/apply.aspx?post=reply&member_id=' + memberId;
             let post_data = {
                 apply_id: applyId,
-                content: encodeURIComponent(content)
+                content: content
             };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"

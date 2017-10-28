@@ -1,0 +1,34 @@
+<wxs src="../../utils/tools.wxs" module="tools" />
+<template name="region-picker">
+        <view class="m-sliding" wx:if="{{menuIsShow}}">
+                <view class="m-mask" bindtap="cityCancel"></view>
+                <view class="picker-view" animation="{{animationMenu}}" style="visibility:{{menuIsShow ? 'visible':'hidden'}}">
+                    <view class="hd">
+                        <text class="t1" bindtap="cityCancel">取消</text>
+                        <block wx:if="{{checkRegion}}">
+                            <text class="t2" bindtap="citySure">确定</text>
+                        </block>
+                        <block wx:else>
+                            <text class="t3">确定</text>
+                        </block>
+                    </view>
+                    <picker-view style="width:100%;height:300px;" bindchange="cityChange" value="{{selectValue}}">
+                        <picker-view-column>
+                            <view wx:for="{{provinceData}}" class="picker-item" wx:key="{{index}}">
+                                {{tools.decodeuri(item.region_name)}}
+                            </view>
+                        </picker-view-column>
+                        <picker-view-column>
+                            <view wx:for="{{cityData}}" class="picker-item" wx:key="{{index}}">
+                                {{tools.decodeuri(item.region_name)}}
+                            </view>
+                        </picker-view-column>
+                        <picker-view-column>
+                            <view wx:for="{{areaData}}" class="picker-item" wx:key="{{index}}">
+                                {{tools.decodeuri(item.region_name)}}
+                            </view>
+                        </picker-view-column>
+                    </picker-view>
+                </view>
+            </view>
+</template>

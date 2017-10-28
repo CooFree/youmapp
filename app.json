@@ -1,5 +1,6 @@
 {
     "pages": [
+        "pages/login/login",
         "pages/index/index",
         "pages/logs/logs",
         "pages/search/search",
@@ -27,7 +28,8 @@
         "pages/member/ticketList/ticketList",
         "pages/member/productComment/productComment",
         "pages/member/apply/apply",
-        "pages/product/productComment/productComment"
+        "pages/product/productComment/productComment",
+        "pages/regist/regist"
     ],
     "window": {
         "backgroundTextStyle": "light",

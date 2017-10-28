@@ -2018,6 +2018,9 @@ m-indexHd .inner {
     justify-content: space-between;
     margin-top: 24rpx;
 }
+.sublime .link{
+    font-size:24rpx;
+}
 
 .sublime a {
     font-size: 24rpx;
@@ -2077,6 +2080,7 @@ m-indexHd .inner {
 
 .ologin .oitem .icon {
     height: 37rpx;
+    width:37rpx;
 }
 
 .mc-servicePolicy {

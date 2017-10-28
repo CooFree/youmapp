@@ -1,18 +1,18 @@
-<!--pages/member/profile/profile.wxml-->
 <wxs src="../../../utils/tools.wxs" module="tools" />
+<import src="../../../components/regionPicker/region-picker.wxml" />
 
 <view class="container greybg">
     <view class="userProfile">
         <view class="avatar">
             <view class="wrap">
-                <image class="pic" mode="widthFix" src="{{Profile.head_portrait}}" alt=""></image>
+                <image class="pic" mode="widthFix" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
             </view>
         </view>
         <view class="infos">
             <view class="item">
                 <text class="label">帐号</text>
                 <view class="right">
-                    <text>{{Profile.login_name}}</text>
+                    <text>{{tools.decodeuri(loginName)}}</text>
                 </view>
             </view>
             <view class="item">
@@ -24,12 +24,12 @@
             <view class="item">
                 <text class="label">性别</text>
                 <view class="right">
-                    <view class="sex-wrap" bindtap="setSex" data-sex="0">
-                        <view class="icon {{setProfile.sex === 0? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
+                    <view class="sex-wrap" bindtap="setSex" data-sex="1">
+                        <view class="icon {{sex === 1? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
                         <text class="spanTxt">男</text>
                     </view>
-                    <view class="sex-wrap" bindtap="setSex" data-sex="1">
-                        <view class="icon {{setProfile.sex === 1? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
+                    <view class="sex-wrap" bindtap="setSex" data-sex="2">
+                        <view class="icon {{sex === 2? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
                         <text class="spanTxt">女</text>
                     </view>
                 </view>
@@ -37,9 +37,9 @@
             <view class="item">
                 <text class="label">生日</text>
                 <view class="right">
-                    <picker mode="date" value="{{date}}" start="1949-01-01" end="2050-01-01" bindchange="bindDateChange">
+                    <picker mode="date" value="{{ birthYear+'-'+birthMonth+'-'+birthDay}}" start="1949-01-01" end="2020-01-01" bindchange="bindDateChange">
                         <view class="picker">
-                            {{setProfile.birth_year? date : '请选择'}}
+                            {{birthYear>0? birthYear+'-'+birthMonth+'-'+birthDay : '请选择'}}
                         </view>
                     </picker>
                 </view>
@@ -48,45 +48,16 @@
                 <text class="label">地区</text>
                 <view class="right">
                     <view class="picker" bindtap="selectDistrict">
-
-                        {{tools.decodeuri(areaInfo? areaInfo : '请选择')}}
+                        {{regionId>0?tools.decodeuri(regionName) : '请选择'}}
                     </view>
-                    <view class="m-sliding" wx:if="{{addressMenuIsShow}}">
-                        <view class="m-mask" bindtap="cityCancel"></view>
-                        <view class="picker-view" animation="{{animationAddressMenu}}" style="visibility:{{addressMenuIsShow ? 'visible':'hidden'}}">
-                            <view class="hd">
-                                <text class="t1" bindtap="cityCancel">取消</text>
-                                <block wx:if="{{checkArea}}">
-                                    <text class="t2" bindtap="citySure">确定</text>
-                                </block>
-                                <block wx:else>
-                                    <text class="t3">确定</text>
-                                </block>
-                            </view>
-                            <picker-view style="width: 100%; height: 300px;" bindchange="cityChange" value="{{value}}" wx:key="">
-                                <picker-view-column>
-                                    <view wx:for="{{provinces}}" class="picker-item">
-                                        {{tools.decodeuri(item.region_name)}}
-                                    </view>
-                                </picker-view-column>
-                                <picker-view-column>
-                                    <view wx:for="{{citys}}" class="picker-item">
-                                        {{tools.decodeuri(item.region_name)}}
-                                    </view>
-                                </picker-view-column>
-                                <picker-view-column>
-                                    <view wx:for="{{areas}}" class="picker-item">
-                                        {{tools.decodeuri(item.region_name)}}
-                                    </view>
-                                </picker-view-column>
-                            </picker-view>
-                        </view>
-                    </view>
+                    <template is="region-picker" data="{{...regionData}}" />
                 </view>
             </view>
         </view>
         <view class="orderRFT">
-            <view class="left"><navigator open-type="navigateBack" delta="1">取消</navigator></view>
+            <view class="left">
+                <navigator open-type="navigateBack" delta="1">取消</navigator>
+            </view>
             <view class="right" bindtap="saveProfile">保存</view>
         </view>
     </view>

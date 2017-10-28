@@ -1,0 +1,15 @@
+<template name="form-input">
+    <view class="inputwrap {{show?'':'hide'}}">
+        <view class="inputBox {{authcode?'scode':''}}">
+            <input data-formindex="{{formIndex}}" type="{{inputType}}" password="{{password}}" class="j-inputtext lophone" placeholder="{{placeholder}}"
+                maxlength="{{maxLength}}" value="{{formValue}}" bindinput="changeInput"/>
+            <view wx:if="{{clearShow}}" data-formindex="{{formIndex}}" class="utip" bindtap="clearInput">
+                <i class="icon u-clear ion-ios-close"></i>
+            </view>
+            <view data-formindex="{{formIndex}}" wx:if="{{authcode}}" class="getbox" bindtap="changeAuthcode">
+                <image class="authcode" src="{{formAuthcodeSrc}}" alt=""></image>
+            </view>
+        </view>
+        <view wx:if="{{formError}}" class="msg">{{formMsg}}</view>
+    </view>
+</template>

@@ -1,6 +1,7 @@
 import OrderChannel from '../../channels/order';
 import generalConfig from '../../generalConfig';
 import buyTemp from '../../utils/buyTemp';
+import memberState from '../../utils/memberState';
 
 const orderChannel = new OrderChannel();
 Page({
@@ -16,10 +17,13 @@ Page({
     postageFreeAmount: 0,
     orderNotice: '',
     delBtnWidth: 164,
-    txtStyle: ''
+    txtStyle: '',
+    isLogin: false,
   },
   onLoad: function (options) {
+
     this.setData({
+      isLogin: memberState.isLogin(),
       postageFreeAmount: generalConfig.postageFreeAmount,
       orderNotice: generalConfig.orderNotice
     });
@@ -212,21 +216,21 @@ Page({
     }
   },
   //获取元素自适应后的实际宽度
-  getEleWidth:function(w){
+  getEleWidth: function (w) {
     var real = 0;
     try {
       var res = wx.getSystemInfoSync().windowWidth;
-      var scale = (750/2)/(w/2);  
-      real = Math.floor(res/scale);
+      var scale = (750 / 2) / (w / 2);
+      real = Math.floor(res / scale);
       return real;
     } catch (e) {
       return false;
     }
   },
-  initEleWidth:function(){
+  initEleWidth: function () {
     var delBtnWidth = this.getEleWidth(this.data.delBtnWidth);
     this.setData({
-      delBtnWidth:delBtnWidth
+      delBtnWidth: delBtnWidth
     });
   },
   /**

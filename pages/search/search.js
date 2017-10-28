@@ -19,7 +19,6 @@ Page({
         if (searchInput.length === 0) {
             searchInput = this.data.searchPlaceholder;
         }
-        console.log('searchInput', searchInput);
         wx.navigateTo({ url: '../product/productSearch/productSearch?keyword=' + encodeURIComponent(this.data.searchInput) })
     },
     listenerTypeing: function (event) {

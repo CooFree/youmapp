@@ -1,4 +1,3 @@
-// pages/member/profile/profile.js
 import MemberChannel from '../../../channels/member';
 import PortalChannel from '../../../channels/portal';
 import util from '../../../utils/util';

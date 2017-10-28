@@ -1,38 +1,16 @@
 <!--pages/login/login.wxml-->
 <wxs src="../../utils/tools.wxs" module="tools" />
+<import src="../../components/formInput/form-input.wxml" />
+
 <view class="container ">
     <view class="g-row">
         <view class="login-form">
-            <view class="inputwrap">
-                <view class="inputBox">
-                    <input type="text" class="j-inputtext lophone" placeholder="用户名/手机号/邮箱" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
+            <form bindsubmit="onSubmit">
+                <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
+                <view class="btn-login">
+                    <button class="ben-login-txt" formType="submit">登录</button>
                 </view>
-            </view>
-            <view class="inputwrap">
-                <view class="inputBox">
-                    <input type="password" class="j-inputtext lophone" placeholder="密码" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                </view>
-            </view>
-            <view class="inputwrap" style="display:none">
-                <view class="inputBox scode">
-                    <input type="text" class="j-inputtext lophone" placeholder="验证码" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                    <view class="getbox">
-                        <image class="authcode" src="https://app.you.camel.com.cn/upload/auth_code/13827848-e6e0-449c-a2be-bb695390c524.jpg" alt=""></image>
-                    </view>
-                </view>
-            </view>
-            <view class="btn-login">
-                <text class="ben-login-txt">登录</text>
-            </view>
+            </form>
             <view class="sublime">
                 <navigator url="../regist/regist">
                     <text class="link">快速注册</text>

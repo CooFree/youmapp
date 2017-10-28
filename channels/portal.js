@@ -21,7 +21,7 @@ export default class PortalChannel {
     }
   }
 
-  async postLogin(code) {
+  async postWeixinLogin(code) {
     let url = config.Host + '/handlers/wxAppLoginCallback.ashx';
     try {
       let resData = await util.fetch(url, { body: { code } });
@@ -30,6 +30,46 @@ export default class PortalChannel {
       }
       else {
         console.warn(resData.msg);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async postLogin(formLoginname, formPassword) {
+    const url = config.Host + '/login.aspx';
+    const post_data = { loginname: formLoginname, password: util.md5(formPassword) };
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+    try {
+      let responseData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+      if (responseData.result === 1) {
+        return responseData.info;
+      }
+      else {
+        console.warn(responseData.msg);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async postMobileLogin(loginMobile, smsCode) {
+    const url = config.Host + '/mobileLogin.aspx';
+    const post_data = { mobile: loginMobile, sms_code: smsCode };
+    const headers = {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
+    try {
+      let responseData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+      if (responseData.result === 1) {
+        return responseData.info.login_member_id;
+      }
+      else {
+        console.warn(responseData.msg);
       }
     }
     catch (error) {

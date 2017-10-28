@@ -1,7 +1,7 @@
 <wxs src="../../utils/tools.wxs" module="tools" />
 
 <view class="container greybg">
-    <view class="cart-wrap">
+    <view wx:if="{{isLogin}}" class="cart-wrap">
         <view class="mc-servicePolicy">
             <view class="item">
                 <text>30天无忧退货</text>
@@ -94,8 +94,7 @@
             </view>
         </view>
     </view>
-
-    <view class="empty-cart">
+    <view wx:else class="empty-cart">
         <view class="m-defualtPage">
             <view class="img"></view>
             <view class="noCart-title">购物车空空如也</view>

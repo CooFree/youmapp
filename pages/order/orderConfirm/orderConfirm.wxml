@@ -4,32 +4,35 @@
     <view class="m-shipAddress ma-layort">
         <view class="u-icon u-address-bg">
         </view>
-        <navigator url="../orderReceive/orderReceive">
-            <view class="item">
-                <view class="middle">
-                    <view class="phone"></view>
-                    <view class="addr">
-                        + 新建收货地址
-                    </view>
-                </view>
-                <view class="right">
-                    <view class="icon icon-right ion-ios-arrow-right"></view>
-                </view>
-            </view>
-        </navigator>
+        <navigator wx:if="{{receiveId>0}}" url="../orderReceiveList/orderReceiveList?receive_id={{receiveId}}">
         <view class="item">
             <view class="left">
-                <text class="uname">冯文乐</text>
-                <text class="default">默认</text>
+                <text class="uname">{{tools.decodeuri(receive.name)}}</text>
+                <text wx:if="{{receive.default_flag===1}}" class="default">默认</text>
             </view>
             <view class="middle">
-                <text class="phone">176****2904</text>
-                <text class="addr">上海-上海市-黄浦区,石槎路396号骆驼大楼4F</text>
+                <text class="phone">{{receive.mobile}}</text>
+                <text class="addr">{{tools.decodeuri(receive.region_name)}}，{{tools.decodeuri(receive.address)}}</text>
             </view>
             <view class="right">
                 <i class="icon icon-right ion-ios-arrow-right"></i>
             </view>
         </view>
+    </navigator>
+    <navigator wx:else url="../orderReceive/orderReceive">
+        <view class="item">
+            <view class="middle">
+                <view class="phone"></view>
+                <view class="addr">
+                    + 新建收货地址
+                </view>
+            </view>
+            <view class="right">
+                <view class="icon icon-right ion-ios-arrow-right"></view>
+            </view>
+        </view>
+    </navigator>
+
     </view>
 
     <view class="Payway ma-layort">

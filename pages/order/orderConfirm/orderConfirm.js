@@ -47,6 +47,7 @@ Page({
       wx.showLoading();
       orderChannel.getOrderConfirmData(ticketId, deliveryId, paytype, receiveId, buyData).then(data => {
         if (data) {
+          console.log('data.receive', data.receive);
           this.setData({
             deliveryList: data.delivery_list,
             productList: data.basket_product_list,

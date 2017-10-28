@@ -10,14 +10,6 @@ const portalChannel = new PortalChannel();
 const productChannel = new ProductChannel();
 App({
   onLaunch: function () {
-
-    //let systemInfo = wx.getSystemInfoSync();
-    //console.log('systemInfo',systemInfo);
-    // 展示本地存储能力
-    //var logs = wx.getStorageSync('logs') || [];
-    //logs.unshift(Date.now());
-    //wx.setStorageSync('logs', logs);
-
     //预加载通用配置
     portalChannel.getGeneralConfig().then(data => {
       if (data) {
@@ -27,14 +19,12 @@ App({
         generalConfig.searchPlaceholder = util.decodeURI(data.search_placeholder);
       }
     });
-
     //预加载标签
     productChannel.getTagData();
-
     //预加载地区数据
     portalChannel.getRegionData();
 
-    memberState.initLogin();
+    /*memberState.initLogin();
     if (memberState.isLogin() === false) {
       //console.log('wx.login');
       // 登录
@@ -47,10 +37,10 @@ App({
           });
         }
       })
-    }
+    }*/
 
     // 获取用户信息
-    wx.getSetting({
+    /*wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
@@ -68,7 +58,7 @@ App({
           })
         }
       }
-    })
+    })*/
   },
   globalData: {
     userInfo: null

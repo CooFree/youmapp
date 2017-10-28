@@ -6,7 +6,6 @@
         </view>
         <navigator url="../orderReceive/orderReceive">
             <view class="item">
-
                 <view class="middle">
                     <view class="phone"></view>
                     <view class="addr">
@@ -18,6 +17,19 @@
                 </view>
             </view>
         </navigator>
+        <view class="item">
+            <view class="left">
+                <text class="uname">冯文乐</text>
+                <text class="default">默认</text>
+            </view>
+            <view class="middle">
+                <text class="phone">176****2904</text>
+                <text class="addr">上海-上海市-黄浦区,石槎路396号骆驼大楼4F</text>
+            </view>
+            <view class="right">
+                <i class="icon icon-right ion-ios-arrow-right"></i>
+            </view>
+        </view>
     </view>
 
     <view class="Payway ma-layort">
@@ -106,7 +118,9 @@
                             </view>
                             <view class="cnt">
                                 <view class="xbox">
-                                    <text class="line1">{{tools.decodeuri(item.gift_name)}}<text class="w-tag tag">赠品</text></text>
+                                    <text class="line1">{{tools.decodeuri(item.gift_name)}}
+                                        <text class="w-tag tag">赠品</text>
+                                    </text>
                                     <text class="count">x{{item.volume}}</text>
                                 </view>
                                 <text class="line2">{{tools.decodeuri(item.specificate)}}</text>

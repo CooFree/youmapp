@@ -1,5 +1,6 @@
 {
     "pages": [
+        
         "pages/index/index",
         "pages/logs/logs",
         "pages/search/search",
@@ -64,8 +65,8 @@
             {
                 "selectedIconPath": "images/tab_icons_05.png",
                 "iconPath": "images/zw_iconb5.png",
-                "pagePath": "pages/login/login",
-                "text": "登陆"
+                "pagePath": "pages/center/center",
+                "text": "我的"
             }
         ]
     }

@@ -34,8 +34,12 @@
                 <text class="ben-login-txt">登录</text>
             </view>
             <view class="sublime">
-                <text class="link">快速注册</text>
-                <text class="link">忘记密码</text>
+                <navigator url="../regist/regist">
+                    <text class="link">快速注册</text>
+                </navigator>
+                <navigator url="../member/mobileVerify/mobileVerify">
+                    <text class="link">忘记密码</text>
+                </navigator>
             </view>
             <view class="ologin">
                 <a href="https://app.you.camel.com.cn/handlers/qqLogin.ashx" class="oitem">

@@ -1,6 +1,5 @@
 {
     "pages": [
-        "pages/login/login",
         "pages/index/index",
         "pages/logs/logs",
         "pages/search/search",
@@ -29,7 +28,8 @@
         "pages/member/productComment/productComment",
         "pages/member/apply/apply",
         "pages/product/productComment/productComment",
-        "pages/regist/regist"
+        "pages/regist/regist",
+        "pages/login/login"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -64,8 +64,8 @@
             {
                 "selectedIconPath": "images/tab_icons_05.png",
                 "iconPath": "images/zw_iconb5.png",
-                "pagePath": "pages/center/center",
-                "text": "我的"
+                "pagePath": "pages/login/login",
+                "text": "登陆"
             }
         ]
     }

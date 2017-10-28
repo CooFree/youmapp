@@ -14,6 +14,7 @@ Page({
     loginAccount: '',
     loginPassword: '',
     verifiCode: '',
+    errorMsg: ''
   },
 
   /**
@@ -37,7 +38,7 @@ Page({
   },
   clearInput: function (event) {
     const { formindex } = event.currentTarget.dataset;
-    console.log('clearInput',event);
+    console.log('clearInput', event);
     this.FormInputs[formindex].setValue('');
   },
   changeInput: function (event) {
@@ -50,6 +51,10 @@ Page({
     this.FormInputs[formindex].loadAuthcode();
   },
   onSubmit: async function () {
+    const { submiting } = this.data;
+    if (submiting) {
+      return;
+    }
     const loginName = await this.FormInputs[0].match();
     const password = await this.FormInputs[1].match();
     let authcode = true;
@@ -59,23 +64,12 @@ Page({
     console.log('loginName:' + loginName + ',password:' + password + ',authcode:' + authcode);
     if (loginName && password && authcode) {
       portalChannel.postLogin(loginName, password).then(data => {
+   
         if (data) {
           memberState.saveLogin(data.login_member_id, true);
 
           //buyTemp.tempToApi();//把购物商品从客户端传到服务端
-
-          /*if (data.mobile_flag === 1) {
-            const callBackUrl = Login.getCallBackUrl();
-            if (callBackUrl.length > 0) {
-              history.replace(callBackUrl);
-            }
-            else {
-              history.replace('/home');
-            }
-          }
-          else {
-            history.replace('/mobileVerify?settype=login', { memberId: data.login_member_id });
-          }*/
+          wx.navigateBack(1);
         }
         else {
           this.loginCount++;
@@ -83,7 +77,7 @@ Page({
           if (this.loginCount > 2) {
             this.FormInputs[2].setShow();
           }
-          //this.props.showTip('账号或密码错误');
+          this.FormInputs[0].setError('账号或密码不匹配');
         }
       });
     }

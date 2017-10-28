@@ -3,12 +3,13 @@
 <import src="../../components/formInput/form-input.wxml" />
 
 <view class="container ">
+    <view class="ad_popError" wx:if="{{errorMsg.length>0}}">{{errorMsg}}</view>
     <view class="g-row">
         <view class="login-form">
             <form bindsubmit="onSubmit">
                 <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
                 <view class="btn-login">
-                    <button class="ben-login-txt" formType="submit">登录</button>
+                    <button class="ben-login-txt" formType="submit">{{submiting?'登陆中...':'登录'}}</button>
                 </view>
             </form>
             <view class="sublime">

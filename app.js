@@ -23,9 +23,9 @@ App({
     productChannel.getTagData();
     //预加载地区数据
     portalChannel.getRegionData();
-
-    /*memberState.initLogin();
-    if (memberState.isLogin() === false) {
+    //初始化登陆状态
+    memberState.initLogin();
+    /*if (memberState.isLogin() === false) {
       //console.log('wx.login');
       // 登录
       wx.login({

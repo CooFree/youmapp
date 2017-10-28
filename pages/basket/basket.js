@@ -21,7 +21,6 @@ Page({
     isLogin: false,
   },
   onLoad: function (options) {
-
     this.setData({
       isLogin: memberState.isLogin(),
       postageFreeAmount: generalConfig.postageFreeAmount,
@@ -244,6 +243,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({ isLogin: memberState.isLogin() });
+    this.initEleWidth();
     this.loadBasket();
   },
 

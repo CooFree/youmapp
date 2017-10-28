@@ -10,25 +10,16 @@ Page({
   loginCount: 0,
   data: {
     formDatas: [],
-    submiting: false,
-    loginAccount: '',
-    loginPassword: '',
-    verifiCode: '',
-    errorMsg: ''
+    submiting: false
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     this.FormInputs.push(new FormInput(this, { title: '账号', required: true, placeholder: '用户名/手机号/邮箱' }));
     this.FormInputs.push(new FormInput(this, { title: '密码', required: true, password: true, placeholder: '密码' }));
     this.FormInputs.push(new FormInput(this, { title: '验证码', required: true, authcode: true, placeholder: '验证码' }));
 
-    let formDatas = [];
-    this.FormInputs.forEach((item, index) => {
-      const data = item.load(index);
-      formDatas.push(data);
+    const formDatas = this.FormInputs.map((formInput, index) => {
+      return formInput.load(index);
     });
     this.setData({ formDatas });
   },
@@ -64,7 +55,7 @@ Page({
     console.log('loginName:' + loginName + ',password:' + password + ',authcode:' + authcode);
     if (loginName && password && authcode) {
       portalChannel.postLogin(loginName, password).then(data => {
-   
+
         if (data) {
           memberState.saveLogin(data.login_member_id, true);
 
@@ -82,51 +73,6 @@ Page({
       });
     }
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
   }

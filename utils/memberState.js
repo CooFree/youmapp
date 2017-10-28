@@ -33,6 +33,6 @@ export default class MemberLoginState {
   }
   static clearLogin() {
     LoginNemberID = null;
-    localStorage.removeItem(LOGIN_MEMBER_STATE);
+    wx.removeStorageSync(LOGIN_MEMBER_STATE);
   }
 }

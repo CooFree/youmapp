@@ -4,7 +4,7 @@
         <navigator url="../member/profile/profile">
             <view class="m-profile">
                 <image class="avatar" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
-                <view class="info">
+                <view wx:if="{{isLogin}}" class="info">
                     <view class="nickname">
                         {{tools.decodeuri(loginName)}}
                     </view>
@@ -13,53 +13,48 @@
                     </view>
                     <view class="icon ion-ios-arrow-right top_right"></view>
                 </view>
+
+                <view wx:else class="info" bindtip="goLogin">
+                    <view class="nickname">
+                        登陆/注册
+                    </view>
+                    <view class="membershipLevel">
+                        <text class="memberTitle1"></text>
+                    </view>
+                    <view class="icon ion-ios-arrow-right top_right"></view>
+                </view>
             </view>
         </navigator>
     </view>
     <view class="m-uc-wrap">
-            <navigator url="../member/orderList/orderList">
-        <view class="m-uc-wraptit">
-            
+            <view class="m-uc-wraptit" bindtap="goOrderList">
                 <text class="txt">我的订单</text>
                 <view class="icon-arrow-right">查看全部订单></view>
-            
-        </view>
-    </navigator>
+            </view>
         <view class="m-uc-menu">
             <view class="list">
-                <view class="item">
-                    <navigator url="../member/orderList/orderList?show_status=unpay">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon1.png" alt=""></image>
-                        <text class="txt">待付款</text>
-                        <text class="red-dot">{{unpayCount}}</text>
-                    </navigator>
+                <view class="item" data-showstatus="unpay" bindtap="goOrderList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon1.png" alt=""></image>
+                    <text class="txt">待付款</text>
+                    <text class="red-dot">{{unpayCount}}</text>
+                </view>
+                <view class="item" data-showstatus="undelivery" bindtap="goOrderList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon2.png" alt=""></image>
+                    <text class="txt">待发货</text>
+                </view>
+                <view class="item" data-showstatus="delivered" bindtap="goOrderList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon3.png" alt=""></image>
+                    <text class="txt">已发货</text>
+                    <text class="red-dot">{{deliveredCount}}</text>
+                </view>
+                <view class="item" data-showstatus="uncomment" bindtap="goOrderList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon4.png" alt=""></image>
+                    <text class="txt">待评价</text>
+                    <text class="red-dot">{{uncommentCount}}</text>
                 </view>
                 <view class="item">
-                    <navigator url="../member/orderList/orderList?show_status=undelivery">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon2.png" alt=""></image>
-                        <text class="txt">待发货</text>
-                        <text class="red-dot">{{undeliveryCount}}</text>
-                    </navigator>
-                </view>
-                <view class="item">
-                    <navigator url="../member/orderList/orderList?show_status=delivered">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon3.png" alt=""></image>
-                        <text class="txt">已发货</text>
-                        <text class="red-dot">{{deliveredCount}}</text>
-                    </navigator>
-                </view>
-                <view class="item">
-                    <navigator url="../member/orderList/orderList?show_status=uncomment">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon4.png" alt=""></image>
-                        <text class="txt">待评价</text>
-                        <text class="red-dot">{{uncommentCount}}</text>
-                    </navigator>
-                </view>
-                <view class="item">
-                    <navigator url="../member/applyList/applyList">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon5.png" alt=""></image>
-                        <text class="txt">退款/售后</text>
-                    </navigator>
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon5.png" alt=""></image>
+                    <text class="txt">退款/售后</text>
                 </view>
             </view>
         </view>
@@ -121,5 +116,7 @@
             </view>
         </view>
     </view>
-    <button class="w-button ">退出</button>
+
+    <button wx:if="{{isLogin}}" class="w-button" bindtap="logout">退出</button>
+    <button wx:else class="w-button" bindtap="login">登录</button>
 </view>

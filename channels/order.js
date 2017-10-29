@@ -17,7 +17,7 @@ export default class OrderChannel {
             }
             try {
                 let resData = await util.fetch(url, { headers });
-                console.log('resData',resData);
+                console.log('resData', resData);
                 if (resData.result === 1) {
                     return resData;
                 }
@@ -220,9 +220,6 @@ export default class OrderChannel {
     async postOrderConfirm(ticketId, deliveryId, paytype, receiveId, postBuyData, invoice) {
         let memberId = memberState.getLoginId();
         if (memberId) {
-            let src = localStorage.getItem('channel_src') || '';//来源
-            let src_url = localStorage.getItem('channel_url') || '';//来源地址
-
             let url = config.Host + '/order/orderConfirm.aspx?post=place_order&member_id=' + memberId;
             let post_data = {
                 ticket_id: ticketId,
@@ -230,12 +227,9 @@ export default class OrderChannel {
                 pay_type: paytype,
                 receive_id: receiveId,
                 post_script: '',
-                invoice: invoice,
-                src: src,
-                src_url: src_url
+                invoice: invoice
             };
             post_data = Object.assign({}, post_data, postBuyData);
-
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Platform': 'wxapp'

@@ -5,33 +5,33 @@
         <view class="u-icon u-address-bg">
         </view>
         <navigator wx:if="{{receiveId>0}}" url="../orderReceiveList/orderReceiveList?receive_id={{receiveId}}">
-        <view class="item">
-            <view class="left">
-                <text class="uname">{{tools.decodeuri(receive.name)}}</text>
-                <text wx:if="{{receive.default_flag===1}}" class="default">默认</text>
-            </view>
-            <view class="middle">
-                <text class="phone">{{receive.mobile}}</text>
-                <text class="addr">{{tools.decodeuri(receive.region_name)}}，{{tools.decodeuri(receive.address)}}</text>
-            </view>
-            <view class="right">
-                <i class="icon icon-right ion-ios-arrow-right"></i>
-            </view>
-        </view>
-    </navigator>
-    <navigator wx:else url="../orderReceive/orderReceive">
-        <view class="item">
-            <view class="middle">
-                <view class="phone"></view>
-                <view class="addr">
-                    + 新建收货地址
+            <view class="item">
+                <view class="left">
+                    <text class="uname">{{tools.decodeuri(receive.name)}}</text>
+                    <text wx:if="{{receive.default_flag===1}}" class="default">默认</text>
+                </view>
+                <view class="middle">
+                    <text class="phone">{{receive.mobile}}</text>
+                    <text class="addr">{{tools.decodeuri(receive.region_name)}}，{{tools.decodeuri(receive.address)}}</text>
+                </view>
+                <view class="right">
+                    <i class="icon icon-right ion-ios-arrow-right"></i>
                 </view>
             </view>
-            <view class="right">
-                <view class="icon icon-right ion-ios-arrow-right"></view>
+        </navigator>
+        <navigator wx:else url="../orderReceive/orderReceive">
+            <view class="item">
+                <view class="middle">
+                    <view class="phone"></view>
+                    <view class="addr">
+                        + 新建收货地址
+                    </view>
+                </view>
+                <view class="right">
+                    <view class="icon icon-right ion-ios-arrow-right"></view>
+                </view>
             </view>
-        </view>
-    </navigator>
+        </navigator>
 
     </view>
 
@@ -41,14 +41,14 @@
         </view>
         <view class="ma-list">
             <view class="item" data-paytype="weixin" bindtap="selectPaytype">
-                <view class="icon ion-checkmark-circled {{paytype==='weixin'?'icon-ischecked-g':'icon-nochecked-g'}}"></view>
+                <view class="icon {{paytype==='weixin'?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <view class="paywayItem">
                     <image class="pic" src="https://img02.camel.com.cn/image/wx_icon.png" alt=""></image>
                     <text class="txt">微信</text>
                 </view>
             </view>
             <view class="item" data-paytype="outpay" bindtap="selectPaytype">
-                <view class="icon ion-ios-circle-outline icon-nochecked-g"></view>
+                <view class="icon {{paytype==='outpay'?'ion-checkmark-circled icon-ischecked-g':'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                 <text class="txt">货到付款，客服会和您电话确认订单</text>
             </view>
         </view>
@@ -66,30 +66,23 @@
 
     <view class="campaigns">
         <view class="left">
-            <view class="item">
-                <text class="txt">暂无优惠活动</text>
-            </view>
+            <block wx:if="{{preferList.length>0}}">
+                <view wx:for="{{preferList}}" wx:key="{{index}}" class="item">
+                    <view class="promotion">
+                        <view class="w-tag tag">{{tools.decodeuri(item.prefer_class)}}</view>
+                        <text class="txt">{{tools.decodeuri(item.prefer_name)}}</text>
+                    </view>
+                </view>
+            </block>
+            <block wx:else>
+                <view class="item">
+                    <text class="txt">暂无优惠活动</text>
+                </view>
+            </block>
         </view>
         <view class="right"></view>
     </view>
 
-    <view class="campaigns">
-        <view class="left">
-            <view class="item">
-                <view class="promotion">
-                    <view class="w-tag tag">赠品</view>
-                    <text class="txt">国庆节 买冲锋衣送包，限量500</text>
-                </view>
-            </view>
-            <view class="item">
-                <view class="promotion">
-                    <view class="w-tag tag">满减</view>
-                    <text class="txt">国庆节 满100减10</text>
-                </view>
-            </view>
-        </view>
-        <view class="right"></view>
-    </view>
 
     <view class="ma-plist ma-layort">
         <view class="hd">我的商品</view>
@@ -173,7 +166,7 @@
             </li>
             <li class="item">
                 <view class="left">优惠金额</view>
-                <view class="right">￥{{tools.tofixed(preferential,2)}} </view>
+                <view class="right">￥-{{tools.tofixed(preferential,2)}} </view>
             </li>
             <li class="item">
                 <view class="left">运费</view>

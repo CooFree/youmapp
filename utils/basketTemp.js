@@ -1,3 +1,4 @@
+import regeneratorRuntime from '../modules/regenerator-runtime/runtime';
 import memberState from './memberState';
 import OrderChannel from '../channels/order';
 
@@ -5,20 +6,17 @@ const sessionkey = 'basketTemp';
 const orderChannel = new OrderChannel();
 export default class BasketTemp {
     static clear() {
-        wx.clearStorage()
-        sessionStorage.removeItem(sessionkey)
+        wx.removeStorage({ key: sessionkey });
     }
     static addBasket(productId, specificateId, volume, location, image) {
         if (memberState.isLogin()) {
-             orderChannel.addBasket(productId.toString(), specificateId.toString(), volume.toString(), location, image);
+            orderChannel.addBasket(productId, specificateId, volume, location, image);
         }
         else {
-            const jsonStr = sessionStorage.getItem(sessionkey);
-            let basketTempData = { productIdArray: [], specificateIdArray: [], volumeArray: [], locationArray: [], imageArray: [] }
-            if (jsonStr) {
-                basketTempData = JSON.parse(jsonStr);
-            }
-            let index = basketTempData.specificateIdArray.indexOf(specificateId);
+            const basketTempData = wx.getStorageSync(sessionkey)
+                || { productIdArray: [], specificateIdArray: [], volumeArray: [], locationArray: [], imageArray: [] };
+
+            const index = basketTempData.specificateIdArray.indexOf(specificateId);
             if (index < 0) {
                 basketTempData.productIdArray.push(productId);
                 basketTempData.specificateIdArray.push(specificateId);
@@ -29,19 +27,17 @@ export default class BasketTemp {
             else {
                 basketTempData.volumeArray[index] = basketTempData.volumeArray[index] + volume;
             }
-            sessionStorage.setItem(sessionkey, JSON.stringify(basketTempData));
+            wx.setStorageSync(sessionkey, basketTempData);
         }
     }
     static async getBasketVolume() {
         let volume = 0;
-        if (MemberLoginState.isLogin()) {
-            const orderChannel = new OrderChannel();
+        if (memberState.isLogin()) {
             volume = await orderChannel.getBasketVolume();
         }
         else {
-            const jsonStr = sessionStorage.getItem(sessionkey);
-            if (jsonStr) {
-                let basketTempData = JSON.parse(jsonStr);
+            const basketTempData = wx.getStorageSync(sessionkey);
+            if (basketTempData) {
                 for (let subvolume of basketTempData.volumeArray) {
                     volume += subvolume;
                 }
@@ -51,14 +47,9 @@ export default class BasketTemp {
     }
     static async tempToApi() {
         let result = false;
-        const jsonStr = sessionStorage.getItem(sessionkey);
-        if (!jsonStr) {
-            return false;
-        }
-        let basketTempData = JSON.parse(jsonStr);
-        if (MemberLoginState.isLogin() && basketTempData !== null && basketTempData.productIdArray.length > 0) {
-            const orderChannel = new OrderChannel();
-            let result = await orderChannel.addBasket(basketTempData.productIdArray.join(','), basketTempData.specificateIdArray.join(','), basketTempData.volumeArray.join(','), basketTempData.locationArray.join(','), basketTempData.imageArray.join(','));
+        const basketTempData = wx.getStorageSync(sessionkey);
+        if (basketTempData && basketTempData.productIdArray.length > 0) {
+            result = await orderChannel.addBasket(basketTempData.productIdArray, basketTempData.specificateIdArray, basketTempData.volumeArray, basketTempData.locationArray, basketTempData.imageArray);
             if (result) {
                 BasketTemp.clear();
             }

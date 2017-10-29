@@ -2,6 +2,7 @@ import ProductChannel from '../../../channels/product';
 import OrderChannel from '../../../channels/order';
 import util from '../../../utils/util';
 import buyTemp from '../../../utils/buyTemp';
+import basketTemp from '../../../utils/basketTemp';
 
 const orderChannel = new OrderChannel();
 const productChannel = new ProductChannel();
@@ -191,7 +192,7 @@ Page({
             this.setData({ showSelector: true });
             return;
         }
-        orderChannel.addBasket(productId, specItem.id, finlVolume, location, finlImg);
+        basketTemp.addBasket(productId, specItem.id, finlVolume, location, finlImg);
         this.setData({ showSelector: false });
         wx.showToast({ title: '已加入购物车', icon: 'success', duration: 2000 });
     },

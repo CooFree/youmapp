@@ -2,6 +2,7 @@ import regeneratorRuntime from '../../modules/regenerator-runtime/runtime';
 import FormInput from '../../components/formInput/formInput.js';
 import memberState from '../../utils/memberState';
 import buyTemp from '../../utils/buyTemp';
+import basketTemp from '../../utils/basketTemp';
 import PortalChannel from '../../channels/portal';
 
 const portalChannel = new PortalChannel();
@@ -52,7 +53,6 @@ Page({
     if (this.loginCount > 2) {
       authcode = await this.formInputs[2].match();
     }
-    console.log('loginName:' + loginName + ',password:' + password + ',authcode:' + authcode);
     if (loginName && password && authcode) {
       this.setData({submiting:true});
       portalChannel.postLogin(loginName, password).then(data => {
@@ -60,7 +60,7 @@ Page({
         if (data) {
           memberState.saveLogin(data.login_member_id, true);
 
-          //buyTemp.tempToApi();//把购物商品从客户端传到服务端
+          basketTemp.tempToApi();//把购物商品从客户端传到服务端
           wx.navigateBack();
         }
         else {

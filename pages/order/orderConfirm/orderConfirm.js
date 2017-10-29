@@ -47,7 +47,6 @@ Page({
       wx.showLoading();
       orderChannel.getOrderConfirmData(ticketId, deliveryId, paytype, receiveId, buyData).then(data => {
         if (data) {
-          console.log('data.receive', data.receive);
           this.setData({
             deliveryList: data.delivery_list,
             productList: data.basket_product_list,
@@ -139,7 +138,7 @@ Page({
       this.setData({ submiting: false });
       if (orderId > 0) {
         buyTemp.clear();
-        wx.navigateTo({ url: '../order/orderPay/orderPay?order_id=' + orderId });
+        wx.navigateTo({ url: '../orderPay/orderPay?order_id=' + orderId });
       }
       else {
         wx.showToast({ title: '提交失败', icon: 'loading', duration: 2000 });

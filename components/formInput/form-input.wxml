@@ -1,13 +1,19 @@
 <template name="form-input">
     <view class="inputwrap {{show?'':'hide'}}">
-        <view class="inputBox {{authcode?'scode':''}}">
+        <view class="inputBox {{(authcode||mobilecode||mailcode)?'scode':''}}">
             <input data-formindex="{{formIndex}}" type="{{inputType}}" password="{{password}}" class="j-inputtext lophone" placeholder="{{placeholder}}"
-                maxlength="{{maxLength}}" value="{{formValue}}" bindinput="changeInput"/>
+                maxlength="{{maxLength}}" value="{{formValue}}" bindinput="changeInput" />
             <view wx:if="{{clearShow}}" data-formindex="{{formIndex}}" class="utip" bindtap="clearInput">
                 <i class="icon u-clear ion-ios-close"></i>
             </view>
             <view data-formindex="{{formIndex}}" wx:if="{{authcode}}" class="getbox" bindtap="changeAuthcode">
                 <image class="authcode" src="{{formAuthcodeSrc}}" alt=""></image>
+            </view>
+            <view data-formindex="{{formIndex}}" wx:if="{{mobilecode}}" class="getbox" bindtap="sendMobileCode">
+                <view class="getcode">{{smsSeconds > 0 ? smsSeconds + 's' : (smsState ? '获取中...' : '获取验证码')}}</view>
+            </view>
+            <view data-formindex="{{formIndex}}" wx:if="{{mailcode}}" class="getbox" bindtap="sendEmailCode">
+                <view class="getcode">{{smsSeconds > 0 ? smsSeconds + 's' : (smsState ? '获取中...' : '获取验证码')}}</view>
             </view>
         </view>
         <view wx:if="{{formError}}" class="msg">{{formMsg}}</view>

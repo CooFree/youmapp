@@ -6,7 +6,7 @@ import PortalChannel from '../../channels/portal';
 
 const portalChannel = new PortalChannel();
 Page({
-  FormInputs: [],
+  formInputs: [],
   loginCount: 0,
   data: {
     formDatas: [],
@@ -14,11 +14,11 @@ Page({
   },
 
   onLoad: function (options) {
-    this.FormInputs.push(new FormInput(this, { title: '账号', required: true, placeholder: '用户名/手机号/邮箱' }));
-    this.FormInputs.push(new FormInput(this, { title: '密码', required: true, password: true, placeholder: '密码' }));
-    this.FormInputs.push(new FormInput(this, { title: '验证码', required: true, authcode: true, placeholder: '验证码' }));
+    this.formInputs.push(new FormInput(this, { title: '账号', required: true, placeholder: '用户名/手机号/邮箱' }));
+    this.formInputs.push(new FormInput(this, { title: '密码', required: true, password: true, placeholder: '密码' }));
+    this.formInputs.push(new FormInput(this, { title: '验证码', required: true, authcode: true, placeholder: '验证码' }));
 
-    const formDatas = this.FormInputs.map((formInput, index) => {
+    const formDatas = this.formInputs.map((formInput, index) => {
       return formInput.load(index);
     });
     this.setData({ formDatas });
@@ -30,46 +30,48 @@ Page({
   clearInput: function (event) {
     const { formindex } = event.currentTarget.dataset;
     console.log('clearInput', event);
-    this.FormInputs[formindex].setValue('');
+    this.formInputs[formindex].setValue('');
   },
   changeInput: function (event) {
     const { value } = event.detail;
     const { formindex } = event.currentTarget.dataset;
-    this.FormInputs[formindex].setValue(value);
+    this.formInputs[formindex].setValue(value);
   },
   changeAuthcode: function (event) {
     const { formindex } = event.currentTarget.dataset;
-    this.FormInputs[formindex].loadAuthcode();
+    this.formInputs[formindex].loadAuthcode();
   },
   onSubmit: async function () {
     const { submiting } = this.data;
     if (submiting) {
       return;
     }
-    const loginName = await this.FormInputs[0].match();
-    const password = await this.FormInputs[1].match();
+    const loginName = await this.formInputs[0].match();
+    const password = await this.formInputs[1].match();
     let authcode = true;
     if (this.loginCount > 2) {
-      authcode = await this.FormInputs[2].match();
+      authcode = await this.formInputs[2].match();
     }
     console.log('loginName:' + loginName + ',password:' + password + ',authcode:' + authcode);
     if (loginName && password && authcode) {
+      this.setData({submiting:true});
       portalChannel.postLogin(loginName, password).then(data => {
-
+        this.setData({submiting:false});
         if (data) {
           memberState.saveLogin(data.login_member_id, true);
 
           //buyTemp.tempToApi();//把购物商品从客户端传到服务端
-          wx.navigateBack(1);
+          wx.navigateBack();
         }
         else {
           this.loginCount++;
           console.log('this.loginCount', this.loginCount);
           if (this.loginCount > 2) {
-            this.FormInputs[2].setShow();
+            this.formInputs[2].setShow();
           }
-          this.FormInputs[0].setError('账号或密码不匹配');
+          this.formInputs[0].setError('账号或密码不匹配');
         }
+        
       });
     }
   },

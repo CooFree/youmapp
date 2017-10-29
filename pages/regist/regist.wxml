@@ -1,48 +1,16 @@
 <!--pages/regist/regist.wxml-->
 <wxs src="../../utils/tools.wxs" module="tools" />
+<import src="../../components/formInput/form-input.wxml" />
+
 <view class="container ">
     <view class="g-row">
         <view class="login-form">
-            <view class="inputwrap">
-                <view class="inputBox">
-                    <input type="text" class="j-inputtext lophone" placeholder="手机号" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
+            <form bindsubmit="onSubmit">
+                <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
+                <view class="btn-login">
+                    <button class="ben-login-txt" formType="submit">{{submiting?'注册中...':'注册'}}</button>
                 </view>
-            </view>
-            <view class="inputwrap">
-                <view class="inputBox">
-                    <input type="password" class="j-inputtext lophone" placeholder="密码" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                </view>
-            </view>
-            <view class="inputwrap">
-                <view class="inputBox">
-                    <input type="password" class="j-inputtext lophone" placeholder="确认密码" maxlength="100" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                </view>
-            </view>
-            <view class="inputwrap">
-                <view class="inputBox scode">
-                    <input type="number" class="j-inputtext lophone" placeholder="短信验证码" maxlength="6" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                    <view class="getbox">
-                        <view class="getcode">
-                            获取验证码
-                        </view>
-                    </view>
-                </view>
-            </view>
-            <view class="btn-login">
-                <text class="ben-login-txt">注册</text>
-            </view>
+            </form>
         </view>
     </view>
 </view>

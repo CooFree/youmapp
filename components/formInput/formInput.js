@@ -7,6 +7,7 @@ const portalChannel = new PortalChannel();
 
 export default class FormInput {
     constructor(page, props) {
+        this.interval = 0;
         this.page = page;
         this.props = props || {};
         this.data = {
@@ -63,6 +64,10 @@ export default class FormInput {
             this.loadAuthcode();
         }
         return this.data;
+    }
+    getValue() {
+        console.log(this.data);
+        return this.data.formValue;
     }
     setValue(value) {
         this.setData({ formValue: value, clearShow: value.length > 0 });
@@ -176,8 +181,14 @@ export default class FormInput {
         //邮件验证码、手机验证码
         if (mailcode || mobilecode) {
             let now_time = new Date();
-            let refValue = this.props.getCodeRef();
-            if (!smsData || smsData.smsName !== refValue || smsData.expires_time <= now_time) {
+            let smsName = '';
+            if (mailcode) {
+                smsName = this.props.getEmail();
+            }
+            if (mobilecode) {
+                smsName = this.props.getMobile();
+            }
+            if (!smsData || smsData.smsName !== smsName || smsData.expires_time <= now_time) {
                 this.setError('验证码无效');
                 return;
             }
@@ -200,7 +211,7 @@ export default class FormInput {
         return formValue;
     }
     clear() {
-        this.setState({ formValue: '' });
+        this.setData({ formValue: '' });
     }
     loadAuthcode() {
         portalChannel.getAuthCode().then(data => {
@@ -212,7 +223,7 @@ export default class FormInput {
 
     async sendEmailCode() {
         let now_time = new Date();
-        const { smsData, smsState } = this.state;
+        const { smsData, smsState } = this.data;
         if (smsState === 1) {//获取中...
             return
         }
@@ -221,33 +232,33 @@ export default class FormInput {
         }
         clearInterval(this.interval);
 
-        let email = this.props.getCodeRef();
+        let email = this.props.getEmail();
         if (!email) {
             return;
         }
-        this.setState({ smsState: 1 });
+        this.setData({ smsState: 1 });
         let data = await portalChannel.sendEmailCode(email);
-        this.setState({ smsState: 0 });
+        this.setData({ smsState: 0 });
         if (data) {
-            let limit_time = Utility.timeAdd(now_time, 1, 'm');
-            let expires_time = Utility.timeAdd(now_time, 10, 'm');
-            let seconds = parseInt(Utility.timeDiff(limit_time, now_time, 's'), 0);
+            let limit_time = util.timeAdd(now_time, 1, 'm');
+            let expires_time = util.timeAdd(now_time, 10, 'm');
+            let seconds = parseInt(util.timeDiff(limit_time, now_time, 's')) || 0;
 
-            this.setState({ smsData: { smsName: email, limit_time, expires_time }, smsSeconds: seconds });
+            this.setData({ smsData: { smsName: email, limit_time, expires_time }, smsSeconds: seconds });
             this.interval = setInterval(() => {
                 if (seconds <= 0) {
-                    this.setState({ smsSeconds: 0 });
+                    this.setData({ smsSeconds: 0 });
                     clearInterval(this.interval);
                     return;
                 }
                 seconds--;
-                this.setState({ smsSeconds: seconds });
+                this.setData({ smsSeconds: seconds });
             }, 1000);
         }
     }
     async sendMobileCode() {
         let now_time = new Date();
-        const { smsData, smsState } = this.state;
+        const { smsData, smsState } = this.data;
         if (smsState === 1) {//获取中...
             return
         }
@@ -256,27 +267,27 @@ export default class FormInput {
         }
         clearInterval(this.interval);
 
-        let mobile = this.props.getCodeRef();
+        let mobile = this.props.getMobile();
         if (!mobile) {
             return;
         }
-        this.setState({ smsState: 1 });
+        this.setData({ smsState: 1 });
         let data = await portalChannel.sendMobileCode(mobile);
-        this.setState({ smsState: 0 });
+        this.setData({ smsState: 0 });
         if (data) {
-            let limit_time = Utility.timeAdd(now_time, 1, 'm');
-            let expires_time = Utility.timeAdd(now_time, 10, 'm');
-            let seconds = parseInt(Utility.timeDiff(limit_time, now_time, 's'), 0);
+            let limit_time = util.timeAdd(now_time, 1, 'm');
+            let expires_time = util.timeAdd(now_time, 10, 'm');
+            let seconds = parseInt(util.timeDiff(limit_time, now_time, 's')) || 0;
 
-            this.setState({ smsData: { smsName: mobile, limit_time: limit_time, expires_time: expires_time }, smsSeconds: seconds });
+            this.setData({ smsData: { smsName: mobile, limit_time: limit_time, expires_time: expires_time }, smsSeconds: seconds });
             this.interval = setInterval(() => {
                 if (seconds <= 0) {
-                    this.setState({ smsSeconds: 0 });
+                    this.setData({ smsSeconds: 0 });
                     clearInterval(this.interval);
                     return;
                 }
                 seconds--;
-                this.setState({ smsSeconds: seconds });
+                this.setData({ smsSeconds: seconds });
             }, 1000);
         }
     }

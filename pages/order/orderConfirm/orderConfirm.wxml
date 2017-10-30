@@ -134,14 +134,19 @@
     </view>
 
     <view class="ma-layort">
-        <navigator url="../orderTicketList/orderTicketList">
-            <view class="m-listItem">
-                <view class="left">你拥有优惠券</view>
-                <view class="middel">{{ticketList.length}}张
+        <navigator url="../orderTicketList/orderTicketList?ticket_id={{ticketId}}">
+            <block wx:if="{{ticketUseflag===1}}">
+                <view class="m-listItem">
+                    <view class="left">{{ticketId>0?ticketName:'你拥有优惠券'}}</view>
+                    <view class="middel">{{ticketList.length}}张
+                    </view>
+                    <view class="right">
+                        <view class="icon icon-right ion-ios-arrow-right"></view>
+                    </view>
                 </view>
-                <view class="right">
-                    <view class="icon icon-right ion-ios-arrow-right"></view>
-                </view>
+            </block>
+            <view wx:else class="m-listItem">
+                <view class="left">不可以使用优惠券</view>
             </view>
         </navigator>
     </view>

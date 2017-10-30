@@ -6,6 +6,7 @@
     "pages/category/category",
     "pages/basket/basket",
     "pages/product/productList/productList",
+    "pages/product/topProductList/topProductList",
     "pages/product/productDetail/productDetail",
     "pages/product/productSearch/productSearch",
     "pages/order/orderConfirm/orderConfirm",

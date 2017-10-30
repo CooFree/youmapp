@@ -1,66 +1,58 @@
-// pages/order/orderTicketList/orderTicketList.js
+import util from '../../../utils/util';
+import OrderChannel from '../../../channels/order';
+import MemberChannel from '../../../channels/member';
+
+const orderChannel = new OrderChannel();
+const memberChannel = new MemberChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    ticketList: [],
+    ticketCode: '',
+    ticketId: 0
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    const ticketId = parseInt(options.ticket_id) || 0;
+    const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
+    console.log(ticketList);
+    this.setData({ ticketId, ticketList });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  changeTicketCode: function (event) {
+    let ticketCode = event.detail.value;
+    this.setData({ ticketCode });
   },
+  bindTicket: function () {
+    const ticketCode = this.data.ticketCode.trim();
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+    if (ticketCode.length > 0) {
+      let result = memberChannel.bindTicket(ticketCode);
+      if (result) {
+        getCurrentPages().forEach((item, index) => {
+          if (item.route.indexOf('/orderConfirm') > 0) {
+            item.loadData();
+            const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
+            this.setData({ ticketList });
+          }
+        });
+      }
+      else {
+        //this.props.showTip('优惠券无效');
+
+      }
+      this.setState({ ticketCode: '' });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  selectTicket: function (event) {
+    let { ticketid, ticketname, ticketenable } = event.currentTarget.dataset;
+    if (ticketenable === 1) {
+      if (ticketid === this.data.ticketId) {
+        ticketid = 0;
+      }
+      getCurrentPages().forEach((item, index) => {
+        if (item.route.indexOf('/orderConfirm') > 0) {
+          item.selecTicket(ticketid, ticketname);
+        }
+      });
+      wx.navigateBack();
+    }
   }
-})
+});

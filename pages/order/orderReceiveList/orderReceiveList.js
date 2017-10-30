@@ -1,66 +1,40 @@
-// pages/order/orderReceiveList/orderReceiveList.js
+import MemberChannel from '../../../channels/member';
+
+const memberChannel = new MemberChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    receiveId: 0,
+    receiveList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.setData({ receiveId: parseInt(options.receive_id) || 0 });
+    this.loadData();
   },
+  loadData: function () {
+    wx.showLoading();
+    memberChannel.getReceiveList().then(data => {
+      this.setData({ receiveList: data });
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+      wx.hideLoading();
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-  
+    this.loadData();
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
+  selectReceive: function (event) {
+    const receiveid = event.currentTarget.dataset.receiveid;
+    getCurrentPages().forEach((item, index) => {
+      if (item.route.indexOf('/orderConfirm') > 0) {
+        item.selectReceive(receiveid);
+      }
+    });
+    wx.navigateBack();
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
+  editReceive: function (event) {
+    const receiveid = event.currentTarget.dataset.receiveid;
+    wx.navigateTo({ url: '../orderReceive/orderReceive?receive_id=' + receiveid });
+  },
+  onShow: function () {
+    this.loadData();
+  },
 })

@@ -115,7 +115,7 @@
                 </view>
                 <view class="commentPics" wx:if="{{item.images.length > 0}}">
                     <ul class="list">
-                        <li class="item" wx:for="{{item.images}}" bindtap="showPreview" data-url="{{item.image_url}}">
+                        <li class="item" wx:for="{{item.images}}" wx:key="{{index}}" bindtap="showPreview" data-url="{{item.image_url}}">
                             <image class="img" mode="widthFix" src="{{tools.httpsuri(item.image_url+'!prodimg78')}}" alt=""></image>
                         </li>
                     </ul>

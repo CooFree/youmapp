@@ -201,10 +201,12 @@ export default class OrderChannel {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Platform': 'wxapp'
             }
+
             try {
                 let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
                 if (resData.result === 1) {
-                    cache.confirmOrderData = resData.info.order;
+                    console.log(resData);
+                    cache.confirmOrderData = resData.info;
                     return resData.info;
                 }
                 else {
@@ -215,6 +217,9 @@ export default class OrderChannel {
                 console.error(error);
             }
         }
+    }
+    getOrderConfirmCache() {
+        return cache.confirmOrderData;
     }
 
     async postOrderConfirm(ticketId, deliveryId, paytype, receiveId, postBuyData, invoice) {

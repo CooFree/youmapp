@@ -309,7 +309,7 @@ export default class MemberChannel {
             let url = config.Host + '/member/receive.aspx?post=save&member_id=' + memberId;
             let post_data = {
                 receive_id: receiveId,
-                receive_name: Utility.filterUrlBad(receiveName),
+                receive_name: util.filterUrlBad(receiveName),
                 receive_mobile: receiveMobile,
                 receive_region: receiveRegion,
                 receive_zipcode: '',
@@ -373,7 +373,7 @@ export default class MemberChannel {
     async postSetPassword(memberId, formPassword) {
         if (memberId) {
             let url = config.Host + '/member/setPassword.aspx?member_id=' + memberId;
-            let password = Utility.md5(formPassword);
+            let password = util.md5(formPassword);
             let post_data = { password };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
@@ -511,7 +511,7 @@ export default class MemberChannel {
         let memberId = memberState.getLoginId();
         if (memberId) {
             let url = config.Host + '/member/ticketList.aspx?post=bind&member_id=' + memberId;
-            let post_data = { ticket_code: Utility.filterUrlBad(ticketCode) };
+            let post_data = { ticket_code: util.filterUrlBad(ticketCode) };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
@@ -628,7 +628,7 @@ export default class MemberChannel {
             let post_data = {
                 order_id: orderId,
                 type: applyType,
-                title: Utility.filterUrlBad(title),
+                title: util.filterUrlBad(title),
                 content: content
             };
             let headers = {

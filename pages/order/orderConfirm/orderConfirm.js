@@ -22,6 +22,7 @@ Page({
     paytype: 'weixin',
     deliveryId: 0,
     ticketId: 0,
+    ticketName: '',
     receiveId: 0,
     invoiceFlag: 0,
     invoiceHead: '',
@@ -90,8 +91,8 @@ Page({
     this.setData({ receiveId });
     this.loadData();
   },
-  selecTicket: function (ticketId) {
-    this.setData({ ticketId });
+  selecTicket: function (ticketId, ticketName) {
+    this.setData({ ticketId, ticketName });
     this.loadData();
   },
   selecDelivery: function (event) {

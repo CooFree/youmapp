@@ -101,6 +101,21 @@ Page({
       delBtnWidth: delBtnWidth
     });
   },
+  delStore: function(event){
+    let id = event.currentTarget.dataset.storeid;
+    memberChannel.deleteProductStore(id).then(data=>{
+      let initData = this.data.productStore;
+      initData.forEach(function(value, index, arr){
+        if(value.store_id === id){
+          initData.splice(index, 1);
+        }
+      })
+      this.setData({
+        productStore: initData
+      })
+      wx.showToast({ title: '已取消！', icon: 'success', duration: 1000 });
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

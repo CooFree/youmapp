@@ -1,15 +1,14 @@
 <!--pages/portal/helpList/helpList.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="helpWrap g-row">
         <view class="list">
-            <view class="item">
-                <view class="tit">购物流程</view>
-                <i class="icon icon-arrow-right ion-ios-arrow-forward"></i>
-            </view>
-            <view class="item">
-                <view class="tit">购物保障</view>
-                <i class="icon icon-arrow-right ion-ios-arrow-forward"></i>
-            </view>
+            <navigator url="../help/help?code={{item.code}}" wx:for="{{helpList}}">
+                <view class="item">
+                    <view class="tit">{{tools.decodeuri(item.title)}}</view>
+                    <i class="icon icon-arrow-right ion-ios-arrow-forward"></i>
+                </view>
+            </navigator>
         </view>
     </view>
 </view>

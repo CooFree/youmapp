@@ -1,6 +1,5 @@
 {
     "pages": [
-        "pages/order/orderPay/orderPay",
         "pages/index/index",
         "pages/logs/logs",
         "pages/search/search",
@@ -30,7 +29,8 @@
         "pages/member/apply/apply",
         "pages/product/productComment/productComment",
         "pages/regist/regist",
-        "pages/login/login"
+        "pages/login/login",
+        "pages/order/orderPay/orderPay"
     ],
     "window": {
         "backgroundTextStyle": "light",

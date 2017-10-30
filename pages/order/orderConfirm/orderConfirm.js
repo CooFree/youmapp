@@ -139,7 +139,7 @@ Page({
       this.setData({ submiting: false });
       if (orderId > 0) {
         buyTemp.clear();
-        wx.navigateTo({ url: '../orderPay/orderPay?order_id=' + orderId });
+        wx.redirectTo({ url: '../orderPay/orderPay?order_id=' + orderId });
       }
       else {
         wx.showToast({ title: '提交失败', icon: 'loading', duration: 2000 });

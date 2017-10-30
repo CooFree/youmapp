@@ -6,46 +6,43 @@
             <view class="txtwrap">
                 <view class="p1">
                     订单编号：
-                    <span class="s1">201710301642353373</span>
+                    <span class="s1">{{orderInfo.order_code}}</span>
                 </view>
                 <view class="p1">
                     商品金额：
-                    <span class="s1">91.00元</span>
+                    <span class="s1">{{tools.tofixed(orderInfo.product_amount,2)}}元</span>
                 </view>
                 <view class="p1">
                     优惠金额：
-                    <span class="s1">-0.00元</span>
+                    <span class="s1">-{{tools.tofixed(orderInfo.preferential,2)}}元</span>
                 </view>
                 <view class="p1">
                     运费金额：
-                    <span class="s1">0.00元</span>
+                    <span class="s1">{{tools.tofixed(orderInfo.delivery_fee,2)}}元</span>
                 </view>
             </view>
         </view>
         <view class="wechatpay">
             <view class="hd">
                 <span class="s1">还需支付：</span>
-                <span class="s2">91.00元</span>
+                <span class="s2">{{tools.tofixed(orderInfo.order_amount,2)}}元</span>
             </view>
             <view class="bd">
                 <view class="left">
                     <image mode="widthFix" class="pic" src="data:image/png;base64,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"
                         alt=""></image>
                 </view>
-                <view class="right">
-                    <view class="p1">
-                        微信支付
-                    </view>
-                    <view class="p2">
-                        推荐安装微信6.0.2及以上版本使用
-                    </view>
-                    <view class="p2">
-                        /order/orderPay
-                    </view>
+                <view wx:if="{{orderInfo.pay_type === 0}}" class="right">
+                    <view class="p1">货到付款</view>
+                    <view class="p2">您的订单已提交成功，请保持电话通畅！</view>
+                </view>
+                <view wx:if="{{orderInfo.pay_type === 7}}" class="right">
+                    <view class="p1">微信支付</view>
+                    <view class="p2">推荐安装微信6.0.2及以上版本使用</view>
                 </view>
             </view>
         </view>
-        <view class="wechatpayft">
+        <view wx:if="{{orderInfo.pay_type === 7}}" class="wechatpayft" bindtap="weixinPay">
             <button class="btn">确认支付</button>
         </view>
     </view>

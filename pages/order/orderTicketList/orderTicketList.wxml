@@ -4,9 +4,9 @@
         <view class="m-couponHd g-row">
             <view class="inner">
                 <view class="m-ipt">
-                    <input type="text" class="ipt" placeholder="请输入优惠码" value="" bindinput="changeTicketCode" />
+                    <input type="text" class="ipt" placeholder="请输入优惠码" value="{{ticketCode}}" bindinput="changeTicketCode" />
                 </view>
-                <button class="btn disabled" bindtap="bindTicket">兑换</button>
+                <button class="btn {{ticketCode.length>0?'':'disabled'}}" bindtap="bindTicket">兑换</button>
             </view>
         </view>
     </view>

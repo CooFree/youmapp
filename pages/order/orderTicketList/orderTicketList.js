@@ -13,7 +13,6 @@ Page({
   onLoad: function (options) {
     const ticketId = parseInt(options.ticket_id) || 0;
     const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
-    console.log(ticketList);
     this.setData({ ticketId, ticketList });
   },
   changeTicketCode: function (event) {
@@ -24,21 +23,23 @@ Page({
     const ticketCode = this.data.ticketCode.trim();
 
     if (ticketCode.length > 0) {
-      let result = memberChannel.bindTicket(ticketCode);
-      if (result) {
-        getCurrentPages().forEach((item, index) => {
-          if (item.route.indexOf('/orderConfirm') > 0) {
-            item.loadData();
-            const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
-            this.setData({ ticketList });
-          }
-        });
-      }
-      else {
-        //this.props.showTip('优惠券无效');
+      memberChannel.bindTicket(ticketCode).then(result => {
+        if (result) {
+          getCurrentPages().forEach((item, index) => {
+            if (item.route.indexOf('/orderConfirm') > 0) {
+              item.loadData();
+              const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
+              this.setData({ ticketList });
+            }
+          });
+        }
+        else {
+          console.log('优惠券无效');
+          //this.props.showTip('优惠券无效');
+        }
+        this.setData({ ticketCode: '' });
+      });
 
-      }
-      this.setState({ ticketCode: '' });
     }
   },
   selectTicket: function (event) {

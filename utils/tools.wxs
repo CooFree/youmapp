@@ -66,10 +66,22 @@ return -1;
 }
 }
 
+var strSubstr = function(str, item, dir){
+  var inx = str.indexOf(item);
+  var temp = '';
+  if(dir === 1){
+    temp = str.substring(0, inx);
+  }else {
+    temp = str.substring(inx + 1);
+  }
+  return temp;
+}
+
 module.exports = {
   decodeuri: decodeURI,
   httpsuri: httpsURI,
   navigateurl: navigateUrl,
   tofixed: toFixed,
-  indexof:indexOf
+  indexof:indexOf,
+  substr: strSubstr
 }

@@ -1,11 +1,11 @@
-<!--pages/member/productStore/productStore.wxml-->
+
 <wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="productStore">
         <view class="m-cartGroup">
             <view class="list">
                 <navigator url="prod_id"></navigator>
-                <view class="item" wx:for="{{productStore}}">
+                <view class="item" wx:for="{{productStore}}" wx:key="{{index}}">
                     <view class="inner" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" data-index="{{index}}" style="{{item.txtStyle}}">
                         <view class="m-good">
                             <view class="imgWrap">
@@ -26,7 +26,7 @@
                             <view class="m-selnum">
                             </view>
                         </view>
-                        <view class="del" bindtap="delStore" data-storeID="{{item.store_id}}">
+                        <view class="del" bindtap="delStore" data-storeid="{{item.store_id}}">
                             <i class="icon icon-trash ion-ios-trash-outline"></i>
                         </view>
                     </view>

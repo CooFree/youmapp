@@ -18,11 +18,11 @@ Page({
   onLoad: function (options) {
     this.getOrderDetail(options.order_id);
   },
-  getOrderDetail: function(options){
-    memberChannel.getOrderDetail(options.order_id).then(data => {
+  getOrderDetail: function(id){
+    memberChannel.getOrderDetail(id).then(data => {
       this.setData({
         orderInfo: data,
-        orderID: options.order_id
+        orderID: id
       })
     })
   },

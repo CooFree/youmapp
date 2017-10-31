@@ -27,6 +27,8 @@ Page({
         limittime: '',
         storeflag: 0,
         tagList: [],
+        preferList: [],
+        productCommentList: [],
     },
     showPreview: function (event) {
         let url = event.currentTarget.dataset.url;
@@ -186,6 +188,7 @@ Page({
         }
 
         if (memberState.isLogin()) {
+            console.log('finlImg', finlImg);
             buyTemp.addBuy(specItem.id, finlVolume, location, finlImg);
             this.setData({ showSelector: false });
             wx.navigateTo({ url: '../../order/orderConfirm/orderConfirm' });
@@ -232,13 +235,22 @@ Page({
             wx.hideLoading();
         });
 
+        //商品优惠
+        productChannel.getProductPrefer(productId).then((data) => {
+            this.setData({ preferList: data });
+        });
+
+        //商品评价
         productChannel.getProductCommentList(productId, 1, 1).then(data => {
             this.setData({ productCommentList: data });
         });
 
+        //商品标签
         productChannel.getTagData().then(data => {
             this.setData({ tagList: data });
         });
+
+
     },
     onTiming: function (limitSeconds) {
         if (limitSeconds > 0) {

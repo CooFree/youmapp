@@ -1,97 +1,105 @@
 <!--pages/member/orderDetail/orderDetail.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
 <view class="container greybg">
-    <!-- <view class="m-indexHd" style="height: 44px;">
-        <view class="m-hd">
-            <view class="">
-                <view class="product-hd g-row">
-                    <view class="g-top g-row">
-                        <i class="icon tg-icon ion-ios-arrow-back"></i>
-                        <text class="topBarTitle">订单详情</text>
-                        <view class="right">
-                            <i class="icon tg-icon ion-ios-home-outline"></i>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-    </view> -->
-
-
     <view class="orderDetail">
         <view class="odinfos">
             <view class="txtwrap">
                 <view class="p1">下单时间：
-                    <span class="s1">2017年10月09日 14:14:37</span>
+                    <text class="s1">{{orderInfo.order.create_time}}</text>
                 </view>
                 <view class="p1">订单编号：
-                    <span class="s1">201710091414371189</span>
+                    <text class="s1">{{orderInfo.order.code}}</text>
                 </view>
             </view>
             <view class="ft">
                 <view class="btns">
                     <view class="cost">
                         <view class="p1">应付:
-                            <span class="price">￥273.00</span>
+                            <text class="price">￥{{orderInfo.order.product_amount}}</text>
                         </view>
                     </view>
-                    <span class="cancel">取消订单</span>
-                    <span class="w-button btn-topay">去付款</span>
+                    <block wx:if="{{orderInfo.order.show_status === 1}}">
+                        <text class="cancel">取消订单</text>
+                    </block>
+                    <block wx:if="{{orderInfo.order.show_status === 1}}">
+                        <text class="w-button btn-topay">去付款</text>
+                    </block>
+                    <block wx:if="{{orderInfo.order.show_status === 3}}">
+                        <text class="w-button">售后申请</text>
+                    </block>
+                    <block wx:if="{{orderInfo.order.show_status === 0}}">
+                        <text class="w-button">追踪物流</text>
+                    </block>
+                    <block wx:if="{{orderInfo.order.show_status === 6}}">
+                        <text class="w-button">{{orderInfo.order.comment_flag === 0 ? '马上评论' : '已评价'}}</text>
+                    </block>
+                    <block wx:if="{{orderInfo.order.show_status === 3}}">
+                        <text class="w-button btn-topay">确认到货</text>
+                    </block>
                 </view>
             </view>
         </view>
         <view class="od-googs">
             <view class="hd">
-                <span class="orderId">包裹</span>
-                <view class="p4">未付款</view>
+                <text class="orderId">包裹</text>
+                <block wx:if="{{orderInfo.cancel_flag === 1}}">
+                    <p className="p2">已取消</p>
+                </block>
+                <block wx:else>
+                    <view class="{{orderInfo.show_status === 6 ? 'p5' : 'p4'}}">{{tools.decodeuri(orderInfo.order.show_status_desc)}}</view>
+                </block>
             </view>
-            <view class="order-item">
-                <view class="bd">
-                    <view class="left">
-                        <image src="https://img01.camel.com.cn/product/image/D6Y105770/0f9dd4ee-3c89-4d11-ac6c-2f82b5455ca0.jpg!prodimg100" class="pic" alt=""></image>
-                    </view>
-                    <view class="middle">
-                        <view class="goodInfo">
-                            <view class="p1">骆驼秋冬新款男士轻薄羽绒服 可脱卸帽</view>
-                            <view class="p2">咖啡*M(170/88A)</view>
-                            <view class="p6">￥258.00</view>
+            <view class="order-item" wx:for="{{orderInfo.order_item_list}}" wx:key="">
+                <navigator url="">
+                    <view class="bd">
+                        <view class="left">
+                            <image src="{{item.image_url}}" class="pic" alt=""></image>
+                        </view>
+                        <view class="middle">
+                            <view class="goodInfo">
+                                <view class="p1">{{tools.decodeuri(item.prod_name)}}</view>
+                                <view class="p2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
+                                <view class="p6">￥{{item.last_price}}</view>
+                            </view>
+                        </view>
+                        <view class="right">
+                            <view class="p3">x{{item.volume}}</view>
                         </view>
                     </view>
-                    <view class="right">
-                        <view class="p3">x1</view>
-                    </view>
-                </view>
+                </navigator>
             </view>
         </view>
         <view class="od-addr">
-            <view class="p1">冯文乐，176****2904</view>
-            <view class="p1">上海-上海市-黄浦区，石槎路396号骆驼大楼4F</view>
+            <view class="p1">{{tools.decodeuri(orderInfo.order.receive_name)}}，176****2904</view>
+            <view class="p1">{{tools.decodeuri(orderInfo.order.receive_region)}}，{{tools.decodeuri(orderInfo.order.receive_address)}}</view>
         </view>
         <view class="od-addr">
             <view class="row-item">
                 <view class="sp1">配送方式</view>
-                <view class="sp2">EMS快递</view>
+                <view class="sp2">{{tools.decodeuri(orderInfo.order.delivery_name)}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">支付方式</view>
-                <view class="sp2">支付宝</view>
+                <view class="sp2">{{tools.decodeuri(orderInfo.order.pay_type_desc)}}</view>
             </view>
         </view>
         <view class="od-addr">
             <view class="row-item">
                 <view class="sp1">商品金额</view>
-                <view class="sp2 red">￥258.00</view>
+                <view class="sp2 red">￥{{orderInfo.order.product_amount}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">优惠金额</view>
-                <view class="sp2 red">￥0.00</view>
+                <view class="sp2 red">￥{{orderInfo.order.preferential}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">运费</view>
-                <view class="sp2 red">￥15.00</view>
+                <view class="sp2 red">￥{{orderInfo.order.delivery_fee}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">积分</view>
-                <view class="sp3">258</view>
+                <view class="sp3">{{orderInfo.order.give_score}}</view>
             </view>
         </view>
         <view class="od-addr">
@@ -101,11 +109,11 @@
             <view class="serviceWrap">
                 <view class="seriveChat">
                     <i class="icon ion-ios-chatbubble-outline"></i>
-                    <span>在线客服</span>
+                    <text>在线客服</text>
                 </view>
                 <a href="tel://010-4006816178" class="seriveChat">
                     <i class="icon ion-ios-telephone-outline"></i>
-                    <span>电话客服</span>
+                    <text>电话客服</text>
                 </a>
             </view>
         </view>

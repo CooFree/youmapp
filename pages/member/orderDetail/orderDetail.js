@@ -9,21 +9,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    orderID: null,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.getOrderDetail(options.order_id);
+  },
+  getOrderDetail: function(options){
     memberChannel.getOrderDetail(options.order_id).then(data => {
-      console.log(data);
       this.setData({
-        orderInfo: data
+        orderInfo: data,
+        orderID: options.order_id
       })
     })
   },
-
+  cancelOrder: function (event) {
+    let id = event.currentTarget.dataset.orderid;
+    memberChannel.cancelOrder(id).then(data => {
+      if (data) {
+        this.getOrderDetail(this.data.orderID);
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

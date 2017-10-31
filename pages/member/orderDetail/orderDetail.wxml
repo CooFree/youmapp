@@ -20,22 +20,22 @@
                         </view>
                     </view>
                     <block wx:if="{{orderInfo.order.show_status === 1}}">
-                        <text class="cancel">取消订单</text>
+                        <text class="cancel" data-orderID="{{orderInfo.order.id}}" bindtap="cancelOrder">取消订单</text>
                     </block>
                     <block wx:if="{{orderInfo.order.show_status === 1}}">
-                        <text class="w-button btn-topay">去付款</text>
+                        <text class="w-button btn-topay" data-orderID="{{orderInfo.order.id}}">去付款</text>
                     </block>
                     <block wx:if="{{orderInfo.order.show_status === 3}}">
-                        <text class="w-button">售后申请</text>
+                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">售后申请</text>
                     </block>
                     <block wx:if="{{orderInfo.order.show_status === 0}}">
-                        <text class="w-button">追踪物流</text>
+                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">追踪物流</text>
                     </block>
                     <block wx:if="{{orderInfo.order.show_status === 6}}">
-                        <text class="w-button">{{orderInfo.order.comment_flag === 0 ? '马上评论' : '已评价'}}</text>
+                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">{{orderInfo.order.comment_flag === 0 ? '马上评论' : '已评价'}}</text>
                     </block>
                     <block wx:if="{{orderInfo.order.show_status === 3}}">
-                        <text class="w-button btn-topay">确认到货</text>
+                        <text class="w-button btn-topay" data-orderID="{{orderInfo.order.id}}">确认到货</text>
                     </block>
                 </view>
             </view>

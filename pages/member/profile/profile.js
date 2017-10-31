@@ -56,7 +56,7 @@ Page({
 
     memberChannel.saveProfile(name, sex, birthYear, birthMonth, birthDay, regionId).then(data => {
       if (data) {
-        wx.showToast({ title: '保存成功', icon: 'success', duration: 2000 });
+        wx.showToast({ title: '保存成功' });
       }
     })
   },

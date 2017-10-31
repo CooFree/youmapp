@@ -27,21 +27,17 @@ Page({
         if (result) {
           getCurrentPages().forEach((item, index) => {
             if (item.route.indexOf('/orderConfirm') > 0) {
-              item.loadData();
-              
-              const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
-              console.log(ticketList);
-              this.setData({ ticketList });
+              item.loadData(data => {
+                this.setData({ ticketList: data.member_ticket_list });
+              });
             }
           });
         }
         else {
-          //console.log('优惠券无效');
-          
+          wx.showToast({ title: '优惠券无效', image: '../../../images/errorx.png' });
         }
         this.setData({ ticketCode: '' });
       });
-
     }
   },
   selectTicket: function (event) {

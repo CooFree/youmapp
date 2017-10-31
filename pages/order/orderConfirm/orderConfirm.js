@@ -39,7 +39,7 @@ Page({
 
     this.loadData();
   },
-  loadData: function () {
+  loadData: function (success) {
     const { paytype, deliveryId, ticketId, receiveId } = this.data;
     let buyData = buyTemp.jsonData();
     if (buyData) {
@@ -64,6 +64,10 @@ Page({
             deliveryId: data.order.delivery_type,
             receiveId: data.receive.id || 0,
           });
+
+          if (success) {
+            success(data);
+          }
         }
         wx.hideLoading();
       });
@@ -93,9 +97,6 @@ Page({
     this.setData({ ticketId, ticketName });
     this.loadData();
   },
-  loadTicket: function () {
-    this.loadData();
-  },
   selecDelivery: function (event) {
     const { deliveryid } = event.currentTarget.dataset;
     this.setData({ deliveryId: deliveryid });
@@ -113,25 +114,25 @@ Page({
       return;
     }
     if (receiveId === 0) {
-      wx.showToast({ title: '先选择收货地址', icon: 'loading', duration: 2000 });
+      wx.showToast({ title: '先选择收货地址', image: '../../../images/alertx.png' });
       return;
     }
     if (reserveFlag === 0) {
-      wx.showToast({ title: '库存不足', icon: 'loading', duration: 2000 });
+      wx.showToast({ title: '库存不足', image: '../../../images/alertx.png' });
       return;
     }
     let buyData = buyTemp.jsonData();
     if (!buyData) {
-      wx.showToast({ title: '没有商品', icon: 'loading', duration: 2000 });
+      wx.showToast({ title: '没有商品', image: '../../../images/alertx.png' });
       return;
     }
     if (amountFlag === 0) {
-      wx.showToast({ title: '金额不符', icon: 'loading', duration: 2000 });
+      wx.showToast({ title: '金额不符', image: '../../../images/alertx.png' });
       return;
     }
     const productVolume = buyTemp.getVolume();
     if (paytype === 'outpay' && productVolume > 3) {
-      wx.showToast({ title: '货到付款不能超过3件', icon: 'loading', duration: 2000 });
+      wx.showToast({ title: '货到付款不能超过3件', image: '../../../images/alertx.png' });
       return;
     }
 
@@ -143,7 +144,7 @@ Page({
         wx.redirectTo({ url: '../orderPay/orderPay?order_id=' + orderId });
       }
       else {
-        wx.showToast({ title: '提交失败', icon: 'loading', duration: 2000 });
+        wx.showToast({ title: '提交失败', image: '../../../images/errorx.png' });
       }
     });
   }

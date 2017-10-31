@@ -3,6 +3,7 @@ import OrderChannel from '../../../channels/order';
 import util from '../../../utils/util';
 import buyTemp from '../../../utils/buyTemp';
 import basketTemp from '../../../utils/basketTemp';
+import memberState from '../../../utils/memberState';
 
 const orderChannel = new OrderChannel();
 const productChannel = new ProductChannel();
@@ -152,20 +153,25 @@ Page({
         this.setData({ showSelector: !this.data.showSelector });
     },
     setStore: function (event) {
-        const { prodid } = event.currentTarget.dataset;
-        let { storeflag } = this.data;
-        if (storeflag === 1) {
-            productChannel.deleteProductStore(prodid).then(data => {
-                if (data) {
-                    this.setData({ storeflag: 0 });
-                }
-            });
-        } else {
-            productChannel.addProductStore(prodid).then(data => {
-                if (data) {
-                    this.setData({ storeflag: 1 });
-                }
-            });
+        if (memberState.isLogin()) {
+            const { prodid } = event.currentTarget.dataset;
+            let { storeflag } = this.data;
+            if (storeflag === 1) {
+                productChannel.deleteProductStore(prodid).then(data => {
+                    if (data) {
+                        this.setData({ storeflag: 0 });
+                    }
+                });
+            } else {
+                productChannel.addProductStore(prodid).then(data => {
+                    if (data) {
+                        this.setData({ storeflag: 1 });
+                    }
+                });
+            }
+        }
+        else {
+            this.goLogin();
         }
     },
     onBuy: function (event) {
@@ -178,9 +184,15 @@ Page({
             this.setData({ showSelector: true });
             return;
         }
-        buyTemp.addBuy(specItem.id, finlVolume, location, finlImg);
-        this.setData({ showSelector: false });
-        wx.navigateTo({ url: '../../order/orderConfirm/orderConfirm' });
+        
+        if (memberState.isLogin()) {
+            buyTemp.addBuy(specItem.id, finlVolume, location, finlImg);
+            this.setData({ showSelector: false });
+            wx.navigateTo({ url: '../../order/orderConfirm/orderConfirm' });
+        }
+        else {
+            this.goLogin();
+        }
     },
     onBasket: function (event) {
         let { specItem, finlImg, finlColor, finlSize, finlVolume, productId, location } = this.data;
@@ -195,6 +207,9 @@ Page({
         basketTemp.addBasket(productId, specItem.id, finlVolume, location, finlImg);
         this.setData({ showSelector: false });
         wx.showToast({ title: '已加入购物车', icon: 'success', duration: 2000 });
+    },
+    goLogin: function () {
+        wx.navigateTo({ url: '../../login/login' });
     },
     onLoad: function (options) {
 

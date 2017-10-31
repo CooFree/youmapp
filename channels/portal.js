@@ -9,8 +9,6 @@ var cache = {
 };
 
 export default class PortalChannel {
-
-
   async getGeneralConfig() {
     let url = config.Host + '/config.aspx';
     try {
@@ -42,8 +40,24 @@ export default class PortalChannel {
     }
   }
 
-  async postWeixinLogin(code) {
+  async getWeixinAuth(code) {
     let url = config.Host + '/handlers/wxAppLoginCallback.ashx';
+    try {
+      let resData = await util.fetch(url, { body: { code } });
+      if (resData.result === 1) {
+        return { openid: resData.openid, session_key: resData.session_key, unionid: resData.unionid };
+      }
+      else {
+        console.warn(resData.msg);
+      }
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getWeixinLogin(code) {
+    let url = config.Host + '/handlers/wxAppLoginCallback.ashx?login=1';
     try {
       let resData = await util.fetch(url, { body: { code } });
       if (resData.result === 1) {

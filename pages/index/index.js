@@ -5,7 +5,6 @@ import util from '../../utils/util';
 
 const app = getApp();
 const homeChannel = new HomeChannel();
-
 Page({
     data: {
         swiperData: [],

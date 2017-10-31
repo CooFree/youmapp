@@ -36,8 +36,6 @@ Page({
       postageFreeAmount: generalConfig.postageFreeAmount,
       orderNotice: generalConfig.orderNotice
     });
-    const pages = getCurrentPages();
-    console.log('pages', pages);
 
     this.loadData();
   },
@@ -93,6 +91,9 @@ Page({
   },
   selecTicket: function (ticketId, ticketName) {
     this.setData({ ticketId, ticketName });
+    this.loadData();
+  },
+  loadTicket: function () {
     this.loadData();
   },
   selecDelivery: function (event) {

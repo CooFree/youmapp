@@ -28,14 +28,16 @@ Page({
           getCurrentPages().forEach((item, index) => {
             if (item.route.indexOf('/orderConfirm') > 0) {
               item.loadData();
+              
               const ticketList = orderChannel.getOrderConfirmCache().member_ticket_list || [];
+              console.log(ticketList);
               this.setData({ ticketList });
             }
           });
         }
         else {
-          console.log('优惠券无效');
-          //this.props.showTip('优惠券无效');
+          //console.log('优惠券无效');
+          
         }
         this.setData({ ticketCode: '' });
       });

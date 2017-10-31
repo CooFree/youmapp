@@ -184,7 +184,7 @@ Page({
             this.setData({ showSelector: true });
             return;
         }
-        
+
         if (memberState.isLogin()) {
             buyTemp.addBuy(specItem.id, finlVolume, location, finlImg);
             this.setData({ showSelector: false });
@@ -206,7 +206,7 @@ Page({
         }
         basketTemp.addBasket(productId, specItem.id, finlVolume, location, finlImg);
         this.setData({ showSelector: false });
-        wx.showToast({ title: '已加入购物车', icon: 'success', duration: 2000 });
+        wx.showToast({ title: '已加入购物车' });
     },
     goLogin: function () {
         wx.navigateTo({ url: '../../login/login' });

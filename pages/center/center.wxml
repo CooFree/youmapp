@@ -41,6 +41,7 @@
                 <view class="item" data-showstatus="undelivery" bindtap="goOrderList">
                     <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon2.png" alt=""></image>
                     <text class="txt">待发货</text>
+                    <text class="red-dot">{{undeliveryCount}}</text>
                 </view>
                 <view class="item" data-showstatus="delivered" bindtap="goOrderList">
                     <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon3.png" alt=""></image>

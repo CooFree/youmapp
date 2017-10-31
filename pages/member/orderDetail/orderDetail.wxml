@@ -69,6 +69,25 @@
                     </view>
                 </navigator>
             </view>
+            <view class="order-item" wx:for="{{orderInfo.order_gift_list}}" wx:key="">
+                <navigator url="">
+                    <view class="bd">
+                        <view class="left">
+                            <image src="{{item.gift_image_url}}" class="pic" alt=""></image>
+                        </view>
+                        <view class="middle">
+                            <view class="goodInfo">
+                                <view class="p1">{{tools.decodeuri(item.gift_name)}}【赠品】</view>
+                                <view class="p2">{{tools.decodeuri(item.specificate)}}</view>
+                                <view class="p6">￥{{item.gift_price}}</view>
+                            </view>
+                        </view>
+                        <view class="right">
+                            <view class="p3">x{{item.volume}}</view>
+                        </view>
+                    </view>
+                </navigator>
+            </view>
         </view>
         <view class="od-addr">
             <view class="p1">{{tools.decodeuri(orderInfo.order.receive_name)}}，176****2904</view>

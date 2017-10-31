@@ -46,7 +46,7 @@
                         <text class="w-button">{{item.comment_flag===0?'马上评论':'已评价'}}</text>
                     </navigator>
                     <navigator wx:if="{{item.show_status===1}}" url="../../order/orderPay/orderPay?order_id={{item.order_id}}">
-                        <text class="w-button">去付款</text>
+                        <text class="w-button btn-topay">去付款</text>
                     </navigator>
                 </view>
             </view>

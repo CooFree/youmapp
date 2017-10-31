@@ -3,26 +3,24 @@ import MemberChannel from '../../../channels/member';
 import util from '../../../utils/util';
 const memberChannel = new MemberChannel();
 
+const pageSize = 10;
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  page: 1,
   data: {
     delBtnWidth: 164,
-    txtStyle: ''
+    txtStyle: '',
+    productStore: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    memberChannel.getProductStore(1, 10).then(data => {
+    this.loadData();
+    this.initEleWidth();
+  },
+  loadData: function (more) {
+    memberChannel.getProductStore(this.page, pageSize).then(data => {
       this.setData({
         productStore: data
       })
     })
-    this.initEleWidth();
   },
   touchStart: function (event) {
     if (event.touches.length == 1) {

@@ -78,32 +78,7 @@ Page({
             }
           });
         });
-        util.uploadFile('/member/productComment.aspx?post=upload_image', file, true).then((data) => {
-          wx.hideLoading();
-          if (data) {
-            if (data.result === 1) {
-              actions.addProductCommentImage(rowIndex, data.image_url, data.image_width, data.image_height);
-            }
-            else {
-              this.props.showTip(data.msg);
-            }
-          }
-          this.setState({ uploading: false });
-        })
       }
     });
-    wx.showLoading();
-    /*util.uploadFile('/member/productComment.aspx?post=upload_image', file, true).then((data) => {
-       wx.hideLoading();
-      if (data) {
-        if (data.result === 1) {
-          actions.addProductCommentImage(rowIndex, data.image_url, data.image_width, data.image_height);
-        }
-        else {
-          this.props.showTip(data.msg);
-        }
-      }
-      this.setState({ uploading: false });
-    });*/
   }
 })

@@ -26,7 +26,7 @@ Page({
 
     this.formInputs.push(new FormInput(this, {
       title: '验证码', required: true, num: true, range: [6], mobilecode: true, placeholder: '短信验证码', getMobile: () => {
-        return mobile;
+        return this.data.mobile;
       }
     }));
 

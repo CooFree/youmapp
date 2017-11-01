@@ -1,27 +1,17 @@
-<!--pages/member/mobileVerify/mobileVerify.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<import src="../../../components/formInput/form-input.wxml" />
 <view class="container">
     <view class="g-row">
         <view class="login-form">
             <view class="hd">
-                手机号：
-                <text class="uname">13058428969</text>
+                手机号：<text class="uname">{{mobile}}</text>
             </view>
-            <view class="inputwrap">
-                <view class="inputBox scode">
-                    <input type="number" class="j-inputtext lophone" placeholder="短信验证码" maxlength="6" value="" />
-                    <view class="utip">
-                        <i class="icon u-clear ion-ios-close"></i>
-                    </view>
-                    <view class="getbox">
-                        <view class="getcode">
-                            获取验证码
-                        </view>
-                    </view>
-                </view>
-            </view>
+            <form bindsubmit="onVerify">
+            <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
             <view class="login-btn-wrap">
                 <button class="login-btn login-btn-g" formType="submit">下一步</button>
             </view>
+            </form>
         </view>
     </view>
 </view>

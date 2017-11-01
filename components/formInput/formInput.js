@@ -65,10 +65,6 @@ export default class FormInput {
         }
         return this.data;
     }
-    getValue() {
-        console.log(this.data);
-        return this.data.formValue;
-    }
     setValue(value) {
         this.setData({ formValue: value, clearShow: value.length > 0 });
     }
@@ -257,6 +253,7 @@ export default class FormInput {
         }
     }
     async sendMobileCode() {
+        console.log('sendMobileCode');
         let now_time = new Date();
         const { smsData, smsState } = this.data;
         if (smsState === 1) {//获取中...

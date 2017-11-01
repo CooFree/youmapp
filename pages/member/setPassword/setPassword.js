@@ -22,7 +22,7 @@ Page({
     const formDatas = this.formInputs.map((formInput, index) => {
       return formInput.load(index);
     });
-    this.setData({ formDatas, memberId });
+    this.setData({ formDatas });
   },
   setFormData: function (data) {
     this.data.formDatas[data.formIndex] = data;

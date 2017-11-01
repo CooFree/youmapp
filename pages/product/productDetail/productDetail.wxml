@@ -40,8 +40,8 @@
             </view>
             <view class="comment collet">
                 <view class="wrap" bindtap="setStore" data-prodid="{{productDetail.product.id}}">
-                    <i wx:if="{{storeflag===1}}" class="icon-fullstar ion-ios-star-outline"></i>
-                    <i wx:else class="icon ion-ios-star-outline"></i>
+                    <i wx:if="{{storeflag===1}}" class="pro_sc"></i>
+                    <i wx:else class="pro_bsc"></i>
                     <view class="more">
                         <text>{{storeflag===1? '取消': '收藏'}}</text>
                     </view>

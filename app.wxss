@@ -444,9 +444,9 @@ image {
 }
 
 .top-line .logo {
-    width: 138rpx;
-    height: 40rpx;
-    background-image: url(http://img02.camel.com.cn/image/logo138x40_1.png);
+    width: 200rpx;
+    height: 58rpx;
+    background-image: url("https://img02.camel.com.cn/image/you_logo.jpg");
     display: inline-block;
     margin-right: 20rpx;
     background-size: cover;
@@ -474,7 +474,7 @@ image {
 }
 
 .m-navs view.active .txt {
-    color: #e21a81;
+    color: #d2ab44;
 }
 
 .m-navs view.active .txt:after {
@@ -484,7 +484,7 @@ image {
     bottom: 0;
     width: 100%;
     height: 4rpx;
-    background-color: #e21a81;
+    background-color: #d2ab44;
 }
 
 .m-navs view {
@@ -866,7 +866,7 @@ m-indexHd .inner {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 4rpx;
+    width: 6rpx;
     background-color: #ab2b2b;
 }
 
@@ -1076,8 +1076,9 @@ m-indexHd .inner {
 }
 
 .m-list-floor .hd3 .dtit {
-    font-size: 37rpx;
+    font-size: 24rpx;
     text-align: center;
+    color: #999;
 }
 
 .m-list-floor .hd3 .desc {
@@ -2018,8 +2019,9 @@ m-indexHd .inner {
     justify-content: space-between;
     margin-top: 24rpx;
 }
-.sublime .link{
-    font-size:24rpx;
+
+.sublime .link {
+    font-size: 24rpx;
 }
 
 .sublime a {
@@ -2080,7 +2082,7 @@ m-indexHd .inner {
 
 .ologin .oitem .icon {
     height: 37rpx;
-    width:37rpx;
+    width: 37rpx;
 }
 
 .mc-servicePolicy {
@@ -2236,7 +2238,7 @@ m-indexHd .inner {
     height: 206rpx;
     position: relative;
     left: 0;
-    transition: left 0.2s ease-in-out; 
+    transition: left 0.2s ease-in-out;
 }
 
 .m-cartGroup .item:last-child {
@@ -4230,12 +4232,10 @@ m-indexHd .inner {
     margin-left: 20px;
 }
 
-
-
 .picker-view {
     width: 100.5%;
     display: flex;
-    z-index:12;
+    z-index: 12;
     background-color: #fff;
     flex-direction: column;
     justify-content: center;
@@ -4245,29 +4245,57 @@ m-indexHd .inner {
     left: -2rpx;
     height: 40vh;
 }
+
 .picker-view .hd {
-    display:flex;
-    height:100rpx;
-    width:100%;
-    border-bottom:2rpx solid #e6e6e6;
-    padding:0 40rpx;
+    display: flex;
+    height: 100rpx;
+    width: 100%;
+    border-bottom: 2rpx solid #e6e6e6;
+    padding: 0 40rpx;
     justify-content: space-between;
     align-items: center;
-    font-size:32rpx;
+    font-size: 32rpx;
 }
+
 .picker-view .hd .t1 {
-    margin-left:20rpx;
+    margin-left: 20rpx;
 }
+
 .picker-view .hd .t2 {
-    margin-right:20rpx;
-    color:#1AAD16;
+    margin-right: 20rpx;
+    color: #1aad16;
 }
+
 .picker-view .hd .t3 {
-    margin-right:20rpx;
+    margin-right: 20rpx;
 }
+
 .picker-item {
     line-height: 70rpx;
     margin-left: 5rpx;
     margin-right: 5rpx;
     text-align: center;
+}
+
+/*  样式更新  */
+
+.zw-kefu {
+    display: inline-block;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: url(http://img02.camel.com.cn/image/zw-kefu.png);
+    width: 60rpx;
+    height: 58rpx;
+    margin-left: 22rpx;
+}
+
+.pro_bsc, .pro_sc {
+    display: block;
+    width: 46rpx;
+    height: 46rpx;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    margin: 22rpx auto;
 }

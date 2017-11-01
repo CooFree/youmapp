@@ -52,6 +52,7 @@ Page({
     const { mobile, settype } = this.data;
     const mobilecode = await this.formInputs[0].match();
     if (mobile && mobilecode) {
+      console.log(settype);
       if (settype === 'email') {
         wx.redirectTo({ url: '../setLoginEmail/setLoginEmail' });
       }

@@ -114,6 +114,7 @@ export default class FormInput {
             }
             if (remote !== undefined) {
                 let exist = await portalChannel.existsEmail(formValue);
+                console.log('exist', exist);
                 if (remote === 1 && exist === true) {
                     this.setError('邮箱已经被使用');
                     return;
@@ -179,10 +180,10 @@ export default class FormInput {
             let now_time = new Date();
             let smsName = '';
             if (mailcode) {
-                smsName = this.props.getEmail();
+                smsName = await this.props.getEmail();
             }
             if (mobilecode) {
-                smsName = this.props.getMobile();
+                smsName = await this.props.getMobile();
             }
             if (!smsData || smsData.smsName !== smsName || smsData.expires_time <= now_time) {
                 this.setError('验证码无效');
@@ -228,7 +229,7 @@ export default class FormInput {
         }
         clearInterval(this.interval);
 
-        let email = this.props.getEmail();
+        let email = await this.props.getEmail();
         if (!email) {
             return;
         }
@@ -253,7 +254,6 @@ export default class FormInput {
         }
     }
     async sendMobileCode() {
-        console.log('sendMobileCode');
         let now_time = new Date();
         const { smsData, smsState } = this.data;
         if (smsState === 1) {//获取中...
@@ -264,7 +264,7 @@ export default class FormInput {
         }
         clearInterval(this.interval);
 
-        let mobile = this.props.getMobile();
+        let mobile = await this.props.getMobile();
         if (!mobile) {
             return;
         }

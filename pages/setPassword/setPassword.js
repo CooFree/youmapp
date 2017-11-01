@@ -1,5 +1,5 @@
 import regeneratorRuntime from '../../modules/regenerator-runtime/runtime';
-import FormInput from '../../components/formInput/formInput.js';
+import FormInput from '../../components/formInput/formInput';
 import MemberChannel from '../../channels/member';
 
 const memberChannel = new MemberChannel();

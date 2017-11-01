@@ -1,0 +1,16 @@
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<import src="../../../components/formInput/form-input.wxml" />
+
+<view class="container ">
+    <view class="g-row">
+        <view class="login-form">
+            <form bindsubmit="onSubmit">
+                <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
+
+                <view class="login-btn-wrap">
+                    <button class="login-btn login-btn-g" formType="submit">{{submiting?'提交中...':'提交'}}</button>
+                </view>
+            </form>
+        </view>
+    </view>
+</view>

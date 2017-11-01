@@ -37,7 +37,10 @@
     "pages/member/receive/receive",
     "pages/success/success",
     "pages/error/error",
-    "pages/member/setPassword/setPassword"
+    "pages/member/setPassword/setPassword",
+    "pages/member/setLoginMobile/setLoginMobile",
+    "pages/member/setLoginEmail/setLoginEmail",
+    "pages/member/setLoginName/setLoginName"
   ],
   "window": {
     "backgroundTextStyle": "light",

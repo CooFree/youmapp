@@ -8,14 +8,13 @@ Page({
   formInputs: [],
   data: {
     formDatas: [],
-    submiting: false,
+    submiting: false
   },
   onLoad: function (options) {
-    this.formInputs.push(new FormInput(this, { title: '密码', required: true, password: true, range: [6, 20], placeholder: '密码' }));
+    this.formInputs.push(new FormInput(this, { title: '邮箱', required: true, email: true, remote: 1, placeholder: '邮箱' }));
     this.formInputs.push(new FormInput(this, {
-      title: '确认密码', required: true, password: true, range: [6, 20], placeholder: '确认密码',
-      passwordAgain: () => {
-        return this.data.formDatas[0].formValue;
+      title: '验证码', required: true, num: true, range: [6], mailcode: true, placeholder: '邮箱验证码', getEmail: async () => {
+        return await this.formInputs[0].match();
       }
     }));
 
@@ -42,11 +41,11 @@ Page({
     if (submiting) {
       return;
     }
-    const password = await this.formInputs[0].match();
-    const password2 = await this.formInputs[1].match();
+    const email = await this.formInputs[0].match();
+    const mailcode = await this.formInputs[1].match();
     const memberId = memberState.getLoginId();
-    if (password && password2 && memberId) {
-      memberChannel.postSetPassword(memberId, password).then(result => {
+    if (email && mailcode && memberId) {
+      memberChannel.postSetLoginEmail(memberId, email).then(result => {
         if (result) {
           wx.redirectTo({ url: '../../success/success?msg=修改成功' });
         }
@@ -55,5 +54,9 @@ Page({
         }
       });
     }
+  },
+  sendEmailCode: function (event) {
+    const { formindex } = event.currentTarget.dataset;
+    this.formInputs[formindex].sendEmailCode();
   }
 })

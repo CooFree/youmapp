@@ -1,10 +1,9 @@
-<!--pages/member/account/account.wxml-->
-<wxs src="../../../utils/tools.wxs" module="tools" />
+
 <view class="container greybg">
     <view class="account-wrap">
-        <view class="hd">
+        <view class="hd" data-settype="name" bindtap="goMobileVerify">
             用户名：
-            <span class="uname">joek2222</span>
+            <span class="uname">{{loginName}}</span>
         </view>
         <view class="accoutn-bind">
             <view class="item">
@@ -12,21 +11,21 @@
                     <i class="icon ion-ios-telephone-outline"></i>
                     <view class="t">登录手机</view>
                 </view>
-                <button class="btn">修改手机</button>
+                <button class="btn" data-settype="mobile" bindtap="goMobileVerify">修改手机</button>
             </view>
             <view class="item">
                 <view class="left">
                     <i class="icon ion-ios-email-outline"></i>
                     <view class="t">登录邮箱</view>
                 </view>
-                <button class="btn">修改邮箱</button>
+                <button class="btn" data-settype="email" bindtap="goMobileVerify">修改邮箱</button>
             </view>
             <view class="item">
                 <view class="left">
                     <i class="icon ion-ios-locked-outline"></i>
                     <view class="t">登录密码</view>
                 </view>
-                <button class="btn">修改密码</button>
+                <button class="btn" data-settype="password" bindtap="goMobileVerify">修改密码</button>
             </view>
         </view>
     </view>

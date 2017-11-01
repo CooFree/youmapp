@@ -8,17 +8,10 @@ Page({
   formInputs: [],
   data: {
     formDatas: [],
-    submiting: false,
+    submiting: false
   },
-  onLoad: function (options) {
-    this.formInputs.push(new FormInput(this, { title: '密码', required: true, password: true, range: [6, 20], placeholder: '密码' }));
-    this.formInputs.push(new FormInput(this, {
-      title: '确认密码', required: true, password: true, range: [6, 20], placeholder: '确认密码',
-      passwordAgain: () => {
-        return this.data.formDatas[0].formValue;
-      }
-    }));
-
+  onLoad: async function (options) {
+    this.formInputs.push(new FormInput(this, { title: '用户名', required: true, username: true, remote: 1, placeholder: '用户名' }));
     const formDatas = this.formInputs.map((formInput, index) => {
       return formInput.load(index);
     });
@@ -42,11 +35,10 @@ Page({
     if (submiting) {
       return;
     }
-    const password = await this.formInputs[0].match();
-    const password2 = await this.formInputs[1].match();
+    const username = await this.formInputs[0].match();
     const memberId = memberState.getLoginId();
-    if (password && password2 && memberId) {
-      memberChannel.postSetPassword(memberId, password).then(result => {
+    if (username && memberId) {
+      memberChannel.postSetLoginName(memberId, username).then(result => {
         if (result) {
           wx.redirectTo({ url: '../../success/success?msg=修改成功' });
         }

@@ -1,4 +1,5 @@
 Page({
+  timeout: 0,
   data: {
     msg: '恭喜，正确'
   },
@@ -7,5 +8,12 @@ Page({
     if (msg && msg.length > 0) {
       this.setData({ msg });
     }
+
+    this.timeout = setTimeout(() => {
+      wx.navigateBack();
+    }, 2000);
+  },
+  onUnload: function () {
+    clearTimeout(this.timeout);
   }
 })

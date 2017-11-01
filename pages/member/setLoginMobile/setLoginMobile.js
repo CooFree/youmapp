@@ -1,9 +1,9 @@
-import regeneratorRuntime from '../../modules/regenerator-runtime/runtime';
-import FormInput from '../../components/formInput/formInput';
-import memberState from '../../utils/memberState';
-import PortalChannel from '../../channels/portal';
+import regeneratorRuntime from '../../../modules/regenerator-runtime/runtime';
+import FormInput from '../../../components/formInput/formInput';
+import MemberChannel from '../../../channels/member';
+import memberState from '../../../utils/memberState';
 
-const portalChannel = new PortalChannel();
+const memberChannel = new MemberChannel();
 Page({
   formInputs: [],
   data: {
@@ -12,16 +12,9 @@ Page({
   },
   onLoad: function (options) {
     this.formInputs.push(new FormInput(this, { title: '手机号', required: true, mobile: true, range: [11], remote: 1, placeholder: '手机号' }));
-    this.formInputs.push(new FormInput(this, { title: '密码', required: true, password: true, range: [6, 20], placeholder: '密码' }));
-    this.formInputs.push(new FormInput(this, {
-      title: '确认密码', required: true, password: true, range: [6, 20], placeholder: '确认密码',
-      passwordAgain: () => {
-        return this.data.formDatas[1].formValue;
-      }
-    }));
     this.formInputs.push(new FormInput(this, {
       title: '验证码', required: true, num: true, range: [6], mobilecode: true, placeholder: '短信验证码', getMobile: async () => {
-        return this.formInputs[0].match();
+        return await this.formInputs[0].match();
       }
     }));
 
@@ -49,16 +42,15 @@ Page({
       return;
     }
     const mobile = await this.formInputs[0].match();
-    const password = await this.formInputs[1].match();
-    const password2 = await this.formInputs[2].match();
-    const mobilecode = await this.formInputs[3].match();
-    if (mobile && password && password2 && mobilecode) {
-      portalChannel.postRegist(mobile, password).then(memberId => {
-        if (memberId) {
-          wx.navigateBack();
+    const mobilecode = await this.formInputs[1].match();
+    const memberId = memberState.getLoginId();
+    if (mobile && mobilecode && memberId) {
+      memberChannel.postSetLoginMobile(memberId, mobile).then(result => {
+        if (result) {
+          wx.redirectTo({ url: '../../success/success?msg=修改成功' });
         }
         else {
-          this.formInputs[3].setError('注册失败');
+          wx.showToast({ title: '提交失败', image: '../../../images/errorx.png' });
         }
       });
     }
@@ -66,8 +58,5 @@ Page({
   sendMobileCode: function (event) {
     const { formindex } = event.currentTarget.dataset;
     this.formInputs[formindex].sendMobileCode();
-  },
-  onShareAppMessage: function () {
-
   }
 })

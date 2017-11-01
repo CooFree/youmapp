@@ -31,7 +31,9 @@
         "pages/product/productComment/productComment",
         "pages/regist/regist",
         "pages/login/login",
-        "pages/order/orderPay/orderPay"
+        "pages/order/orderPay/orderPay",
+        "pages/success/success",
+        "pages/error/error"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -41,9 +43,9 @@
     },
     "tabBar": {
         "color": "#666",
-        "selectedColor": "#e21a81",
+        "selectedColor": "#d2ab44",
         "backgroundColor": "#ffffff",
-        "borderStyle": "#d9d9d9",
+        "borderStyle": "#f3f3f3",
         "list": [
             {
                 "selectedIconPath": "images/zw_icony1.png",

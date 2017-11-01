@@ -17,7 +17,6 @@ export default class MemberChannel {
         let memberId = memberState.getLoginId();
         if (memberId) {
             let url = config.Host + '/member/info.aspx?member_id=' + memberId;
-            console.log(memberId);
             try {
                 let resData = await util.fetch(url);
                 if (resData.result === 1) {
@@ -372,14 +371,15 @@ export default class MemberChannel {
 
     async postSetPassword(memberId, formPassword) {
         if (memberId) {
-            let url = config.Host + '/member/setPassword.aspx?member_id=' + memberId;
-            let password = util.md5(formPassword);
-            let post_data = { password };
+            const url = config.Host + '/member/setPassword.aspx?member_id=' + memberId;
+            const password = util.md5(formPassword);
+            const post_data = { password };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
             try {
                 let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
+     
                 if (resData.result === 1) {
                     return true;
                 }

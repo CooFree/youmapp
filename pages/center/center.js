@@ -65,5 +65,59 @@ Page({
         else {
             this.login();
         }
+    },
+    goSetPassword: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/mobileVerify/mobileVerify?settype=password' });
+        }
+        else {
+            this.login();
+        }
+    },
+    goTicketList: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/ticketList/ticketList' });
+        }
+        else {
+            this.login();
+        }
+    },
+    goProductStore: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/productStore/productStore' });
+        }
+        else {
+            this.login();
+        }
+    },
+    goReceiveList: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/receiveList/receiveList' });
+        }
+        else {
+            this.login();
+        }
+    },
+    goAccount: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/account/account' });
+        }
+        else {
+            this.login();
+        }
+    },
+    goProductCommentList: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/productCommentList/productCommentList' });
+        }
+        else {
+            this.login();
+        }
     }
 })

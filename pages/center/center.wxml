@@ -1,35 +1,35 @@
 <wxs src="../../utils/tools.wxs" module="tools" />
 <view class="m-ucenter g-row greybg">
     <view class="m-uc-top">
- 
-            <view class="m-profile" bindtap="goProfile">
-                <image class="avatar" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
-                <view wx:if="{{isLogin}}" class="info">
-                    <view class="nickname">
-                        {{tools.decodeuri(loginName)}}
-                    </view>
-                    <view class="membershipLevel">
-                        <text class="memberTitle1">{{tools.decodeuri(memberLevel)}}</text>
-                    </view>
-                    <view class="icon ion-ios-arrow-right top_right"></view>
-                </view>
 
-                <view wx:else class="info">
-                    <view class="nickname">
-                        登陆/注册
-                    </view>
-                    <view class="membershipLevel">
-                        <text class="memberTitle1"></text>
-                    </view>
-                    <view class="icon ion-ios-arrow-right top_right"></view>
+        <view class="m-profile" bindtap="goProfile">
+            <image class="avatar" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
+            <view wx:if="{{isLogin}}" class="info">
+                <view class="nickname">
+                    {{tools.decodeuri(loginName)}}
                 </view>
+                <view class="membershipLevel">
+                    <text class="memberTitle1">{{tools.decodeuri(memberLevel)}}</text>
+                </view>
+                <view class="icon ion-ios-arrow-right top_right"></view>
             </view>
+
+            <view wx:else class="info">
+                <view class="nickname">
+                    登陆/注册
+                </view>
+                <view class="membershipLevel">
+                    <text class="memberTitle1"></text>
+                </view>
+                <view class="icon ion-ios-arrow-right top_right"></view>
+            </view>
+        </view>
     </view>
     <view class="m-uc-wrap">
-            <view class="m-uc-wraptit" bindtap="goOrderList">
-                <text class="txt">我的订单</text>
-                <view class="icon-arrow-right">查看全部订单></view>
-            </view>
+        <view class="m-uc-wraptit" bindtap="goOrderList">
+            <text class="txt">我的订单</text>
+            <view class="icon-arrow-right">查看全部订单></view>
+        </view>
         <view class="m-uc-menu">
             <view class="list">
                 <view class="item" data-showstatus="unpay" bindtap="goOrderList">
@@ -65,23 +65,17 @@
         </view>
         <view class="m-uc-menu">
             <view class="list">
-                <view class="item">
-                    <navigator url="../member/ticketList/ticketList">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon6.png" alt=""></image>
-                        <text class="txt">优惠券</text>
-                    </navigator>
+                <view class="item" bindtap="goTicketList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon6.png" alt=""></image>
+                    <text class="txt">优惠券</text>
                 </view>
-                <view class="item">
-                    <navigator url="../member/productStore/productStore">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon7.png" alt=""></image>
-                        <text class="txt">收藏夹</text>
-                    </navigator>
+                <view class="item" bindtap="goProductStore">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon7.png" alt=""></image>
+                    <text class="txt">收藏夹</text>
                 </view>
-                <view class="item">
-                    <navigator url="../member/productCommentList/productCommentList">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon8.png" alt=""></image>
-                        <text class="txt">商品点评</text>
-                    </navigator>
+                <view class="item" bindtap="goProductCommentList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon8.png" alt=""></image>
+                    <text class="txt">商品点评</text>
                 </view>
                 <view class="item">
                     <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon9.png" alt=""></image>
@@ -89,17 +83,13 @@
                 </view>
             </view>
             <view class="list">
-                <view class="item">
-                    <navigator url="../member/receiveList/receiveList">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon10.png" alt=""></image>
-                        <text class="txt">地址管理</text>
-                    </navigator>
+                <view class="item" bindtap="goReceiveList">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon10.png" alt=""></image>
+                    <text class="txt">地址管理</text>
                 </view>
-                <view class="item">
-                    <navigator url="../member/mobileVerify/mobileVerify">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon11.png" alt=""></image>
-                        <text class="txt">修改密码</text>
-                    </navigator>
+                <view class="item" bindtap="goSetPassword">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon11.png" alt=""></image>
+                    <text class="txt">修改密码</text>
                 </view>
                 <view class="item">
                     <navigator url="../portal/helpList/helpList">
@@ -107,11 +97,9 @@
                         <text class="txt">帮助</text>
                     </navigator>
                 </view>
-                <view class="item">
-                    <navigator url="../member/account/account">
-                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon13.png" alt=""></image>
-                        <text class="txt">设置</text>
-                    </navigator>
+                <view class="item" bindtap="goAccount">
+                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon13.png" alt=""></image>
+                    <text class="txt">设置</text>
                 </view>
             </view>
         </view>

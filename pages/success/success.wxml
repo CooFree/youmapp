@@ -1,11 +1,10 @@
-<!--pages/success/success.wxml-->
 <view class="container greybg">
     <view className="successWrap">
         <view className="hd">
             <i className="icon icon-success ion-ios-checkmark-outline"></i>
         </view>
         <view className="bd">
-            <text className="desc">恭喜，正确</text>
+            <text className="desc">{{msg}}</text>
         </view>
     </view>
 </view>

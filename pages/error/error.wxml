@@ -1,11 +1,10 @@
-<!--pages/error/error.wxml-->
 <view class="container greybg">
     <view className="errorWrap">
         <view className="hd">
             <i className="icon icon-success ion-ios-checkmark-outline"></i>
         </view>
         <view className="bd">
-            <text className="desc">对不起，出错</text>
+            <text className="desc">{{msg}}</text>
         </view>
     </view>
 </view>

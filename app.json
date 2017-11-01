@@ -36,7 +36,8 @@
     "pages/setPassword/setPassword",
     "pages/member/receive/receive",
     "pages/success/success",
-    "pages/error/error"
+    "pages/error/error",
+    "pages/member/setPassword/setPassword"
   ],
   "window": {
     "backgroundTextStyle": "light",

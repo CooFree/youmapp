@@ -16,7 +16,7 @@
                 <navigator url="../regist/regist">
                     <text class="link">快速注册</text>
                 </navigator>
-                <navigator url="../member/mobileVerify/mobileVerify">
+                <navigator url="../mobileVerify/mobileVerify?settype=password">
                     <text class="link">忘记密码</text>
                 </navigator>
             </view>

@@ -87,7 +87,6 @@ Page({
         }
         else {
           this.loginCount++;
-          console.log('this.loginCount', this.loginCount);
           if (this.loginCount > 2) {
             this.formInputs[2].setShow();
           }

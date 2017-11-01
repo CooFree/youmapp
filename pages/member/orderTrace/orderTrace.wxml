@@ -1,14 +1,13 @@
-<!--pages/member/orderTrace/orderTrace.wxml-->
 <wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="m-delivery">
         <view class="tabNav">
-            <block wx:for="{{traceData.list}}">
+            <block wx:for="{{traceData}}" wx:key="{{index}}">
                 <view class="item {{index === curIndex ? 'active': ''}}" data-index="{{index}}" bindtap="changeTab">包裹{{index + 1}}</view>
             </block>
         </view>
         <view class="tabCon">
-            <view class="" wx:for="{{traceData.list}}" wx:if="{{index === curIndex}}">
+            <view class="" wx:for="{{traceData}}" wx:if="{{index === curIndex}}" wx:key="{{index}}">
                 <view class="deliveryInfo">
                     <view class="icon-express"></view>
                     <view class="infoWarp">
@@ -21,7 +20,7 @@
                     </view>
                 </view>
                 <view class="deliveryDetail">
-                    <block wx:for="{{item.trace_array}}">
+                    <block wx:for="{{item.trace_array}}" wx:key="{{index}}">
                         <view class="item {{index === 0? 'active': ''}}">
                             <i class="icon icon-dot ion-ios-location-outline"></i>
                             <view class="detail">

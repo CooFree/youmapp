@@ -61,7 +61,7 @@ export default class PortalChannel {
     try {
       let resData = await util.fetch(url, { body: { code } });
       if (resData.result === 1) {
-        return resData.member_id;
+        return resData;
       }
       else {
         console.warn(resData.msg);

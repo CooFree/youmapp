@@ -1,26 +1,22 @@
 import regeneratorRuntime from '../../modules/regenerator-runtime/runtime';
-import FormInput from '../../components/formInput/formInput.js';
+import FormInput from '../../components/formInput/formInput';
+import MemberChannel from '../../channels/member';
 import memberState from '../../utils/memberState';
 import PortalChannel from '../../channels/portal';
 
 const portalChannel = new PortalChannel();
+const memberChannel = new MemberChannel();
 Page({
   formInputs: [],
   data: {
     formDatas: [],
-    password: '',
-    mobile: '',
+    settype: '',
     submiting: false
   },
   onLoad: function (options) {
-    this.formInputs.push(new FormInput(this, { title: '手机号', required: true, mobile: true, range: [11], remote: 1, placeholder: '手机号' }));
-    this.formInputs.push(new FormInput(this, { title: '密码', required: true, password: true, range: [6, 20], placeholder: '密码' }));
-    this.formInputs.push(new FormInput(this, {
-      title: '确认密码', required: true, password: true, range: [6, 20], placeholder: '确认密码',
-      passwordAgain: () => {
-        return this.data.formDatas[1].formValue;
-      }
-    }));
+    const settype = options.settype || '';
+    const remote = settype === 'login' ? 1 : 0;
+    this.formInputs.push(new FormInput(this, { title: '手机号', required: true, mobile: true, range: [11], remote, placeholder: '手机号' }));
     this.formInputs.push(new FormInput(this, {
       title: '验证码', required: true, num: true, range: [6], mobilecode: true, placeholder: '短信验证码', getMobile: () => {
         const mobile = this.data.formDatas[0].formValue;
@@ -36,7 +32,7 @@ Page({
     const formDatas = this.formInputs.map((formInput, index) => {
       return formInput.load(index);
     });
-    this.setData({ formDatas });
+    this.setData({ formDatas, settype });
   },
   setFormData: function (data) {
     this.data.formDatas[data.formIndex] = data;
@@ -52,30 +48,44 @@ Page({
     this.formInputs[formindex].setValue(value);
   },
   onSubmit: async function () {
-    const { submiting } = this.data;
-    if (submiting) {
-      return;
-    }
+    const { settype } = this.data;
+
+
     const mobile = await this.formInputs[0].match();
-    const password = await this.formInputs[1].match();
-    const password2 = await this.formInputs[2].match();
-    const mobilecode = await this.formInputs[3].match();
-    if (mobile && password && password2 && mobilecode) {
-      portalChannel.postRegist(mobile, password).then(memberId => {
+    const mobilecode = await this.formInputs[1].match();
+    if (mobile && mobilecode) {
+      //登录验证手机，并绑定手机
+      if (settype === 'login') {
+        const memberId = memberState.getLoginId();
         if (memberId) {
-          wx.navigateBack();
+          this.setData({ submiting: true });
+          memberChannel.postSetLoginMobile(memberId, mobile).then(result => {
+            this.setData({ submiting: false });
+            if (result) {
+              wx.navigateBack();
+            }
+            else {
+              wx.showToast({ title: '提交失败', image: '../../images/errorx.png' });
+            }
+          });
         }
-        else {
-          this.formInputs[3].setError('注册失败');
-        }
-      });
+      }
+      else {
+        portalChannel.postMobileLogin(mobile, mobilecode).then(memberId => {
+          if (memberId) {
+            wx.redirectTo({ url: '../setPassword/setPassword?member_id=' + memberId });
+          }
+          else {
+            wx.showToast({ title: '验证失败', image: '../../images/errorx.png' });
+          }
+
+        });
+
+      }
     }
   },
   sendMobileCode: function (event) {
     const { formindex } = event.currentTarget.dataset;
     this.formInputs[formindex].sendMobileCode();
   },
-  onShareAppMessage: function () {
-
-  }
 })

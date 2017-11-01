@@ -3,26 +3,49 @@ import MemberChannel from '../../../channels/member';
 import util from '../../../utils/util';
 const memberChannel = new MemberChannel();
 
+const pageSize = 8;
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  page: 1,
   data: {
     delBtnWidth: 164,
-    txtStyle: ''
+    txtStyle: '',
+    productStore: [],
+    loadEnd: false,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    memberChannel.getProductStore(1, 10).then(data => {
-      this.setData({
-        productStore: data
-      })
-    })
+    this.loadData();
     this.initEleWidth();
+  },
+  loadData: function (more) {
+    const { loadEnd, productStore } = this.data;
+    if (more) {
+      if (loadEnd === false) {
+        wx.showLoading();
+
+        this.page++;
+        memberChannel.getProductStore(this.page, pageSize).then(data => {
+          this.setData({
+            productStore: productStore.concat(data),
+            loadEnd: data.length === 0
+          });
+
+          wx.hideLoading();
+        });
+      }
+    }
+    else {
+      wx.showLoading();
+
+      this.page = 1;
+      memberChannel.getProductStore(this.page, pageSize).then(data => {
+        this.setData({
+          productStore: data,
+          loadEnd: data.length === 0
+        });
+
+        wx.hideLoading();
+      });
+    }
   },
   touchStart: function (event) {
     if (event.touches.length == 1) {
@@ -102,66 +125,23 @@ Page({
     });
   },
   delStore: function (event) {
-    let id = event.currentTarget.dataset.storeid;
-    memberChannel.deleteProductStore(id).then(data => {
+    const {storeid} = event.currentTarget.dataset;
+    memberChannel.deleteProductStore(storeid).then(data => {
       let initData = this.data.productStore;
       initData.forEach(function (value, index, arr) {
-        if (value.store_id === id) {
+        if (value.store_id === storeid) {
           initData.splice(index, 1);
         }
-      })
+      });
       this.setData({
         productStore: initData
-      })
-      wx.showToast({ title: '已取消！', image: 'https://img02.camel.com.cn/image/wxapp_error.png' });
+      });
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-
+    this.loadData();
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    this.loadData(true);
   }
 })

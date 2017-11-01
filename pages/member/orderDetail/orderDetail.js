@@ -1,85 +1,47 @@
-// pages/member/orderDetail/orderDetail.js
 import MemberChannel from '../../../channels/member';
 import util from '../../../utils/util';
+
 const memberChannel = new MemberChannel();
-
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    orderID: null,
+    orderId: 0,
+    orderInfo: {},
+    productList: [],
+    giftList: []
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    this.getOrderDetail(options.order_id);
+    const orderId = parseInt(options.order_id) || 0;
+    this.setData({ orderId });
+    this.getOrderDetail();
   },
-  getOrderDetail: function(id){
-    memberChannel.getOrderDetail(id).then(data => {
-      this.setData({
-        orderInfo: data,
-        orderID: id
-      })
-    })
+  getOrderDetail: function () {
+    const { orderId } = this.data;
+    wx.showLoading();
+    memberChannel.getOrderDetail(orderId).then(data => {
+      if (data) {
+        this.setData({
+          orderInfo: data.order,
+          productList: data.order_item_list,
+          giftList: data.order_gift_list
+        });
+      }
+      wx.hideLoading();
+    });
   },
   cancelOrder: function (event) {
-    let id = event.currentTarget.dataset.orderid;
-    memberChannel.cancelOrder(id).then(data => {
-      if (data) {
-        this.getOrderDetail(this.data.orderID);
+    const { orderId } = this.data;
+    memberChannel.cancelOrder(orderId).then(result => {
+      if (result) {
+        this.getOrderDetail();
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  receiveOrder: function (event) {
+    const { orderId } = this.data;
+    memberChannel.receiveOrder(orderId).then(result => {
+      if (result === true) {
+        this.getOrderDetail();
+      }
+    });
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

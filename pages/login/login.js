@@ -42,6 +42,28 @@ Page({
     const { formindex } = event.currentTarget.dataset;
     this.formInputs[formindex].loadAuthcode();
   },
+  wxlogin: function (event) {
+    //获取微信登陆
+    wx.login({
+      success: res => {
+        portalChannel.getWeixinLogin(res.code).then(data => {
+          if (data) {
+            memberState.saveLogin(data.member_id, true);
+            basketTemp.tempToApi();
+            if (data.mobile_flag === 0) {
+              wx.redirectTo({ url: '../mobileVerify/mobileVerify?settype=login' });
+            }
+            else {
+              wx.navigateBack();
+            }
+          }
+          else {
+            wx.showToast({ title: '登陆失败', image: '../../images/errorx.png' });
+          }
+        });
+      }
+    });
+  },
   onSubmit: async function () {
     const { submiting } = this.data;
     if (submiting) {
@@ -54,9 +76,9 @@ Page({
       authcode = await this.formInputs[2].match();
     }
     if (loginName && password && authcode) {
-      this.setData({submiting:true});
+      this.setData({ submiting: true });
       portalChannel.postLogin(loginName, password).then(data => {
-        this.setData({submiting:false});
+        this.setData({ submiting: false });
         if (data) {
           memberState.saveLogin(data.login_member_id, true);
 
@@ -71,7 +93,7 @@ Page({
           }
           this.formInputs[0].setError('账号或密码不匹配');
         }
-        
+
       });
     }
   },

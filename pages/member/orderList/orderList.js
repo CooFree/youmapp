@@ -1,9 +1,9 @@
 import MemberChannel from '../../../channels/member';
 
-const orderChannel = new MemberChannel();
-const pageSize=10;
+const memberChannel = new MemberChannel();
+const pageSize = 10;
 Page({
-  page:1,
+  page: 1,
   data: {
     orderList: [],
     showStatus: '',
@@ -21,7 +21,7 @@ Page({
         wx.showLoading();
 
         this.page++;
-        orderChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
+        memberChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
           this.setData({
             orderList: orderList.concat(data),
             loadEnd: data.length === 0
@@ -34,7 +34,7 @@ Page({
       wx.showLoading();
 
       this.page = 1;
-      orderChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
+      memberChannel.getOrderList(showStatus, this.page, pageSize).then(data => {
         this.setData({
           orderList: data,
           loadEnd: data.length === 0
@@ -48,5 +48,13 @@ Page({
   },
   onReachBottom: function () {
     this.loadData(true);
+  },
+  onCancelOrder: function (event) {
+    const { orderid } = event.currentTarget.dataset;
+    memberChannel.cancelOrder(orderid).then((result) => {
+      if (result) {
+        this.loadData();
+      }
+    });
   }
 })

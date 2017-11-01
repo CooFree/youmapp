@@ -1,4 +1,3 @@
-<!--pages/member/orderDetail/orderDetail.wxml-->
 <wxs src="../../../utils/tools.wxs" module="tools" />
 
 <view class="container greybg">
@@ -6,43 +5,43 @@
         <view class="odinfos">
             <view class="txtwrap">
                 <view class="p1">下单时间：
-                    <text class="s1">{{orderInfo.order.create_time}}</text>
+                    <text class="s1">{{orderInfo.create_time}}</text>
                 </view>
                 <view class="p1">订单编号：
-                    <text class="s1">{{orderInfo.order.code}}</text>
+                    <text class="s1">{{orderInfo.code}}</text>
                 </view>
             </view>
             <view class="ft">
                 <view class="btns">
                     <view class="cost">
                         <view class="p1">应付:
-                            <text class="price">￥{{orderInfo.order.product_amount}}</text>
+                            <text class="price">￥{{tools.tofixed(orderInfo.product_amount,2)}}</text>
                         </view>
                     </view>
-                    <block wx:if="{{orderInfo.order.show_status === 1}}">
-                        <text class="cancel" data-orderID="{{orderInfo.order.id}}" bindtap="cancelOrder">取消订单</text>
+                    <block wx:if="{{orderInfo.show_status === 1}}">
+                        <text bindtap="cancelOrder" class="cancel">取消订单</text>
                     </block>
-                    <block wx:if="{{orderInfo.order.show_status === 1}}">
-                        <text class="w-button btn-topay" data-orderID="{{orderInfo.order.id}}">去付款</text>
-                    </block>
-                    <block wx:if="{{orderInfo.order.show_status === 3}}">
-                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">售后申请</text>
-                    </block>
-                    <block wx:if="{{orderInfo.order.show_status === 0}}">
-                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">追踪物流</text>
-                    </block>
-                    <block wx:if="{{orderInfo.order.show_status === 6}}">
-                        <text class="w-button" data-orderID="{{orderInfo.order.id}}">{{orderInfo.order.comment_flag === 0 ? '马上评论' : '已评价'}}</text>
-                    </block>
-                    <block wx:if="{{orderInfo.order.show_status === 3}}">
-                        <text class="w-button btn-topay" data-orderID="{{orderInfo.order.id}}">确认到货</text>
+                    <navigator wx:if="{{orderInfo.show_status===1}}" url="../../order/orderPay/orderPay?order_id={{orderId}}">
+                        <text class="w-button btn-topay">去付款</text>
+                    </navigator>
+                    <navigator wx:if="{{orderInfo.show_status===3}}" url="../apply/apply?order_id={{orderId}}">
+                        <text class="w-button">售后申请</text>
+                    </navigator>
+                    <navigator wx:if="{{orderInfo.goods_status>0}}" url="../orderTrace/orderTrace?order_id={{orderId}}">
+                        <text class="w-button">追踪物流</text>
+                    </navigator>
+                    <navigator wx:if="{{orderInfo.show_status===6}}" url="../productComment/productComment?order_id={{orderId}}">
+                        <text class="w-button">{{orderInfo.comment_flag === 0 ? '马上评论' : '已评价'}}</text>
+                    </navigator>
+                    <block wx:if="{{orderInfo.show_status === 3}}">
+                        <text bindtap="receiveOrder" class="w-button btn-topay">确认到货</text>
                     </block>
                 </view>
             </view>
         </view>
         <view class="od-googs">
             <view class="hd">
-                <text class="orderId">包裹</text>
+                <text class="orderId">商品</text>
                 <block wx:if="{{orderInfo.cancel_flag === 1}}">
                     <p className="p2">已取消</p>
                 </block>
@@ -50,17 +49,17 @@
                     <view class="{{orderInfo.show_status === 6 ? 'p5' : 'p4'}}">{{tools.decodeuri(orderInfo.order.show_status_desc)}}</view>
                 </block>
             </view>
-            <view class="order-item" wx:for="{{orderInfo.order_item_list}}" wx:key="">
+            <view class="order-item" wx:for="{{productList}}" wx:key="{{index}}">
                 <navigator url="">
                     <view class="bd">
                         <view class="left">
-                            <image src="{{item.image_url}}" class="pic" alt=""></image>
+                            <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" class="pic" alt=""></image>
                         </view>
                         <view class="middle">
                             <view class="goodInfo">
                                 <view class="p1">{{tools.decodeuri(item.prod_name)}}</view>
                                 <view class="p2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
-                                <view class="p6">￥{{item.last_price}}</view>
+                                <view class="p6">￥{{tools.tofixed(item.last_price,2)}}</view>
                             </view>
                         </view>
                         <view class="right">
@@ -69,17 +68,19 @@
                     </view>
                 </navigator>
             </view>
-            <view class="order-item" wx:for="{{orderInfo.order_gift_list}}" wx:key="">
+            <view class="order-item" wx:for="{{giftList}}" wx:key="">
                 <navigator url="">
                     <view class="bd">
                         <view class="left">
-                            <image src="{{item.gift_image_url}}" class="pic" alt=""></image>
+                            <image src="{{tools.httpsuri(item.gift_image_url)}}" class="pic" alt=""></image>
                         </view>
                         <view class="middle">
                             <view class="goodInfo">
-                                <view class="p1">{{tools.decodeuri(item.gift_name)}}【赠品】</view>
+                                <view class="p1">{{tools.decodeuri(item.gift_name)}}
+                                    <text class="w-tag tag">赠品</text>
+                                </view>
                                 <view class="p2">{{tools.decodeuri(item.specificate)}}</view>
-                                <view class="p6">￥{{item.gift_price}}</view>
+                                <view class="p6">￥{{tools.tofixed(item.gift_price,2)}}</view>
                             </view>
                         </view>
                         <view class="right">
@@ -90,35 +91,35 @@
             </view>
         </view>
         <view class="od-addr">
-            <view class="p1">{{tools.decodeuri(orderInfo.order.receive_name)}}，176****2904</view>
-            <view class="p1">{{tools.decodeuri(orderInfo.order.receive_region)}}，{{tools.decodeuri(orderInfo.order.receive_address)}}</view>
+            <view class="p1">{{tools.decodeuri(orderInfo.receive_name)}}，{{tools.decodeuri(orderInfo.receive_mobile)}}</view>
+            <view class="p1">{{tools.decodeuri(orderInfo.receive_region)}}，{{tools.decodeuri(orderInfo.receive_address)}}</view>
         </view>
         <view class="od-addr">
             <view class="row-item">
                 <view class="sp1">配送方式</view>
-                <view class="sp2">{{tools.decodeuri(orderInfo.order.delivery_name)}}</view>
+                <view class="sp2">{{tools.decodeuri(orderInfo.delivery_name)}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">支付方式</view>
-                <view class="sp2">{{tools.decodeuri(orderInfo.order.pay_type_desc)}}</view>
+                <view class="sp2">{{tools.decodeuri(orderInfo.pay_type_desc)}}</view>
             </view>
         </view>
         <view class="od-addr">
             <view class="row-item">
                 <view class="sp1">商品金额</view>
-                <view class="sp2 red">￥{{orderInfo.order.product_amount}}</view>
+                <view class="sp2 red">￥{{tools.tofixed(orderInfo.product_amount,2)}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">优惠金额</view>
-                <view class="sp2 red">￥{{orderInfo.order.preferential}}</view>
+                <view class="sp2 red">￥{{tools.tofixed(orderInfo.preferential,2)}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">运费</view>
-                <view class="sp2 red">￥{{orderInfo.order.delivery_fee}}</view>
+                <view class="sp2 red">￥{{tools.tofixed(orderInfo.delivery_fee,2)}}</view>
             </view>
             <view class="row-item">
                 <view class="sp1">积分</view>
-                <view class="sp3">{{orderInfo.order.give_score}}</view>
+                <view class="sp3">{{orderInfo.give_score}}</view>
             </view>
         </view>
         <view class="od-addr">
@@ -130,7 +131,7 @@
                     <i class="icon ion-ios-chatbubble-outline"></i>
                     <text>在线客服</text>
                 </view>
-                <a href="tel://010-4006816178" class="seriveChat">
+                <a href="tel://020-4006816178" class="seriveChat">
                     <i class="icon ion-ios-telephone-outline"></i>
                     <text>电话客服</text>
                 </a>

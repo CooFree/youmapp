@@ -201,7 +201,6 @@ export default class OrderChannel {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Content-Platform': 'wxapp'
             }
-
             try {
                 let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
                 if (resData.result === 1) {

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "pages": [
         "pages/index/index",
         "pages/logs/logs",
@@ -73,4 +74,80 @@
             }
         ]
     }
+=======
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/search/search",
+    "pages/category/category",
+    "pages/basket/basket",
+    "pages/product/productList/productList",
+    "pages/product/productDetail/productDetail",
+    "pages/product/topProductList/topProductList",
+    "pages/product/productSearch/productSearch",
+    "pages/order/orderConfirm/orderConfirm",
+    "pages/order/orderReceive/orderReceive",
+    "pages/order/orderReceiveList/orderReceiveList",
+    "pages/order/orderTicketList/orderTicketList",
+    "pages/member/profile/profile",
+    "pages/member/orderList/orderList",
+    "pages/member/orderDetail/orderDetail",
+    "pages/member/mobileVerify/mobileVerify",
+    "pages/member/receiveList/receiveList",
+    "pages/member/productCommentList/productCommentList",
+    "pages/member/productStore/productStore",
+    "pages/member/orderTrace/orderTrace",
+    "pages/member/account/account",
+    "pages/center/center",
+    "pages/portal/help/help",
+    "pages/portal/helpList/helpList",
+    "pages/member/ticketList/ticketList",
+    "pages/member/productComment/productComment",
+    "pages/member/apply/apply",
+    "pages/product/productComment/productComment",
+    "pages/regist/regist",
+    "pages/login/login",
+    "pages/order/orderPay/orderPay",
+    "pages/mobileVerify/mobileVerify",
+    "pages/setPassword/setPassword"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#000",
+    "navigationBarTitleText": "骆驼优品",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#666",
+    "selectedColor": "#e21a81",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "#d9d9d9",
+    "list": [
+      {
+        "selectedIconPath": "images/zw_icony1.png",
+        "iconPath": "images/tab_icons_01.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "images/tab_icons_03.png",
+        "iconPath": "images/zw_iconb3.png",
+        "pagePath": "pages/category/category",
+        "text": "分类"
+      },
+      {
+        "selectedIconPath": "images/tab_icons_04.png",
+        "iconPath": "images/zw_iconb4.png",
+        "pagePath": "pages/basket/basket",
+        "text": "购物车"
+      },
+      {
+        "selectedIconPath": "images/tab_icons_05.png",
+        "iconPath": "images/zw_iconb5.png",
+        "pagePath": "pages/center/center",
+        "text": "我的"
+      }
+    ]
+  }
+>>>>>>> ab325c8bd707436bf24b8e748b694b9de4c39454
 }

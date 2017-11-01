@@ -1850,6 +1850,7 @@ m-indexHd .inner {
     text-align: center;
     font-size: 24rpx;
     line-height: 66rpx;
+    border:1px solid #999;
 }
 
 .m-selnum .icon {
@@ -1858,10 +1859,10 @@ m-indexHd .inner {
 
 .m-selnum .textWrap .txt {
     width: 100%;
-    height: 66rpx;
+    height: 64rpx;
     font-size: 33rpx;
     text-align: center;
-    border: 2rpx solid #999;
+    /* border: 1rpx solid #999; */
 }
 
 .m-flashSale {
@@ -2215,7 +2216,7 @@ m-indexHd .inner {
 .m-cartGroup {
     background-color: #fff;
     margin-bottom: 22rpx;
-    padding-left: 115rpx;
+    padding-left: 90rpx;
     overflow: hidden;
     margin-top: 20rpx;
 }
@@ -2302,14 +2303,14 @@ m-indexHd .inner {
 }
 
 .m-cartGroup .m-selnum .textWrap .txt {
-    line-height: 50rpx;
+    line-height:30rpx;
     height: 50rpx;
 }
 
 .m-cartGroup .m-selnum .textWrap {
     height: 50rpx;
     width: 75rpx;
-    border: 1px solid #999;
+    border: 1px solid #999; 
 }
 
 .m-cartGroup .icon-nochecked-g {
@@ -2321,7 +2322,7 @@ m-indexHd .inner {
 
 .m-cartGroup .icon-ischecked-g {
     font-size: 45rpx;
-    color: #db2929;
+    color: #d1ab43;
     position: absolute;
     left: -67rpx;
 }
@@ -2333,7 +2334,7 @@ m-indexHd .inner {
 
 .icon-ischecked-g {
     font-size: 45rpx;
-    color: #db2929;
+    color: #d1ab43;
 }
 
 .m-good .imgWrap .imgTag {
@@ -2352,8 +2353,8 @@ m-indexHd .inner {
     position: absolute;
     top: 0;
     left: 100%;
-    width: 165rpx;
-    background-color: #e83a3a;
+    width: 140rpx;
+    background-color: #9c937a;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -2420,7 +2421,7 @@ m-indexHd .inner {
     margin-top: 0;
     height: 100rpx;
     line-height: 100rpx;
-    background-color: #b4282d;
+    background-color: #d1ab43;
     color: #fff;
     font-size: 24rpx;
 }
@@ -2823,6 +2824,18 @@ m-indexHd .inner {
     text-align: center;
 }
 
+.orderRFT button.right {
+    flex: 1;
+    height: 100rpx;
+    line-height: 100rpx;
+    background-color: #b4282d;
+    color: #fff;
+    font-size: 24rpx;
+    text-align: center;
+    border-radius:0;
+}
+
+
 .m-sliding {
     position: fixed;
     left: 0;
@@ -3224,7 +3237,7 @@ m-indexHd .inner {
 
 .m-couponHd .inner .ipt {
     height: 69rpx;
-    font-size: 33rpx;
+    font-size: 24rpx;
     flex: 1;
     border: 0;
 }
@@ -3236,7 +3249,7 @@ m-indexHd .inner {
     display: inline-block;
     vertical-align: middle;
     color: #fff;
-    border: 1rpx solid #b4282d;
+    /* border: 1rpx solid #b4282d; */
     background-color: #b4282d;
     font-size: 27rpx;
     margin: 15rpx;
@@ -3245,7 +3258,7 @@ m-indexHd .inner {
 }
 
 .m-couponHd .inner .disabled {
-    border: 1rpx solid #ccc !important;
+    /* border: 1rpx solid #ccc !important; */
     background-color: #ccc !important;
 }
 
@@ -4267,6 +4280,8 @@ m-indexHd .inner {
     margin-left: 5rpx;
     margin-right: 5rpx;
     text-align: center;
+
+    font-size:26rpx;
 }
 
 /*  样式更新  */

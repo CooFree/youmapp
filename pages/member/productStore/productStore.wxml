@@ -1,4 +1,3 @@
-
 <wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="productStore">
@@ -27,7 +26,7 @@
                             </view>
                         </view>
                         <view class="del" bindtap="delStore" data-storeid="{{item.store_id}}">
-                            <i class="icon icon-trash ion-ios-trash-outline"></i>
+                            <image mode="widthFix" style="width:50rpx" src="http://img02.camel.com.cn/image/icon-trash.png"></image>
                         </view>
                     </view>
                 </view>

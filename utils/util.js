@@ -240,7 +240,6 @@ const cloneJSON = (json) => {
 
 const arrayContains = function (arr, needle) {
     arr.forEach(function (value, index) {
-        console.log(value.indexOf(needle))
         if (value.indexOf(needle) != -1) return true;
     })
     return false;

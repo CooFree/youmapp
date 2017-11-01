@@ -1337,11 +1337,12 @@ m-indexHd .inner {
 
 .m-detailBase .info {
     flex: 1;
+    margin-right:10rpx;
 }
 
 .m-detailBase .info .name {
-    font-size: 36rpx;
-    margin-bottom: 0.0500025rpx;
+    font-size: 32rpx;
+    margin-bottom: 5rpx;
 }
 
 .m-detailBase .info .desc {
@@ -1353,14 +1354,14 @@ m-indexHd .inner {
 
 .m-detailBase .price {
     font-size: 48rpx;
-    color: #b4282d;
+    color: #f54e0c;
     font-weight: 700;
     margin-top: 10rpx;
 }
 
 .m-detailBase .comment {
     display: flex;
-    background-image: linear-gradient(to bottom, #919191 33%, rgba(255, 255, 255, 0.5) 0);
+    background-image: linear-gradient(to bottom, #e3e3e3 33%, rgba(255, 255, 255, 0.5) 0);
     -webkit-box-pack: center;
     justify-content: center;
     -webkit-box-align: center;
@@ -1421,11 +1422,12 @@ m-indexHd .inner {
     height: 39rpx;
     padding: 0 9rpx;
     font-size: 24rpx;
-    border: 1px solid #f48f18;
     border-radius: 2px;
     margin-right: 15rpx;
     display: flex;
     align-items: center;
+    background-color: #f54e0c;
+    color: #efefef;
 }
 
 .dt-section-2 .taglist .wrap, .m-detailBase .taglist .wrap {
@@ -1436,12 +1438,13 @@ m-indexHd .inner {
 }
 
 .dt-section-2 .taglist .link, .m-detailBase .taglist .link {
-    color: #f48f18;
-    font-size: 21rpx;
+    color: #efefef;
+    font-size: 24rpx;
+    margin-top: -3rpx;
 }
 
 .m-detailBase .taglist .link i.icon {
-    color: #f48f18;
+    color: #efefef;
     margin-left: 7rpx;
 }
 
@@ -1456,7 +1459,7 @@ m-indexHd .inner {
     min-height: 90rpx;
     line-height: 90rpx;
     margin-left: 22rpx;
-    border-bottom: 1px solid #d9d9d9;
+    border-bottom: 1px solid #e3e3e3;
     padding-right: 22rpx;
 }
 
@@ -1513,21 +1516,9 @@ m-indexHd .inner {
     font-size: 24rpx;
     color: #999;
     margin-right: 22rpx;
-    padding-left: 22rpx;
+    padding-left: 26rpx;
     position: relative;
     line-height: 1.7;
-}
-
-.m-serversEntry .mse-wrap .item:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    top: 13rpx;
-    width: 7rpx;
-    height: 7rpx;
-    font-size: 0;
-    background-color: #b4282d;
-    border-radius: 50%;
 }
 
 .dt-comment .more {
@@ -1701,9 +1692,9 @@ m-indexHd .inner {
 
 .m-btnGroup .inner .btn1 {
     flex: 1;
-    border-right: 1px solid #c7c7c7;
+    border-right: 1px solid #e3e3e3;
     font-size: 27rpx;
-    border-top: 1px solid #c7c7c7;
+    border-top: 1px solid #e3e3e3;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1717,11 +1708,12 @@ m-indexHd .inner {
 }
 
 .m-btnGroup .inner .btn2 {
-    border-top: 1px solid #c7c7c7;
+    background-color: #9c937a;
+    color: #fff;
 }
 
 .m-btnGroup .inner .btn3 {
-    background-color: #b4282d;
+    background-color: #d2ab44;
     color: #fff;
 }
 
@@ -4299,3 +4291,41 @@ m-indexHd .inner {
     background-position: 50%;
     margin: 22rpx auto;
 }
+
+.pro_sc {
+    background-image: url(http://img02.camel.com.cn/image/pro_sc.png);
+}
+
+.pro_bsc {
+    background-image: url(http://img02.camel.com.cn/image/pro_bsc.png);
+}
+
+.m-detailBase .linethough {
+    color:#999;
+    font-size:24rpx;
+    font-weight: normal;
+    text-decoration: line-through;
+}
+
+
+.m-serversEntry .mse-wrap .item:after {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 13rpx;
+    width: 18rpx;
+    height: 18rpx;
+    font-size: 0;
+    background-image: url(http://img02.camel.com.cn/image/servers_icon.png);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    background-size: contain;
+}
+
+
+
+
+
+
+
+

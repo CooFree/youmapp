@@ -53,7 +53,14 @@ Page({
     const { orderid } = event.currentTarget.dataset;
     memberChannel.cancelOrder(orderid).then((result) => {
       if (result) {
-        this.loadData();
+        this.data.orderList.some((item, index) => {
+          if (item.order_id === orderid) {
+            item.cancel_flag = 1;
+            item.show_status = 5;
+            return true;
+          }
+        });
+        this.setData({ orderList: this.data.orderList });
       }
     });
   }

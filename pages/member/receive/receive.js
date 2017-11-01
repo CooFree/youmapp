@@ -17,6 +17,7 @@ Page({
     regionName: '',
     regionError: false,
     regionMsg: '',
+    receiveId: 0,
   },
   onLoad: function (options) {
     const receiveId = parseInt(options.receive_id) || 0;
@@ -88,8 +89,16 @@ Page({
   selectDefault: function (event) {
     this.setData({ defaultFlag: this.data.defaultFlag === 1 ? 0 : 1 });
   },
-  goBack: function () {
-    wx.navigateBack();
+  deleteRegion: function (event) {
+    const { receiveId } = this.data;
+    memberChannel.deleteReceive(receiveId).then(data => {
+      if (data) {
+        wx.navigateBack();
+      }
+      else {
+        wx.showToast({ title: '提交失败', image: '../../../images/errorx.png' });
+      }
+    });
   },
   onSubmit: async function (event) {
     const { submiting, receiveId, defaultFlag, regionId } = this.data;
@@ -109,17 +118,7 @@ Page({
       memberChannel.saveReceive(receiveId, name, address, mobile, regionId, defaultFlag).then(data => {
         this.setData({ submiting: false });
         if (data) {
-          getCurrentPages().forEach((item, index) => {
-            if (item.route.indexOf('/orderConfirm') > 0) {
-              item.selectReceive(receiveId);
-            }
-          });
-          if (receiveId > 0) {
-            wx.navigateBack({ delta: 2 });
-          }
-          else {
-            wx.navigateBack();
-          }
+          wx.navigateBack();
         }
       })
     }

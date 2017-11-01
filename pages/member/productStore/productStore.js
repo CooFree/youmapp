@@ -1,4 +1,3 @@
-// pages/member/productStore/productStore.js
 import MemberChannel from '../../../channels/member';
 import util from '../../../utils/util';
 const memberChannel = new MemberChannel();

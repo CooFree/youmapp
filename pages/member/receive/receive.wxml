@@ -1,0 +1,29 @@
+<wxs src="../../../utils/tools.wxs" module="tools" />
+<import src="../../../components/formInput/form-input.wxml" />
+<import src="../../../components/regionPicker/region-picker.wxml" />
+
+<view class="greybgh100">
+    <view class="m-address-form ">
+        <form bindsubmit="onSubmit">
+            <view class="section">
+                <view class="inputwrap">
+                    <view class="inputBox">
+                        <view class="addrBox" bindtap="selectRegion">{{regionId>0?tools.decodeuri(regionName):'请选择'}}</view>
+                        <template is="region-picker" data="{{...regionData}}" />
+                    </view>
+                    <view wx:if="{{regionError}}" class="msg">{{regionMsg}}</view>
+                </view>
+
+                <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
+            </view>
+            <view class="section-1" bindtap="selectDefault">
+                <i class="icon {{defaultFlag===1?'ion-checkmark-circled icon-ischecked-g':'icon-nochecked-g ion-ios-circle-outline'}}"></i>
+                <span class="txt">设为默认地址</span>
+            </view>
+            <view class="orderRFT">
+                <view class="left" bindtap="deleteRegion">删除</view>
+                <button class="right" formType="submit">{{submiting?'保存中...':'保存'}}</button>
+            </view>
+        </form>
+    </view>
+</view>

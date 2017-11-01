@@ -1,66 +1,109 @@
-// pages/member/productComment/productComment.js
+import MemberChannel from '../../../channels/member';
+import util from '../../../utils/util';
+
+const memberChannel = new MemberChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    orderId: 0,
+    previewCommentpic: '',
+    commentList: [],
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.loadData();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  loadData: function () {
+    wx.showLoading();
+    memberChannel.getCommentData(orderId).then(data => {
+      if (data) {
+        this.setData({ commentList: data });
+      }
+      wx.hideLoading();
+    });
   },
+  onSubmit: function (event) {
+    const { index } = event.currentTarget.dataset;
+    const { orderId, commentList } = this.data;
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+    const item = commentList[index];
+    let content = util.decodeURI(item.content);
+
+    if (content.length > 0) {
+      let imageUrlArray = [], imageWidthArray = [], imageHeightArray = [];
+      item.image_list.forEach((item, index) => {
+        imageUrlArray.push(item.image_url);
+        imageWidthArray.push(item.image_width);
+        imageHeightArray.push(item.image_height);
+      });
+
+      memberChannel.saveComment(item.orderitem_id, content, imageUrlArray, imageWidthArray, imageHeightArray).then(result => {
+        if (result) {
+          this.loadData();
+        }
+        else {
+          wx.showToast({ title: '提交失败', image: '../../../images/errorx.png' });
+        }
+      });
+    }
+    else {
+      wx.showToast({ title: '评价内容不为空', image: '../../../images/alertx.png' });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  addImage: function (index, image_url, image_width, image_height) {
+    const { commentList } = this.data;
+    const item = commentList[index];
+    item.image_list.push({ image_url, image_width, image_height });
+    this.setData({ commentList });
   },
+  onFileUpload: function (event) {
+    const { index } = event.currentTarget.dataset;
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    wx.chooseImage({
+      count: 1,
+      success: (res) => {
+        const tempFilePaths = res.tempFilePaths
+        tempFilePaths.forEach((file, index) => {
+          wx.showLoading();
+          const url = '/member/productComment.aspx?post=upload_image';
+          wx.uploadFile({
+            url,
+            filePath: file.path,
+            name: 'file',
+            success: (res) => {
+              const data = JSON.parse(res.data);
+              this.addImage(index, data.image_url, data.image_width, data.image_height)
+              wx.hideLoading();
+            },
+            fail: (msg) => {
+              console.error(msg);
+            }
+          });
+        });
+        util.uploadFile('/member/productComment.aspx?post=upload_image', file, true).then((data) => {
+          wx.hideLoading();
+          if (data) {
+            if (data.result === 1) {
+              actions.addProductCommentImage(rowIndex, data.image_url, data.image_width, data.image_height);
+            }
+            else {
+              this.props.showTip(data.msg);
+            }
+          }
+          this.setState({ uploading: false });
+        })
+      }
+    });
+    wx.showLoading();
+    /*util.uploadFile('/member/productComment.aspx?post=upload_image', file, true).then((data) => {
+       wx.hideLoading();
+      if (data) {
+        if (data.result === 1) {
+          actions.addProductCommentImage(rowIndex, data.image_url, data.image_width, data.image_height);
+        }
+        else {
+          this.props.showTip(data.msg);
+        }
+      }
+      this.setState({ uploading: false });
+    });*/
   }
 })

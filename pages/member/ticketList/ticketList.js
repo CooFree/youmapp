@@ -1,66 +1,69 @@
-// pages/member/ticketList/ticketList.js
+import MemberChannel from '../../../channels/member';
+import util from '../../../utils/util';
+
+const pageSize = 10;
+const memberChannel = new MemberChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  page: 1,
   data: {
-  
+    ticketList: [],
+    ticketCode: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.loadData();
   },
+  loadData: function (more) {
+    const { loadEnd, ticketList } = this.data;
+    if (more) {
+      if (loadEnd === false) {
+        wx.showLoading();
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+        this.page++;
+        memberChannel.getTicketList(this.page, pageSize).then(data => {
+          this.setData({
+            ticketList: ticketList.concat(data),
+            loadEnd: data.length === 0
+          });
+          wx.hideLoading();
+        });
+      }
+    }
+    else {
+      wx.showLoading();
+
+      this.page = 1;
+      memberChannel.getTicketList(this.page, pageSize).then(data => {
+        this.setData({
+          ticketList: data,
+          loadEnd: data.length === 0
+        });
+        wx.hideLoading();
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-  
+    this.loadData();
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-  
+    this.loadData(true);
   },
+  changeTicketCode: function (event) {
+    let ticketCode = event.detail.value;
+    this.setData({ ticketCode });
+  },
+  bindTicket: function () {
+    const ticketCode = this.data.ticketCode.trim();
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
+    if (ticketCode.length > 0) {
+      memberChannel.bindTicket(ticketCode).then(result => {
+        if (result) {
+          this.loadData();
+        }
+        else {
+          wx.showToast({ title: '优惠券无效', image: '../../../images/errorx.png' });
+        }
+        this.setData({ ticketCode: '' });
+      });
+    }
+  },
 })

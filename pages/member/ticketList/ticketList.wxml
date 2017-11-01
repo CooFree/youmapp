@@ -1,49 +1,41 @@
-<!--pages/member/ticketList/ticketList.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
-    <view class="orderReceiveList">
-        <view class="m-shipAddress ma-layort">
-            <view class="u-icon u-address-bg">
-            </view>
-            <view class="item">
-                <view class="left">
-                    <view class="uname">
-                        测试
-                    </view>
-                    <span class="default">默认</span>
+    <view class="whitebg">
+        <view class="m-couponHd g-row">
+            <view class="inner">
+                <view class="m-ipt">
+                    <input type="text" class="ipt" placeholder="请输入优惠码" value="{{ticketCode}}" bindinput="changeTicketCode" />
                 </view>
-                <view class="middle">
-                    <view class="phone">
-                        130****0000
-                    </view>
-                    <view class="addr">
-                        重庆-重庆市-涪陵区，测试地址1
-                    </view>
-                </view>
-                <view class="right">
-                    <i class="icon icon-right ion-ios-arrow-right"></i>
-                </view>
-            </view>
-            <view class="item">
-                <view class="left">
-                    <view class="uname">
-                        徐先生
-                    </view>
-                </view>
-                <view class="middle">
-                    <view class="phone">
-                        132****7847
-                    </view>
-                    <view class="addr">
-                        广东省-广州市-白云区，石井凰岗村凰岗老人活动中心附近
-                    </view>
-                </view>
-                <view class="right">
-                    <i class="icon icon-right ion-ios-arrow-right"></i>
-                </view>
+                <button class="btn {{ticketCode.length>0?'':'disabled'}}" bindtap="bindTicket">兑换</button>
             </view>
         </view>
-        <view class="button-wrap">
-            <button class="w-button">＋ 新建地址</button>
+    </view>
+    <view class="ticketWrap g-row">
+        <view wx:for="{{ticketList}}" wx:key="{{index}}" class="item {{(item.ticket_used_flag===1||item.ticket_due_flag===1)?'disabled':''}}">
+            <view class="hd">
+                <view class="left">
+                    <view class="p1">
+                        {{tools.decodeuri(item.activity_name)}}
+                    </view>
+                    <view class="p2">
+                        {{item.activity_starttime}} - {{item.activity_endtime}}
+                    </view>
+                </view>
+                <view class="right">
+                    <block wx:if="{{item.ticket_used_flag===1}}">
+                        <view class="btn disabled">已使用</view>
+                    </block>
+                    <block wx:else>
+                        <view wx:if="{{item.ticket_due_flag===1}}" class="btn disabled">已失效</view>
+                        <view wx:else class="btn">待使用</view>
+                    </block>
+                </view>
+            </view>
+            <view class="bd">
+                <view class="p3">
+                    {{tools.decodeuri(item.activity_memo)}}
+                </view>
+            </view>
         </view>
     </view>
 </view>

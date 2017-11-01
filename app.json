@@ -33,7 +33,8 @@
     "pages/login/login",
     "pages/order/orderPay/orderPay",
     "pages/mobileVerify/mobileVerify",
-    "pages/setPassword/setPassword"
+    "pages/setPassword/setPassword",
+    "pages/member/receive/receive"
   ],
   "window": {
     "backgroundTextStyle": "light",

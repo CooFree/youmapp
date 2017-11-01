@@ -57,4 +57,13 @@ Page({
     login: function () {
         wx.navigateTo({ url: '../login/login' });
     },
+    goProfile: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/profile/profile' });
+        }
+        else {
+            this.login();
+        }
+    }
 })

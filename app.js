@@ -25,7 +25,7 @@ App({
     portalChannel.getRegionData();
     //初始化登陆状态
     memberState.initLogin();
-    console.log('getSystemInfoSync', wx.getSystemInfoSync());
+    //console.log('getSystemInfoSync', wx.getSystemInfoSync());
     //获取授权
     wx.login({
       success: res => {

@@ -1,41 +1,25 @@
-<!--pages/member/receiveList/receiveList.wxml-->
-<view class="container greybg">
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
+<view class="greybgh100">
     <view class="orderReceiveList">
         <view class="m-shipAddress ma-layort">
             <view class="u-icon u-address-bg">
             </view>
-            <view class="item">
-                <view class="left">
-                    <view class="uname">
-                        测试
-                    </view>
-                    <span class="default">默认</span>
+            <view wx:for="{{receiveList}}" wx:key="{{index}}" class="item defualtItem" data-receiveid="{{item.id}}" bindtap="editReceive">
+                <view data-receiveid="{{item.id}}" class="left" >
+                    <p class="uname">
+                        {{tools.decodeuri(item.name)}}
+                    </p>
+                    <span wx:if="{{item.default_flag===1}}" class="default">默认</span>
+                    <i wx:if="{{item.id===receiveId}}" class="icon icon-selected ion-checkmark-circled"></i>
                 </view>
-                <view class="middle">
-                    <view class="phone">
-                        130****0000
-                    </view>
-                    <view class="addr">
-                        重庆-重庆市-涪陵区，测试地址1
-                    </view>
-                </view>
-                <view class="right">
-                    <i class="icon icon-right ion-ios-arrow-right"></i>
-                </view>
-            </view>
-            <view class="item">
-                <view class="left">
-                    <view class="uname">
-                        徐先生
-                    </view>
-                </view>
-                <view class="middle">
-                    <view class="phone">
-                        132****7847
-                    </view>
-                    <view class="addr">
-                        广东省-广州市-白云区，石井凰岗村凰岗老人活动中心附近
-                    </view>
+                <view data-receiveid="{{item.id}}" class="middle">
+                    <p class="phone">
+                        {{tools.decodeuri(item.mobile)}}
+                    </p>
+                    <p class="addr">
+                        {{tools.decodeuri(item.region_name)}}，{{tools.decodeuri(item.address)}}
+                    </p>
                 </view>
                 <view class="right">
                     <i class="icon icon-right ion-ios-arrow-right"></i>
@@ -43,7 +27,7 @@
             </view>
         </view>
         <view class="button-wrap">
-            <button class="w-button">＋ 新建地址</button>
+            <button class="w-button" data-receiveid="0" bindtap="editReceive">＋ 新建地址</button>
         </view>
     </view>
 </view>

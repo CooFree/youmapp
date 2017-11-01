@@ -1,8 +1,8 @@
 <wxs src="../../utils/tools.wxs" module="tools" />
 <view class="m-ucenter g-row greybg">
     <view class="m-uc-top">
-        <navigator url="../member/profile/profile">
-            <view class="m-profile">
+ 
+            <view class="m-profile" bindtap="goProfile">
                 <image class="avatar" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
                 <view wx:if="{{isLogin}}" class="info">
                     <view class="nickname">
@@ -14,7 +14,7 @@
                     <view class="icon ion-ios-arrow-right top_right"></view>
                 </view>
 
-                <view wx:else class="info" bindtip="goLogin">
+                <view wx:else class="info">
                     <view class="nickname">
                         登陆/注册
                     </view>
@@ -24,7 +24,6 @@
                     <view class="icon ion-ios-arrow-right top_right"></view>
                 </view>
             </view>
-        </navigator>
     </view>
     <view class="m-uc-wrap">
             <view class="m-uc-wraptit" bindtap="goOrderList">

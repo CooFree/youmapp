@@ -19,10 +19,8 @@
                     </view>
                 </view>
             </view>
-            <view class="btn-login">
-                <view class="ben-login-txt">
-                    下一步
-                </view>
+            <view class="login-btn-wrap">
+                <button class="login-btn login-btn-g" formType="submit">下一步</button>
             </view>
         </view>
     </view>

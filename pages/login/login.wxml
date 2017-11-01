@@ -8,8 +8,11 @@
         <view class="login-form">
             <form bindsubmit="onSubmit">
                 <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
-                <view class="btn-login">
-                    <button class="ben-login-txt" formType="submit">{{submiting?'登陆中...':'登录'}}</button>
+                <view class="login-btn-wrap">
+                    <button class="login-btn login-btn-g" formType="submit">{{submiting?'登陆中...':'账号登录'}}</button>
+                </view>
+                <view class="login-btn-wrap" bindtap="wxlogin">
+                    <button type="primary" plain="true" class="login-btn" formType="submit">{{submiting?'登陆中...':'微信登陆'}}</button>
                 </view>
             </form>
             <view class="sublime">
@@ -20,13 +23,7 @@
                     <text class="link">忘记密码</text>
                 </navigator>
             </view>
-            <view class="ologin">
-                <view class="oitem" bindtap="wxlogin">
-                    <image class="icon" mode="widthFix" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAiCAYAAABMfblJAAAAAXNSR0IArs4c6QAAA05JREFUSA21Vk1IVFEUPue+cUxMRYpSy58gF1GRmlOBRa2EfhBalRJlOiJhtkloV+5qE9IiCGowwlq0C0JxVZD0I2Yt3MbMmJShBgPjOObMPZ33nBnee/PszeuNFx733HO+833v/l8EB6UlsFASw1g1Im4TSRlVqOjHp56dvxxQANqBNREZ7SOE8wDoA2JLXxBD7BjZAsrQB3/1b33IyjYmmxANT0IdLDDE7h2mUFaTez2PQnROd9WMZwV1DqGzDWZjINzPjhH+bMXURCKqkEk52hQI9antjYplDxsDodMkaXSjpH/6EUkgXpzurn1phcvq4ak35AGC+1bgnHw8x1LSo+PPw+VW+CzByLfZdh6efVbg3H1UHovRgBU+S5CALlgBnfokQLtVjmEO1S2wTNFFHlKvFdipz4PKwSl/zYw+z9DDFVzmfZYfMVVEUtKnF1NtgyCLHTYDXLURDpnzDYK8uvaaAW7aRFBnzjcIIkKlGeCmzYdgFp9BkAC3uhGwyC0z+wyCCKSYAW7aCFhizs8IHh1ZKgXi2yCPhQ+QqsbAbLOeMiO4Fo+286Yv0gfzYpPs1fNkBCXILn0gXzbxiaMeKGk+TdD3NLyf9+CRtDOvNVHxCsU60pyaYCJBm9K7tAhPlT9tC/U64sm9lHZsRs38zQ3D3+tVbhEJzrVwndOt7uZnhEyc1QRRJs+5Ico1VxKe1AT53jLsk1wJnOL4HjymCfLzZ/12R5zhk+GnUyI7PHO+VzE8jxW+4WCFYEcZ8MNHQbzGe+ajHYGjOMKfAq+njfm1SzhB4oC6LZb5SHvwubt2Qggcc0RoA+ZhHJ+8snvJ64U27tgiJqlUkBDd9WU1A2ru9oLCF/w3tq9nG51UGKVHgdtqY/JyXVBBaCWl8J3hTaMGmx4HB3kh3VFtdwUffu2pu27m0E4avbPUA/f42T6l9zm2EScqd9XetMrLEnx7dU8c0OPnoV22SrDz8ZBFUGDv2BlctcIahrT12Xzxwmr8LgN5xfIL/L8LSl74rwEKb3zxV4X1NIYeLqzFb7FQvzsxlZ4EP6DaCNc69WKqbejhIJF4NTx3AkGWoOSUVEnyH2hgkap5F6djIJT1WAqTTOV5UESm/NWTGVzK+AtmBgo+FG9gVAAAAABJRU5ErkJggg=="
-                        alt=""></image>
-                    <text class="txt">QQ</text>
-                </view>
-            </view>
+           
         </view>
     </view>
 </view>

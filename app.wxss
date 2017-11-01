@@ -4277,6 +4277,8 @@ m-indexHd .inner {
     text-align: center;
 }
 
+/*  样式更新  */
+
 .zw-kefu {
     display: inline-block;
     background-position: 50%;
@@ -4286,4 +4288,14 @@ m-indexHd .inner {
     width: 60rpx;
     height: 58rpx;
     margin-left: 22rpx;
+}
+
+.pro_bsc, .pro_sc {
+    display: block;
+    width: 46rpx;
+    height: 46rpx;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50%;
+    margin: 22rpx auto;
 }

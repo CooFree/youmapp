@@ -7,8 +7,9 @@
         <view class="login-form">
             <form bindsubmit="onSubmit">
                 <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
-                <view class="btn-login">
-                    <button class="ben-login-txt" formType="submit">{{submiting?'注册中...':'注册'}}</button>
+
+                <view class="login-btn-wrap">
+                    <button class="login-btn login-btn-g" formType="submit">{{submiting?'注册中...':'注册'}}</button>
                 </view>
             </form>
         </view>

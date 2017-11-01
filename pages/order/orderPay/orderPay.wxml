@@ -43,7 +43,7 @@
             </view>
         </view>
         <view wx:if="{{orderInfo.pay_type === 7}}" class="wechatpayft" bindtap="weixinPay">
-            <button class="btn">确认支付</button>
+            <button type="primary" size="mini" class="btn">确认支付</button>
         </view>
     </view>
 </view>

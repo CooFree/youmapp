@@ -6,8 +6,8 @@
         <view class="login-form">
             <form bindsubmit="onSubmit">
                 <template is="form-input" wx:for="{{formDatas}}" wx:key="{{index}}" data="{{...item}}" />
-                <view class="btn-login">
-                    <button class="ben-login-txt" formType="submit">确定</button>
+                <view class="login-btn-wrap">
+                    <button class="login-btn login-btn-g" formType="submit">确定</button>
                 </view>
             </form>
         </view>

@@ -51,7 +51,7 @@
                                 </view>
                             </view>
                             <view class="del" data-basketid="{{item.basket_id}}" bindtap="deleteBasket">
-                                <i class="icon icon-trash ion-ios-trash-outline"></i>
+                                <image mode="widthFix" style="width:50rpx" src="http://img02.camel.com.cn/image/icon-trash.png"></image>
                             </view>
                         </view>
                     </view>
@@ -90,7 +90,7 @@
                 </view>
             </view>
             <view class="right">
-                <view class="btn w-button" bindtap="goSettle">去下单</view>
+                <view class="btn w-button" bindtap="goSettle">去结算</view>
             </view>
         </view>
     </view>

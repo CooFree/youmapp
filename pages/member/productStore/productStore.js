@@ -6,7 +6,7 @@ const pageSize = 8;
 Page({
   page: 1,
   data: {
-    delBtnWidth: 164,
+    delBtnWidth: 140,
     txtStyle: '',
     productStore: [],
     loadEnd: false,

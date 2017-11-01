@@ -5,25 +5,6 @@
         <view class="m-profile" bindtap="goProfile">
             <image class="avatar" src="{{tools.httpsuri(headPortrait)}}" alt=""></image>
             <view wx:if="{{isLogin}}" class="info">
-<<<<<<< HEAD
-                <view class="nickname">
-                    {{tools.decodeuri(loginName)}}
-                </view>
-                <view class="membershipLevel">
-                    <text class="memberTitle1">{{tools.decodeuri(memberLevel)}}</text>
-                </view>
-                <view class="icon ion-ios-arrow-right top_right"></view>
-            </view>
-
-            <view wx:else class="info">
-                <view class="nickname">
-                    登陆/注册
-                </view>
-                <view class="membershipLevel">
-                    <text class="memberTitle1"></text>
-                </view>
-                <view class="icon ion-ios-arrow-right top_right"></view>
-=======
                 <view class="left">
                     <view class="nickname">
                         {{tools.decodeuri(loginName)}}
@@ -47,7 +28,6 @@
                     </view>
                 </view>
 
->>>>>>> e7c8bcb13d7ad6b398623598a90b2cbeecaf79d3
             </view>
         </view>
     </view>

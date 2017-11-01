@@ -2,7 +2,7 @@
 <wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="helpCon g-row">
-        <view class="wraper" wx:for="{{helpData.faq_list}}">
+        <view class="wraper" wx:for="{{helpData.faq_list}}" wx:key="{{index}}">
             <view class="question">{{tools.decodeuri(item.question)}}</view>
             <view class="answer">{{tools.decodeuri(item.answer)}}</view>
         </view>

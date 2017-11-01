@@ -3,7 +3,7 @@
 <view class="container greybg">
     <view class="helpWrap g-row">
         <view class="list">
-            <navigator url="../help/help?code={{item.code}}" wx:for="{{helpList}}">
+            <navigator url="../help/help?code={{item.code}}" wx:for="{{helpList}}" wx:key="{{index}}">
                 <view class="item">
                     <view class="tit">{{tools.decodeuri(item.title)}}</view>
                     <i class="icon icon-arrow-right ion-ios-arrow-forward"></i>

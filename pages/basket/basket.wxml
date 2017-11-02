@@ -26,15 +26,19 @@
                         <view class="inner" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" data-index="{{index}}"
                             style="{{item.txtStyle}}">
                             <view class="m-good">
-                                <i class="icon {{item.check_flag==1?'icon-ischecked-g  ion-checkmark-circled':'icon-nochecked-g ion-ios-circle-outline'}}" data-checkflag="{{item.check_flag}}"
-                                    data-basketid="{{item.basket_id}}" bindtap="onCheckCart"></i>
+                                <i class="icon {{item.check_flag==1?'icon-ischecked-g  ion-checkmark-circled':'icon-nochecked-g ion-ios-circle-outline'}}"
+                                    data-checkflag="{{item.check_flag}}" data-basketid="{{item.basket_id}}" bindtap="onCheckCart"></i>
                                 <view class="imgWrap">
-                                    <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
+                                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}">
+                                        <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
+                                    </navigator>
                                 </view>
                                 <view class="cnt">
-                                    <view class="line1">{{tools.decodeuri(item.prod_name)}}</view>
-                                    <view class="line2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
-                                    <view class="line3">￥{{tools.tofixed(item.last_price,2)}}</view>
+                                    <navigator url="../product/productDetail/productDetail?prod_id={{item.prod_id}}">
+                                        <view class="line1">{{tools.decodeuri(item.prod_name)}}</view>
+                                        <view class="line2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
+                                        <view class="line3">￥{{tools.tofixed(item.last_price,2)}}</view>
+                                    </navigator>
                                 </view>
                                 <view class="m-selnum">
                                     <view class="less {{item.volume>1?'':'dis'}}" data-basketid="{{item.basket_id}}" data-volume="{{item.volume}}" bindtap="reduceVolume">
@@ -98,7 +102,9 @@
         <view class="m-defualtPage">
             <view class="img"></view>
             <view class="noCart-title">购物车空空如也</view>
-            <view class="noCart-btn"><navigator url="../login/login">登录</navigator></view>
+            <view class="noCart-btn">
+                <navigator url="../login/login">登录</navigator>
+            </view>
         </view>
     </view>
 </view>

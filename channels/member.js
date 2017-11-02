@@ -656,7 +656,7 @@ export default class MemberChannel {
             let url = config.Host + '/member/apply.aspx?post=reply&member_id=' + memberId;
             let post_data = {
                 apply_id: applyId,
-                content: content
+                content
             };
             let headers = {
                 "Content-Type": "application/x-www-form-urlencoded"

@@ -6,23 +6,23 @@
             <view class="txtwrap">
                 <view class="p1">
                     下单时间：
-                    <span class="s1">{{applyInfo.order_createtime}}</span>
+                    <text class="s1">{{applyInfo.order_createtime}}</text>
                 </view>
                 <view class="p1">
                     订单编号：
-                    <span class="s1">{{applyInfo.order_code}}</span>
+                    <text class="s1">{{applyInfo.order_code}}</text>
                 </view>
             </view>
         </view>
         <view class="od-googs">
             <view wx:if="{{applyInfo.apply_flag === 1}}" class="hd">
-                <span class="orderId title">{{tools.decodeuri(applyInfo.apply.type_desc)}}申请</span>
+                <text class="orderId title">{{tools.decodeuri(applyInfo.apply.type_desc)}}申请</text>
                 <view class="p4">
                     {{tools.decodeuri(applyInfo.apply.status_desc)}}
                 </view>
             </view>
             <view wx:else class="hd">
-                <span class="orderId title">售后申请</span>
+                <text class="orderId title">售后申请</text>
                 <view class="p4">未申请</view>
             </view>
 
@@ -80,7 +80,65 @@
             </view>
         </block>
         <block wx:else>
-
+            <view class="od-addr applyWrap">
+                <view class="hd">发起申请</view>
+                <view class="item">
+                    <view class="left">售后类型</view>
+                    <view class="right">
+                        <view class="sex-wrap">
+                            <i class="icon icon-ischecked-g ion-checkmark-circled"></i>
+                            <text class="spanTxt">退货</text>
+                        </view>
+                        <view class="sex-wrap">
+                            <i class="icon icon-nochecked-g ion-ios-circle-outline"></i>
+                            <text class="spanTxt">换货</text>
+                        </view>
+                    </view>
+                </view>
+                <view class="item">
+                    <view class="left">申请原因</view>
+                    <view class="right">
+                        <view class="addrBox">请选择申请原因</view>
+                    </view>
+                    <view class="m-sliding" style="display: none;">
+                        <view class="m-mask"></view>
+                        <view class="m-areaPicker">
+                            <view class="hd">
+                                <view class="tabSet">
+                                    <view class="item active">请选择</view>
+                                </view>
+                                <view class="right"></view>
+                            </view>
+                            <view class="swiper-areaPicker">
+                                <view class="item">
+                                    <ul class="list" style="width: 100%;">
+                                        <li class="active">请选择申请原因</li>
+                                        <li class="">退运费</li>
+                                        <li class="">质量问题</li>
+                                        <li class="">型号、功率、颜色等与商品页面描述不符</li>
+                                        <li class="">功能、效果不符</li>
+                                        <li class="">少件、漏发</li>
+                                        <li class="">包装、商品破损</li>
+                                        <li class="">未按约定时间发货</li>
+                                        <li class="">发票问题</li>
+                                        <li class="">其他原因</li>
+                                    </ul>
+                                </view>
+                            </view>
+                            <view class="swiper-wrapper"></view>
+                        </view>
+                    </view>
+                </view>
+                <view class="item">
+                    <view class="left">申请说明</view>
+                    <view class="right">
+                        <textarea class="textarea" placeholder="商品是否给力？快分享你的购买心得吧~"></textarea>
+                    </view>
+                </view>
+                <view class="commentBtn">
+                    <button class="btn">提交申请</button>
+                </view>
+            </view>
         </block>
     </view>
 </view>

@@ -17,8 +17,8 @@
                         </view>
                     </view>
                 </view>
-                <view class="commentWrap">
-                    <view class="taWrap">
+                <view class="commented">
+                    <view class="content">
                         <text>{{tools.decodeuri(item.content)}}</text>
                     </view>
                     <view class="comment-pics">
@@ -26,6 +26,7 @@
                             <image class="pic" mode="widthFix" src="{{tools.httpsuri(item.image_url + '!prodimg78')}}" alt="" />
                         </view>
                     </view>
+                    <view class="date">{{item.comment_time}}</view>
                 </view>
             </view>
             <view class="commentContent" wx:else>

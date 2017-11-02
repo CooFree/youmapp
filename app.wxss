@@ -1523,7 +1523,7 @@ m-indexHd .inner {
     color: #f48f18;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: 549rpx;
+    max-width: 460rpx;
     overflow: hidden;
     padding-top: 1px;
 }

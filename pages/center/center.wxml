@@ -24,7 +24,7 @@
                         登陆/注册
                     </view>
                     <view class="membershipLevel">
-                       
+
                     </view>
                 </view>
 
@@ -84,8 +84,10 @@
                     <text class="txt">商品点评</text>
                 </view>
                 <view class="item">
-                    <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon9.png" alt=""></image>
-                    <text class="txt">联系客服</text>
+                    <button open-type="contact" class="contact-kf1">
+                        <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon9.png" alt=""></image>
+                        <text class="txt">联系客服</text>
+                    </button>
                 </view>
             </view>
             <view class="list">

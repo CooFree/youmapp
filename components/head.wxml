@@ -10,7 +10,11 @@
                     </view>
                 </navigator>
             </view>
-            <view class="zw-kefu"></view>
+            <view class="kf-wrap">
+                <button open-type="contact" class="contact-kf">
+                    <view class="zw-kefu"></view>
+                </button>
+            </view>
         </view>
     </view>
 </template>

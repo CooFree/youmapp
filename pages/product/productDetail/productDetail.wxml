@@ -69,7 +69,7 @@
                 <i class="icon ion-ios-arrow-right"></i>
             </view>
         </view>
-        <view class="m-listItem">
+        <view class="m-listItem" wx:if="{{preferList.length > 0}}">
             <view class="left">
                 <text class="txt">{{preferList.length}}个促销：</text>
             </view>
@@ -273,7 +273,9 @@
             </block>
             <block wx:else>
                 <view class="btn btn1">
-                    <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_mes.png" alt=""></image>
+                    <button open-type="contact" class="contact-kf">
+                        <image mode="widthFix" style="width:50rpx;" src="http://img02.camel.com.cn/image/pro_mes.png" alt=""></image>
+                    </button>
                 </view>
             </block>
 

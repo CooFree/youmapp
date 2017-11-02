@@ -121,11 +121,11 @@ Page({
         }
     },
     goApplyList: function (event) {
-        wx.navigateTo({ url: '../success/success' });
-        return;
+        //wx.navigateTo({ url: '../success/success' });
+        //return;
         const { isLogin } = this.data;
         if (isLogin) {
-            wx.navigateTo({ url: '../member/productCommentList/productCommentList' });
+            wx.navigateTo({ url: '../member/applyList/applyList' });
         }
         else {
             this.login();

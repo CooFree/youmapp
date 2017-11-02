@@ -1241,12 +1241,12 @@ m-indexHd .inner {
 .m-profile .info .right {
     display: flex;
     align-items: center;
-    margin-right:30rpx;
+    margin-right: 30rpx;
 }
 
 .m-profile .info .top_right {
-    color:#fff;
-    font-size:50rpx; 
+    color: #fff;
+    font-size: 50rpx;
 }
 
 .m-profile .avatar {
@@ -1981,6 +1981,7 @@ m-indexHd .inner {
     line-height: 100rpx;
     display: flex;
     position: relative;
+    border-bottom: 1px solid #d9d9d9;
 }
 
 .addrBox {
@@ -1991,10 +1992,9 @@ m-indexHd .inner {
 }
 
 .inputBox .j-inputtext {
-    width: 100%;
+    width: 90%;
     height: 100rpx;
     border: 0;
-    border-bottom: 1px solid #d9d9d9;
     font-size: 29rpx;
 }
 
@@ -4379,3 +4379,4 @@ m-indexHd .inner {
     background: #fff;
     box-shadow: 0;
 }
+

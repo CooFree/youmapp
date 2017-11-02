@@ -1,2 +1,12 @@
 <!--pages/member/applyList/applyList.wxml-->
-<text>pages/member/applyList/applyList.wxml</text>
+<view class="container greybg">
+    <view class="swiper-content">
+        <view class="swiper-tabs">
+            <view class="item active">退货</view>
+            <view class="item ">换货</view>
+        </view>
+        <view class="swiper-wrap">
+            <view class="item"></view>
+        </view>
+    </view>
+</view>

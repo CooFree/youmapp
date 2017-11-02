@@ -1,10 +1,10 @@
 <view class="container greybg">
-    <view className="errorWrap">
-        <view className="hd">
-            <i className="icon icon-success ion-ios-checkmark-outline"></i>
+    <view class="errorWrap">
+        <view class="hd">
+            <i class="icon icon-success ion-ios-checkmark-outline"></i>
         </view>
-        <view className="bd">
-            <text className="desc">{{msg}}</text>
+        <view class="bd">
+            <text class="desc">{{msg}}</text>
         </view>
     </view>
 </view>

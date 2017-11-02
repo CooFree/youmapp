@@ -14,12 +14,12 @@
     <view class="dt-section">
         <view wx:if="{{limitseconds>0}}" class="m-flashSale detailFlashSale active">
             <view class="left">
-                <span class="title">限时购</span>
-                <span class="status">抢购中...</span>
+                <text class="title">限时购</text>
+                <text class="status">抢购中...</text>
             </view>
             <view class="right">
-                <span class="s1">离结束还剩</span>
-                <span class="t1">{{limittime}}</span>
+                <text class="s1">离结束还剩</text>
+                <text class="t1">{{limittime}}</text>
             </view>
         </view>
         <view class="m-detailBase">
@@ -28,18 +28,18 @@
                 <view class="desc">{{tools.decodeuri(productDetail.product.intro)}}</view>
 
                 <view wx:if="{{limitseconds>0}}" class="price">
-                    ￥{{tools.tofixed(specificateData.limittime_price,2)}} 
+                    ￥{{tools.tofixed(specificateData.limittime_price,2)}}
                     <text class="linethough">￥{{tools.tofixed(specificateData.prod_price,2)}}</text>
                 </view>
                 <view wx:else class="price">￥{{tools.tofixed(specificateData.prod_price,2)}} </view>
 
                 <view class="taglist" wx:for="{{tagList}}" wx:if="{{tools.indexof(',' + productDetail.product.tag + ',',',' + item.id + ',')>=0}}" wx:key="{{index}}">
                     <view class="wrap">
-                        <div class="item">
+                        <view class="item">
                             <view class="link">
                                 <text>{{tools.decodeuri(item.name)}}</text>
                             </view>
-                        </div>
+                        </view>
                     </view>
                 </view>
             </view>
@@ -56,7 +56,6 @@
     </view>
 
     <view class="dt-section-2">
-
         <view class="m-listItem " bindtap="toggleSelector">
             <view wx:if="{{finlColor.length>0 && finlSize.length>0}}" class="left">
                 <text class="txt">已选：{{tools.decodeuri(finlColor)}}*{{tools.decodeuri(finlSize)}} x{{tools.decodeuri(finlVolume)}}</text>
@@ -68,6 +67,46 @@
             <view class="middle"></view>
             <view class="right">
                 <i class="icon ion-ios-arrow-right"></i>
+            </view>
+        </view>
+        <view class="m-listItem">
+            <view class="left">
+                <text class="txt">{{preferList.length}}个促销：</text>
+            </view>
+            <view class="middle middle_2">
+                <view class="active-wrap">
+                    <block wx:if="{{avtiveShowAll}}">
+                        <view class="active-item" wx:for="{{preferList}}" wx:key="{{index}}">
+                            <view class="taglist">
+                                <view class="wrap">
+                                    <view class="item zq_view">
+                                        <view class="link zq_link">
+                                            <text>{{tools.decodeuri(item.prefer_class)}}</text>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                            <text class="saletxt">{{tools.decodeuri(item.prefer_name)}}</text>
+                        </view>
+                    </block>
+                    <block wx:else>
+                        <view class="active-item" wx:key="{{index}}">
+                            <view class="taglist">
+                                <view class="wrap">
+                                    <view class="item zq_view">
+                                        <view class="link zq_link">
+                                            <text>{{tools.decodeuri(preferList[0].prefer_class)}}</text>
+                                        </view>
+                                    </view>
+                                </view>
+                            </view>
+                            <text class="saletxt">{{tools.decodeuri(preferList[0].prefer_name)}}</text>
+                        </view>
+                    </block>
+                </view>
+            </view>
+            <view class="right">
+                <view class="icon {{avtiveShowAll? 'ion-ios-arrow-up' : 'ion-ios-arrow-down'}} ts_right" bindtap="avtiveShowAll"></view>
             </view>
         </view>
         <view class="m-listItem m-li-noborder">
@@ -98,7 +137,7 @@
                 </view>
                 <view class="middle"></view>
                 <view class="right">
-                    <span class="more">查看全部</span>
+                    <text class="more">查看全部</text>
                     <i class="icon ion-ios-arrow-right"></i>
                 </view>
             </view>
@@ -150,7 +189,7 @@
         <view class="m-commonIssues m-rmcdGoods">
             <view class="tt">
                 <view class="line"></view>
-                <span class="text">大家都在看</span>
+                <text class="text">大家都在看</text>
             </view>
             <view class=""></view>
         </view>
@@ -192,7 +231,7 @@
             <view wx:if="{{specificateData.size_flag===1}}" class="tt">尺码</view>
             <view wx:if="{{specificateData.size_flag===1}}" class="con">
                 <view class="tab {{item.sale === 1? '':'tab-dis'}} {{item.size === finlSize ? 'tab-sel' : ''}}" wx:for="{{arraySize}}" wx:key="{{index}}" bindtap="selectSize" data-specitem="{{item}}">
-                    <span class="txt">{{tools.decodeuri(item.size)}}</span>
+                    <text class="txt">{{tools.decodeuri(item.size)}}</text>
                 </view>
             </view>
             <view class="tt">数量</view>

@@ -14,6 +14,7 @@ Page({
         location: '',
         previewCommentpic: '',
         showSelector: false,
+        avtiveShowAll: false,
         detailImageList: [],
         specificateData: [],
         arrayColor: [],
@@ -29,6 +30,12 @@ Page({
         tagList: [],
         preferList: [],
         productCommentList: [],
+    },
+    avtiveShowAll: function(event){
+        console.log(event)
+        this.setData({
+            avtiveShowAll: !this.data.avtiveShowAll
+        })  
     },
     showPreview: function (event) {
         let url = event.currentTarget.dataset.url;

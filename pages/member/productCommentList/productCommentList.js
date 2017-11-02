@@ -1,66 +1,57 @@
-// pages/member/productCommentList/productCommentList.js
+import MemberChannel from '../../../channels/member';
+import util from '../../../utils/util';
+import memberState from '../../../utils/memberState';
+
+const pageSize = 10;
+const memberChannel = new MemberChannel();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  page: 1,
   data: {
-  
+    prodCommentList: [],
+    previewCommentpic: '',
+    loadEnd: false
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-  
+    this.loadData();
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  loadData: function (more) {
+    const { loadEnd, prodCommentList } = this.data;
+    if (more) {
+      if (loadEnd === false) {
+        this.page++;
+        wx.showLoading();
+        memberChannel.getCommentList(this.page, pageSize).then(data => {
+          wx.hideLoading();
+          this.setData({
+            prodCommentList: prodCommentList.concat(data),
+            loadEnd: data.length === 0
+          });
+        });
+      }
+    }
+    else {
+      this.page = 1;
+      wx.showLoading();
+      memberChannel.getCommentList(this.page, pageSize).then(data => {
+        wx.hideLoading();
+        this.setData({
+          prodCommentList: data,
+          loadEnd: data.length === 0
+        });
+      });
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  showPreview: function (event) {
+    const { image } = event.currentTarget.dataset;
+    this.setData({ previewCommentpic: image });
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  hidePreview: function () {
+    this.setData({ previewCommentpic: '' });
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
-  
+    this.loadData();
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-  
+    this.loadData(true);
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

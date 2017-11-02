@@ -1,5 +1,7 @@
 import MemberChannel from '../../../channels/member';
 import util from '../../../utils/util';
+import config from '../../../config';
+import memberState from '../../../utils/memberState';
 
 const memberChannel = new MemberChannel();
 Page({
@@ -9,9 +11,13 @@ Page({
     commentList: [],
   },
   onLoad: function (options) {
+    const orderId = parseInt(options.order_id) || 0;
+    this.setData({ orderId });
     this.loadData();
   },
   loadData: function () {
+    const { orderId } = this.data;
+
     wx.showLoading();
     memberChannel.getCommentData(orderId).then(data => {
       if (data) {
@@ -20,7 +26,15 @@ Page({
       wx.hideLoading();
     });
   },
+  onInputContent: function (event) {
+    const { index } = event.currentTarget.dataset;
+    const { value } = event.detail;
+    const { commentList } = this.data;
+    commentList[index].content = encodeURIComponent(value);
+    this.setData({ commentList });
+  },
   onSubmit: function (event) {
+
     const { index } = event.currentTarget.dataset;
     const { orderId, commentList } = this.data;
 
@@ -56,29 +70,38 @@ Page({
   },
   onFileUpload: function (event) {
     const { index } = event.currentTarget.dataset;
-
+    const memberId = memberState.getLoginId();
     wx.chooseImage({
       count: 1,
       success: (res) => {
-        const tempFilePaths = res.tempFilePaths
-        tempFilePaths.forEach((file, index) => {
-          wx.showLoading();
-          const url = '/member/productComment.aspx?post=upload_image';
-          wx.uploadFile({
-            url,
-            filePath: file.path,
-            name: 'file',
-            success: (res) => {
-              const data = JSON.parse(res.data);
-              this.addImage(index, data.image_url, data.image_width, data.image_height)
-              wx.hideLoading();
-            },
-            fail: (msg) => {
-              console.error(msg);
-            }
-          });
+        res.tempFilePaths.forEach((file, index) => {
+          if (memberId) {
+            wx.showLoading();
+            const url = config.Host + '/member/productComment.aspx?post=upload_image&member_id=' + memberId;
+            wx.uploadFile({
+              url,
+              filePath: file,
+              name: 'file',
+              success: (res) => {
+                const data = JSON.parse(res.data);
+                this.addImage(index, data.image_url, data.image_width, data.image_height);
+
+                wx.hideLoading();
+              },
+              fail: (msg) => {
+                console.error(msg);
+              }
+            });
+          }
         });
       }
     });
-  }
+  },
+  showPreview: function (event) {
+    const { image } = event.currentTarget.dataset;
+    this.setData({ previewCommentpic: image });
+  },
+  hidePreview: function () {
+    this.setData({ previewCommentpic: '' });
+  },
 })

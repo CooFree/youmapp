@@ -221,14 +221,14 @@
         </view>
     </view>
 
-    <div class="commentpic-preview" wx:if="{{previewCommentpic}}" bindtap="hidePreview">
-        <div class="pic-box">
+    <view class="commentpic-preview" wx:if="{{previewCommentpic}}" bindtap="hidePreview">
+        <view class="pic-box">
             <image mode="widthFix" style="width:96%; margin-right:-1.5%;" src="{{previewCommentpic}}" alt=""></image>
-        </div>
-    </div>
+        </view>
+    </view>
 
     <view class="m-btnGroup">
-        <div class="inner">
+        <view class="inner">
             <block wx:if="{{showSelector}}">
                 <text class="btn btn1" bindtap="toggleSelector">《 返回</text>
             </block>
@@ -244,6 +244,6 @@
 
             <view class="btn btn2" bindtap="onBuy">立即购买</view>
             <view class="btn btn3" bindtap="onBasket">加入购物车</view>
-        </div>
+        </view>
     </view>
 </view>

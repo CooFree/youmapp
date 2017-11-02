@@ -12,7 +12,9 @@ Page({
     weixinBindFlag: 0
   },
   onLoad: function (options) {
+    wx.showLoading();
     memberChannel.getAccountData().then((data) => {
+      wx.hideLoading();
       if (data) {
         this.setData({
           loginName: util.decodeURI(data.login_name),

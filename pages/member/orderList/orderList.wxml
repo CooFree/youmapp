@@ -37,7 +37,7 @@
                 </view>
             </navigator>
             <view class="ft">
-                <view class="btns">
+                <view class="btns" wx:if="{{item.cancel_flag===0}}">
                     <navigator wx:if="{{item.show_status===3}}" url="../apply/apply?order_id={{item.order_id}}">
                         <text class="w-button">售后申请</text>
                     </navigator>

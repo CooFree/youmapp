@@ -127,10 +127,12 @@
                 <view class="sp1">服务时间：08:30-00:00</view>
             </view>
             <view class="serviceWrap">
-                <view class="seriveChat">
-                    <i class="icon ion-ios-chatbubble-outline"></i>
-                    <text>在线客服</text>
-                </view>
+                <button open-type="contact" class="contact-kf2">
+                    <view class="seriveChat">
+                        <i class="icon ion-ios-chatbubble-outline"></i>
+                        <text>在线客服</text>
+                    </view>
+                </button>
                 <a href="tel://020-4006816178" class="seriveChat">
                     <i class="icon ion-ios-telephone-outline"></i>
                     <text>电话客服</text>

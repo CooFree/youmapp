@@ -11,7 +11,7 @@
                 </navigator>
             </view>
             <view class="kf-wrap">
-                <button open-type="contact" class="contact-kf">
+                <button open-type="contact" class="contact-kf2">
                     <view class="zw-kefu"></view>
                 </button>
             </view>

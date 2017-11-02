@@ -3592,7 +3592,7 @@ m-indexHd .inner {
 .applyWrap .item .left {
     margin-right: 22rpx;
     height: 75rpx;
-    line-height: 115rpx;
+    line-height: 75rpx;
     font-size: 27rpx;
     color: #666;
 }
@@ -3602,6 +3602,11 @@ m-indexHd .inner {
     display: flex;
     align-items: center;
     color: #666;
+}
+
+.applyWrap .item .right picker {
+    font-size: 27rpx;
+    margin-top: 10rpx;
 }
 
 .applyWrap .textarea {
@@ -3645,7 +3650,7 @@ m-indexHd .inner {
 }
 
 .applyWrap .commentBtn .btn {
-    /* border: 1px solid #d9d9d9; */
+    border: 1px solid rgba(0, 0, 0, 0.2);
     background-color: #fff;
     font-size: 27rpx;
     padding: 15rpx 22rpx;
@@ -4175,7 +4180,6 @@ m-indexHd .inner {
     background-repeat: no-repeat;
     background-size: contain;
     background-image: url(http://img02.camel.com.cn/image/zw_kefu.png);
-
 }
 
 .zw-proli-tips {
@@ -4314,11 +4318,13 @@ m-indexHd .inner {
 }
 
 /*  样式更新  */
+
 .kf-wrap {
     width: 60rpx;
     height: 58rpx;
     margin-left: 22rpx;
 }
+
 .zw-kefu {
     display: inline-block;
     background-position: 50%;
@@ -4408,10 +4414,17 @@ m-indexHd .inner {
     bottom: -2rpx;
 }
 
+.serviceWrap .contact-kf2 {
+    display: flex;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+}
+
 .contact-kf {
-    flex:1;
-    height:100%;
-    width:100%;
+    flex: 1;
+    height: 100%;
+    width: 100%;
     display: flex;
     background: #fff;
     justify-content: center;

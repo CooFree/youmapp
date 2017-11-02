@@ -1,2 +1,41 @@
-<!--pages/member/applyList/applyList.wxml-->
-<text>pages/member/applyList/applyList.wxml</text>
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
+<view class="container greybg">
+    <view class="m-orderList" wx:for="{{applyList}}" wx:key="{{index}}">
+        <view class="order-item">
+            <view class="hd">
+                <text class="orderId">订单编号：{{item.order_code}}</text>
+            </view>
+
+            <view class="bd">
+                <view class="left">
+                    <image src="{{tools.httpsuri(item.image_url + '!prodimg100')}}" alt="" class="pic"></image>
+                </view>
+                <view class="middle">
+                    <view class="goodInfo">
+                        <view>
+                            <text class="p1">{{tools.decodeuri(item.prod_name)}}</text>
+                        </view>
+                        <view>
+                            <text class="p2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</text>
+                        </view>
+                    </view>
+                    <view class="right">
+                        <view>
+                            <text wx:if="{{item.apply_status===0}}" class="p2">申请中</text>
+                            <text wx:if="{{item.apply_status===1}}" class="p5">售后完成</text>
+                            <text wx:if="{{item.apply_status===3}}" class="p4">已受理</text>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="ft">
+                <view class="btns">
+                    <navigator wx:if="{{item.show_status===3}}" url="../apply/apply?apply_id={{item.apply_id}}">
+                        <text class="w-button">售后详情</text>
+                    </navigator>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

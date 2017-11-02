@@ -58,7 +58,7 @@
                     <text class="txt">待评价</text>
                     <text class="red-dot">{{uncommentCount}}</text>
                 </view>
-                <view class="item">
+                <view class="item" bindtap="goApplyList">
                     <image class="menu-icon" src="http://img02.camel.com.cn/image/zwuc_icon5.png" alt=""></image>
                     <text class="txt">退款/售后</text>
                 </view>

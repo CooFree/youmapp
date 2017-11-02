@@ -24,12 +24,14 @@
                                 <text class="p2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</text>
                             </view>
                         </view>
-                        <view>
-                            <text class="p3">x{{item.volume}}</text>
-                        </view>
-                        <view>
-                            <text wx:if="{{item.cancel_flag===1}}" class="p2">已取消</text>
-                            <text wx:else class="{{rowData.show_status===6?'p5':'p4'}}">{{tools.decodeuri(item.show_status_desc)}}</text>
+                        <view class="right">
+                            <view>
+                                <text class="p3">x{{item.volume}}</text>
+                            </view>
+                            <view>
+                                <text wx:if="{{item.cancel_flag===1}}" class="p2">已取消</text>
+                                <text wx:else class="{{rowData.show_status===6?'p5':'p4'}}">{{tools.decodeuri(item.show_status_desc)}}</text>
+                            </view>
                         </view>
                     </view>
                 </view>

@@ -40,7 +40,8 @@
     "pages/member/setPassword/setPassword",
     "pages/member/setLoginMobile/setLoginMobile",
     "pages/member/setLoginEmail/setLoginEmail",
-    "pages/member/setLoginName/setLoginName"
+    "pages/member/setLoginName/setLoginName",
+    "pages/member/applyList/applyList"
   ],
   "window": {
     "backgroundTextStyle": "light",

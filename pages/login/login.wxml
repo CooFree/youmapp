@@ -12,7 +12,7 @@
                     <button class="login-btn login-btn-g" formType="submit">{{submiting?'登陆中...':'账号登录'}}</button>
                 </view>
                 <view class="login-btn-wrap" bindtap="wxlogin">
-                    <button type="primary" plain="true" class="login-btn" bindtap="wxlogin">{{submiting?'登陆中...':'微信登陆'}}</button>
+                    <button type="primary" plain="true" class="login-btn" bindtap="wxlogin">{{wxsubmiting?'登陆中...':'微信登陆'}}</button>
                 </view>
             </form>
             <view class="sublime">

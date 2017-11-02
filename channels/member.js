@@ -379,7 +379,7 @@ export default class MemberChannel {
             }
             try {
                 let resData = await util.fetch(url, { method: 'POST', headers, body: post_data });
-     
+
                 if (resData.result === 1) {
                     return true;
                 }
@@ -539,7 +539,7 @@ export default class MemberChannel {
             try {
                 let resData = await util.fetch(url + '&' + post_data);
                 if (resData.result === 1) {
-                    return resData;
+                    return resData.list;
                 }
                 else {
                     console.warn(resData.msg);

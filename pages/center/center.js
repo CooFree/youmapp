@@ -119,5 +119,14 @@ Page({
         else {
             this.login();
         }
+    },
+    goApplyList: function (event) {
+        const { isLogin } = this.data;
+        if (isLogin) {
+            wx.navigateTo({ url: '../member/productCommentList/productCommentList' });
+        }
+        else {
+            this.login();
+        }
     }
 })

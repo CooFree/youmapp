@@ -11,7 +11,8 @@ Page({
   loginCount: 0,
   data: {
     formDatas: [],
-    submiting: false
+    submiting: false,
+    wxsubmiting: false
   },
 
   onLoad: function (options) {
@@ -30,7 +31,6 @@ Page({
   },
   clearInput: function (event) {
     const { formindex } = event.currentTarget.dataset;
-    console.log('clearInput', event);
     this.formInputs[formindex].setValue('');
   },
   changeInput: function (event) {
@@ -44,9 +44,11 @@ Page({
   },
   wxlogin: function (event) {
     //获取微信登陆
+    this.setData({ wxsubmiting: true });
     wx.login({
       success: res => {
         portalChannel.getWeixinLogin(res.code).then(data => {
+          this.setData({ wxsubmiting: false });
           if (data) {
             memberState.saveLogin(data.member_id, true);
             basketTemp.tempToApi();

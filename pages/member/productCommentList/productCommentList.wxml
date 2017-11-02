@@ -1,40 +1,36 @@
-<!--pages/member/productCommentList/productCommentList.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
 <view class="container greybg">
     <view class="m-productComment">
-        <view class="commentContent">
+        <view wx:for="{{prodCommentList}}" wx:key="{{index}}" class="commentContent">
             <view class="order-item">
                 <view class="bd">
                     <view class="left">
-                        <image src="https://img01.camel.com.cn/upload/ProdPicture/20150304/6eacbe78-7b3a-41c9-b34d-36ccc27fe0bd.jpg!prodimg100" alt="" class="pic"></image>
+                        <image src="{{tools.httpsuri(item.prod_image_url + '!prodimg100')}}" alt="" class="pic"></image>
                     </view>
                     <view class="middle">
                         <view class="goodInfo">
-                            <view class="p1">
-                                Camel骆驼男鞋 春季新款真皮系带日常休闲耐磨男鞋
-                            </view>
-                            <view class="p2">
-                                浅蓝，43
-                            </view>
+                            <view class="p1">{{tools.decodeuri(item.prod_name)}}</view>
+                            <view class="p2">{{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}</view>
                         </view>
                     </view>
                 </view>
             </view>
             <view class="commented">
                 <view class="content">
-                    测试
+                    {{tools.decodeuri(item.content)}}
                 </view>
                 <view class="comment-pics">
-                    <view class="item">
-                        <image class="pic" src="https://img01.camel.com.cn/upload/ProdPicture/20150304/6eacbe78-7b3a-41c9-b34d-36ccc27fe0bd.jpg!prodimg100" alt="" mode='widthFix'></image>
-                    </view>
-                    <view class="item">
-                        <image class="pic" src="https://img01.camel.com.cn/upload/ProdPicture/20150304/6eacbe78-7b3a-41c9-b34d-36ccc27fe0bd.jpg!prodimg100" alt="" mode='widthFix'></image>
+                    <view class="item" wx:for="{{item.image_list}}" wx:key="{{index}}" data-image="{{tools.httpsuri(item.image_url)}}" bindtap="showPreview">
+                        <image class="pic" src="{{tools.httpsuri(item.image_url + '!prodimg78')}}" alt="" mode='widthFix'></image>
                     </view>
                 </view>
-                <view class="date">
-                    2017年09月25日 14:49:04
-                </view>
+                <view class="date">{{item.comment_time}}</view>
             </view>
+        </view>
+    </view>
+    <view class="commentpic-preview" wx:if="{{previewCommentpic.length>0}}" bindtap="hidePreview">
+        <view class="pic-box">
+            <image mode="widthFix" style="width:96%; margin-right:-1.5%;" src="{{previewCommentpic}}" alt=""></image>
         </view>
     </view>
 </view>

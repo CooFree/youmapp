@@ -41,7 +41,7 @@ Page({
   },
   changeType: function (event) {
     const { type } = event.currentTarget.dataset;
-    setData({type});
+    this.setData({type});
     this.loadData();
   },
   onPullDownRefresh: function () {

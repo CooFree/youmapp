@@ -3,8 +3,8 @@
 <view class="container greybg">
     <view class="swiper-content">
         <view class="swiper-tabs">
-            <view class="item active">退货</view>
-            <view class="item ">换货</view>
+            <view class="item {{type===1?'active':''}}" data-type="{{1}}" bindtap="changeType">退货</view>
+            <view class="item {{type===2?'active':''}}" data-type="{{2}}" bindtap="changeType">换货</view>
         </view>
         <view class="swiper-wrap">
             <view class="m-orderList" wx:for="{{applyList}}" wx:key="{{index}}">
@@ -37,7 +37,7 @@
                     </view>
                     <view class="ft">
                         <view class="btns">
-                            <navigator wx:if="{{item.show_status===3}}" url="../apply/apply?apply_id={{item.apply_id}}">
+                            <navigator url="../apply/apply?apply_id={{item.apply_id}}">
                                 <text class="w-button">售后详情</text>
                             </navigator>
                         </view>

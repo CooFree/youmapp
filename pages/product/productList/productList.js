@@ -4,9 +4,6 @@ const productChannel = new ProductChannel();
 const pageSize = 10;
 Page({
   page: 1,
-  /**
-   * 页面的初始数据
-   */
   data: {
     productClassId: 0,
     productClassParentId: 0,

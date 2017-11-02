@@ -1,0 +1,26 @@
+<wxs src="../../utils/tools.wxs" module="tools" />
+<view class="container greybg">
+    <view class="ticketWrap g-row">
+        <view wx:for="{{ticketList}}" wx:key="{{index}}" class="item {{(item.ticket_used_flag===1||item.ticket_due_flag===1)?'disabled':''}}">
+            <view class="hd">
+                <view class="left">
+                    <view class="p1">
+                        {{tools.decodeuri(item.name)}}
+                    </view>
+                    <view class="p2">
+                        {{item.start_time}} - {{item.end_time}}
+                    </view>
+                </view>
+                <view class="right">
+                    <view wx:if="{{item.enable_ticket_count>0}}" class="btn" data-actid="{{item.id}}" bindtap="bindTicket">点击领取</view>
+                    <view wx:else class="btn disabled">已领完</view>
+                </view>
+            </view>
+            <view class="bd">
+                <view class="p3">
+                    {{tools.decodeuri(item.memo)}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

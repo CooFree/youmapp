@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <wxs src="../../utils/tools.wxs" module="tools" />
-<import src="../../components/head.wxml"/>
+<import src="../../components/head.wxml" />
 
 <view class="container">
   <view class="m-indexHd" style="height: 162rpx;">
@@ -9,7 +9,7 @@
       <view class="inner">
         <view class="m-navs disflex">
           <view class="active">
-              <text class="txt">推荐</text>
+            <text class="txt">推荐</text>
           </view>
           <block wx:for="{{TopCategoryArray}}" wx:key="{{index}}">
             <view>
@@ -24,7 +24,8 @@
   </view>
 
   <view class="zw-banner ">
-    <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true " interval="5000 " duration="500 ">
+    <swiper indicator-dots="true " indicator-color="#fff " circular="true " indicator-active-color="#d2ab44 " autoplay="true "
+      interval="5000 " duration="500 ">
       <block wx:for="{{swiperData}}" wx:key="{{index}}">
         <swiper-item>
           <navigator url="{{tools.navigateurl(item,'wap_home_focus_20171013')}}" hover-class="changestyle">
@@ -37,10 +38,12 @@
 
   <view class="zw-tabs ">
     <view class="zw-tabs-item ">
-      <view>
-        <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
-      </view>
-      <text>领10元券</text>
+      <navigator url="../scoreExch/scoreExch?tid=2759,2749,2750">
+        <view>
+          <image src='https://img02.camel.com.cn/image/zw_icon1.png' alt=" "></image>
+        </view>
+        <text>领10元券</text>
+      </navigator>
     </view>
     <view class="zw-tabs-item ">
       <view>

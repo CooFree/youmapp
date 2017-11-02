@@ -1,90 +1,86 @@
-<!--pages/member/apply/apply.wxml-->
+<wxs src="../../../utils/tools.wxs" module="tools" />
+
 <view class="container greybg">
     <view class="orderDetail">
         <view class="odinfos">
             <view class="txtwrap">
                 <view class="p1">
                     下单时间：
-                    <span class="s1">2017年10月12日 18:53:37</span>
+                    <span class="s1">{{applyInfo.order_createtime}}</span>
                 </view>
                 <view class="p1">
                     订单编号：
-                    <span class="s1">201710121854098642</span>
+                    <span class="s1">{{applyInfo.order_code}}</span>
                 </view>
             </view>
         </view>
         <view class="od-googs">
-            <view class="hd">
-                <span class="orderId title">退货申请</span>
+            <view wx:if="{{applyInfo.apply_flag === 1}}" class="hd">
+                <span class="orderId title">{{tools.decodeuri(applyInfo.apply.type_desc)}}申请</span>
                 <view class="p4">
-                    申请中
+                    {{tools.decodeuri(applyInfo.apply.status_desc)}}
                 </view>
             </view>
-            <view class="order-item">
+            <view wx:else class="hd">
+                <span class="orderId title">售后申请</span>
+                <view class="p4">未申请</view>
+            </view>
+
+            <view class="order-item" wx:for="{{applyInfo.order_item_list}}" wx:key="{{index}}">
                 <view class="bd">
                     <view class="left">
-                        <image src="https://img01.camel.com.cn/product/image/D6Y105770/fb0a8c0f-eb87-4475-8f67-796caad29584.jpg!prodimg100" class="pic" alt=""></image>
+                        <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" class="pic" alt=""></image>
                     </view>
                     <view class="middle">
                         <view class="goodInfo">
                             <view class="p1">
-                                Camel骆驼男装 秋冬款新品男士流行纯色可脱卸帽羽绒服外套
+                                {{tools.decodeuri(item.prod_name)}}
                             </view>
                             <view class="p2">
-                                咖啡*M(170/88A)
+                                {{tools.decodeuri(item.spec_color)}}*{{tools.decodeuri(item.spec_size)}}
                             </view>
                             <view class="p6">
-                                ￥184.00
+                                ￥{{tools.tofixed(item.last_price, 2)}}
                             </view>
                         </view>
                     </view>
                     <view class="right">
                         <view class="p3">
-                            x1
+                            x{{item.volume}}
                         </view>
                     </view>
                 </view>
             </view>
         </view>
-        <view class="od-addr applyWrap">
-            <view class="hd">
-                流程进度
-            </view>
-            <view class="deliveryDetail">
-                <view class="item active">
-                    <i class="icon icon-dot ion-ios-chatboxes-outline"></i>
-                    <view class="detail">
-                        <view class="desc">
-                            退运费，f1
-                        </view>
-                        <view class="time">
-                            2017年10月12日 18:54:12
-                        </view>
-                    </view>
-                </view>
-                <view class="item ">
-                    <i class="icon icon-dot ion-ios-chatboxes-outline"></i>
-                    <view class="detail">
-                        <view class="desc">
-                            退运费，f1
-                        </view>
-                        <view class="time">
-                            2017年10月12日 18:54:12
+        <block wx:if="{{applyInfo.apply_flag === 1}}">
+            <view class="od-addr applyWrap">
+                <view class="hd">流程进度</view>
+                <view class="deliveryDetail">
+                    <view wx:for="{{applyMsgList}}" wx:key="{{index}}" class="item {{index===0?'active':''}}">
+                        <i class="icon icon-dot ion-ios-chatboxes-outline"></i>
+                        <view class="detail">
+                            <view class="desc">
+                                {{tools.decodeuri(item.content)}}
+                            </view>
+                            <view class="time">
+                                {{item.msg_time}}
+                            </view>
                         </view>
                     </view>
                 </view>
             </view>
-        </view>
-        <view class="od-addr applyWrap">
-            <view class="hd">
-                回复申请
+            <view class="od-addr applyWrap">
+                <view class="hd">回复申请</view>
+                <view class="repost">
+                    <textarea class="textarea" placeholder="请输入回复内容~" value="{{content}}" bindtap="changeContent"></textarea>
+                </view>
+                <view class="commentBtn">
+                    <button class="btn">提交回复</button>
+                </view>
             </view>
-            <view class="repost">
-                <textarea class="textarea" placeholder="请输入回复内容~"></textarea>
-            </view>
-            <view class="commentBtn">
-                <button class="btn">提交回复</button>
-            </view>
-        </view>
+        </block>
+        <block wx:else>
+
+        </block>
     </view>
 </view>

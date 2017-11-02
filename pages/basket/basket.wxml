@@ -26,7 +26,7 @@
                         <view class="inner" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd" data-index="{{index}}"
                             style="{{item.txtStyle}}">
                             <view class="m-good">
-                                <i class="icon ion-checkmark-circled {{item.check_flag==1?'icon-ischecked-g':'icon-nochecked-g'}}" data-checkflag="{{item.check_flag}}"
+                                <i class="icon {{item.check_flag==1?'icon-ischecked-g  ion-checkmark-circled':'icon-nochecked-g ion-ios-circle-outline'}}" data-checkflag="{{item.check_flag}}"
                                     data-basketid="{{item.basket_id}}" bindtap="onCheckCart"></i>
                                 <view class="imgWrap">
                                     <image src="{{tools.httpsuri(item.image_url+'!prodimg100')}}" alt="" mode="widthFix"></image>
@@ -82,7 +82,7 @@
         <view class="m-cartFT">
             <view class="left">
                 <view class="checkAll" bindtap="onCheckAllCart">
-                    <i class="icon ion-checkmark-circled {{checkAll?'icon-ischecked-g':'icon-nochecked-g'}}"></i>
+                    <i class="icon {{checkAll?'icon-ischecked-g  ion-checkmark-circled':'icon-nochecked-g ion-ios-circle-outline'}}"></i>
                     <text class="txt">已选 ({{checkCount}})</text>
                 </view>
                 <view class="price">￥{{tools.tofixed(totalAmount,2)}}

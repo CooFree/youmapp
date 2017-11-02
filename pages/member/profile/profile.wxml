@@ -18,18 +18,18 @@
             <view class="item">
                 <text class="label">姓名</text>
                 <view class="right">
-                    <input type="text" class="txtInput" value="{{name}}" bindinput="setName" placeholder="请输入姓名" />
+                    <input type="text" class="txtInput" value="{{tools.decodeuri(name)}}" bindinput="setName" placeholder="请输入姓名" />
                 </view>
             </view>
             <view class="item">
                 <text class="label">性别</text>
                 <view class="right">
                     <view class="sex-wrap" bindtap="setSex" data-sex="1">
-                        <view class="icon {{sex === 1? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
+                        <view class="icon {{sex === 1? 'ion-checkmark-circled icon-ischecked-g' : 'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                         <text class="spanTxt">男</text>
                     </view>
                     <view class="sex-wrap" bindtap="setSex" data-sex="2">
-                        <view class="icon {{sex === 2? 'icon-ischecked-g' : 'icon-nochecked-g'}} ion-ios-circle-outline"></view>
+                        <view class="icon {{sex === 2? 'ion-checkmark-circled icon-ischecked-g' : 'ion-ios-circle-outline icon-nochecked-g'}}"></view>
                         <text class="spanTxt">女</text>
                     </view>
                 </view>
@@ -56,7 +56,7 @@
         </view>
         <view class="orderRFT">
             <view class="left">
-                <navigator open-type="navigateBack" delta="1">取消</navigator>
+                <navigator open-type="navigateBack" delta="1">返回</navigator>
             </view>
             <view class="right" bindtap="saveProfile">保存</view>
         </view>

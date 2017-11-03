@@ -127,7 +127,7 @@
                 <view class="sp1">服务时间：08:30-00:00</view>
             </view>
             <view class="serviceWrap">
-                <button open-type="contact" class="contact-kf2">
+                <button open-type="contact" class="contact-kf3">
                     <view class="seriveChat">
                         <i class="icon ion-ios-chatbubble-outline"></i>
                         <text>在线客服</text>

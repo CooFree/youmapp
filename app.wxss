@@ -4414,13 +4414,15 @@ m-indexHd .inner {
     bottom: -2rpx;
 }
 
-.serviceWrap .contact-kf2 {
+.serviceWrap .contact-kf3 {
     display: flex;
     background: #fff;
     justify-content: center;
     align-items: center;
 }
-
+.contact-kf2 {
+    background: #fff;
+}
 .contact-kf {
     flex: 1;
     height: 100%;

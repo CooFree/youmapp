@@ -1,9 +1,9 @@
 const DevConfig = {
-  Host: 'https://app.test.camel.com.cn',
+  Host: 'https://apptest.camel.com.cn',
 }
 
 const ProdConfig = {
-  Host: 'https://app.you.camel.com.cn',
+  Host: 'https://appyou.camel.com.cn',
 }
 
 var Config = {
